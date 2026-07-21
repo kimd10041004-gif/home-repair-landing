@@ -3,10 +3,10 @@ export const BRAND = {
   tagline: "고양·일산 중심 예약형 집수리",
   serviceArea: "고양·일산 중심, 서울·경기 외곽까지 가능",
   phone: "010-0000-0000",
-  kakaoUrl: "https://pf.kakao.com/_xxxxxx/chat",
+  kakaoUrl: "http://pf.kakao.com/_kHyfX/chat",
   businessName: "반듯집수리",
   businessRegistrationNumber: "000-00-00000",
-  businessOwner: "홍길동",
+  businessOwner: "권태우",
   businessAddress: "경기도 고양시 일산동구 ○○로 00",
 } as const;
 

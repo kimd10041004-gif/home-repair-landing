@@ -1,0 +1,104 @@
+export const BRAND = {
+  name: "반듯집수리",
+  tagline: "고양·일산 중심 예약형 집수리",
+  serviceArea: "고양·일산 중심 (서울·경기 일부 지역 확대 가능)",
+  phone: "010-0000-0000",
+  kakaoUrl: "https://pf.kakao.com/_xxxxxx/chat",
+  businessName: "반듯집수리",
+  businessRegistrationNumber: "000-00-00000",
+  businessOwner: "홍길동",
+  businessAddress: "경기도 고양시 일산동구 ○○로 00",
+} as const;
+
+export const NAV_ITEMS = [
+  { href: "/", label: "홈" },
+  { href: "/services", label: "서비스/가격" },
+  { href: "/reviews", label: "후기" },
+  { href: "/estimate", label: "견적문의" },
+  { href: "/guide", label: "이용안내" },
+  { href: "/about", label: "회사소개" },
+] as const;
+
+export const PRICE_NOTE =
+  "현장 상태/제품/난이도에 따라 비용이 달라질 수 있습니다. 사진을 보내주시면 예상 비용을 먼저 안내해드립니다.";
+
+export type ServiceCategory = {
+  id: string;
+  title: string;
+  priceRange: string;
+  description: string;
+};
+
+export const SERVICE_CATEGORIES: ServiceCategory[] = [
+  {
+    id: "faucet",
+    title: "수전교체",
+    priceRange: "8만원 ~ 12만원",
+    description: "주방·욕실 수전 교체 작업입니다.",
+  },
+  {
+    id: "drain",
+    title: "배수구",
+    priceRange: "5만원 ~ 8만원",
+    description: "막힘·누수 등 배수구 관련 작업입니다.",
+  },
+  {
+    id: "doorknob",
+    title: "문고리",
+    priceRange: "9만원 ~ 15만원",
+    description: "문고리 교체 및 수리 작업입니다.",
+  },
+  {
+    id: "doorlock",
+    title: "도어락",
+    priceRange: "별도 문의",
+    description: "제품·설치 난이도에 따라 별도 견적이 필요합니다.",
+  },
+  {
+    id: "screen",
+    title: "방충망",
+    priceRange: "5만원 ~ 8만원",
+    description: "방충망 교체 및 보수 작업입니다. 규격 확인을 위해 줄자 측정 사진이 필요합니다.",
+  },
+  {
+    id: "electric",
+    title: "전등/콘센트",
+    priceRange: "개당 2만원 ~ 5만원",
+    description: "전등 및 콘센트 교체 작업입니다.",
+  },
+];
+
+export type Review = {
+  id: string;
+  region: string;
+  workType: string;
+  content: string;
+  photoUrl: string;
+};
+
+export const REVIEWS: Review[] = [
+  {
+    id: "r1",
+    region: "고양시 일산동구",
+    workType: "수전교체",
+    content:
+      "주방 수전에서 물이 새서 문의드렸는데, 사진만 보내드렸는데도 예상 비용을 미리 안내해주셔서 부담 없이 예약했습니다. 방문하셔서 상태 확인 후 최종 금액을 먼저 말씀해주시고 동의 후 작업을 시작하셔서 믿음이 갔습니다. 교체 후 물도 잘 나오고 마감도 깔끔합니다.",
+    photoUrl: "/reviews/review-placeholder-1.svg",
+  },
+  {
+    id: "r2",
+    region: "일산서구",
+    workType: "방충망 교체",
+    content:
+      "베란다 방충망이 낡아서 전체 교체를 요청드렸습니다. 사이즈가 특이해서 미리 줄자로 가로세로 재서 사진을 보내달라고 하시더라구요. 덕분에 방문 당일 바로 맞는 자재로 작업이 끝났습니다. 작업 전후 사진도 챙겨주셔서 확인하기 편했습니다.",
+    photoUrl: "/reviews/review-placeholder-2.svg",
+  },
+  {
+    id: "r3",
+    region: "고양시 덕양구",
+    workType: "문고리 교체",
+    content:
+      "오래된 방문 손잡이가 헐거워져서 문의드렸습니다. 방문 전 상담 챗봇으로 사진을 보내니 예상 비용대와 필요한 준비물을 미리 알려주셔서 좋았습니다. 실제 방문해서도 안내받은 범위 내에서 견적이 나왔고 추가 비용 없이 마무리됐습니다.",
+    photoUrl: "/reviews/review-placeholder-3.svg",
+  },
+];

@@ -2,7 +2,7 @@ import { BRAND } from "@/lib/constants";
 
 const HISTORY = [
   { year: "2023", event: "반듯집수리 서비스 시작 (고양·일산 지역)" },
-  { year: "2024", event: "서비스 지역을 서울·경기 일부로 확대" },
+  { year: "2024", event: "서비스 지역을 서울·경기 외곽까지 확대" },
   { year: "2025", event: "사진 기반 사전 견적 시스템 도입" },
 ];
 

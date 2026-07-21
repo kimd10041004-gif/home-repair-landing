@@ -152,6 +152,14 @@ export default function EstimateChat() {
       }
       setUploading(false);
 
+      const materialText = answers.current.material.trim();
+      const hasOwnMaterial = !/^(없음|없어요|아니오|아니요|no|x)$/i.test(materialText);
+      // API는 hasOwnMaterial을 boolean만 받으므로, 보유 자재의 상세 내용(제품명 등)은
+      // 유실되지 않도록 증상(symptom) 필드에 덧붙여 함께 전달한다.
+      const symptomWithMaterial = hasOwnMaterial
+        ? `${answers.current.symptom}\n(보유 자재: ${materialText})`
+        : answers.current.symptom;
+
       const res = await fetch("/api/estimate", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -159,8 +167,8 @@ export default function EstimateChat() {
           photoUrls,
           contact: answers.current.contact,
           address: answers.current.address,
-          symptom: answers.current.symptom,
-          hasOwnMaterial: answers.current.material,
+          symptom: symptomWithMaterial,
+          hasOwnMaterial,
           preferredSchedule: answers.current.schedule,
           extraItems: answers.current.extra,
           consent: consentChecked,

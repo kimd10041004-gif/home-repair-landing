@@ -1,8 +1,15 @@
 import { NextRequest, NextResponse } from "next/server";
-import { insertEstimateInquiry } from "@/lib/db";
 
-// 이 API 라우트는 오직 INSERT(신규 문의 저장)만 수행합니다.
-// GET, PUT, DELETE 등 다른 메서드는 의도적으로 구현하지 않습니다 (조회 불가).
+/**
+ * 이 라우트는 견적 문의를 이 프로젝트의 DB에 저장하지 않습니다.
+ * home-repair-promo가 제공하는 write-only 전용 엔드포인트로 그대로 전달(proxy)만 합니다.
+ * 이 사이트는 고객 데이터를 절대 조회(SELECT)하지 않으며, 저장/조회 로직은
+ * home-repair-promo 쪽에서 전담합니다.
+ */
+const PUBLIC_ESTIMATE_ENDPOINT =
+  process.env.PUBLIC_ESTIMATE_ENDPOINT ??
+  "https://home-repair-promo.vercel.app/api/public-estimate";
+
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
@@ -36,20 +43,33 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    const result = await insertEstimateInquiry({
-      photoUrls,
-      contact,
-      address,
-      symptom,
-      hasOwnMaterial: hasOwnMaterial ?? "",
-      preferredSchedule,
-      extraItems: extraItems ?? "",
-      consent: Boolean(consent),
+    const upstreamRes = await fetch(PUBLIC_ESTIMATE_ENDPOINT, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        photoUrls,
+        contact,
+        address,
+        symptom,
+        hasOwnMaterial: Boolean(hasOwnMaterial),
+        preferredSchedule,
+        extraItems: extraItems ?? "",
+        consent: Boolean(consent),
+      }),
     });
 
-    return NextResponse.json({ ok: true, id: result.id });
+    const upstreamData = await upstreamRes.json().catch(() => ({}));
+
+    if (!upstreamRes.ok) {
+      return NextResponse.json(
+        { error: upstreamData.error || "문의 접수에 실패했습니다. 잠시 후 다시 시도해주세요." },
+        { status: upstreamRes.status }
+      );
+    }
+
+    return NextResponse.json({ ok: true });
   } catch (error) {
-    console.error("[api/estimate] insert failed", error);
+    console.error("[api/estimate] proxy failed", error);
     return NextResponse.json(
       { error: "문의 저장 중 오류가 발생했습니다. 잠시 후 다시 시도해주세요." },
       { status: 500 }

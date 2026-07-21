@@ -13,7 +13,7 @@ export const BRAND = {
 export const NAV_ITEMS = [
   { href: "/", label: "홈" },
   { href: "/services", label: "서비스/가격" },
-  { href: "/reviews", label: "후기" },
+  { href: "/reviews", label: "작업내용 소개" },
   { href: "/estimate", label: "견적문의" },
   { href: "/guide", label: "이용안내" },
   { href: "/about", label: "회사소개" },

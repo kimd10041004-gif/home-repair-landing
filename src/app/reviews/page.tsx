@@ -4,10 +4,10 @@ export default function ReviewsPage() {
   return (
     <div className="mx-auto max-w-3xl px-4 py-10">
       <h1 className="text-xl font-bold text-slate-900 sm:text-2xl">
-        고객 후기
+        작업내용 소개
       </h1>
       <p className="mt-2 text-sm text-slate-600">
-        실제 작업을 진행한 고객님들의 후기입니다.
+        실제로 진행한 작업 내용과 고객님이 남겨주신 후기를 소개합니다.
       </p>
 
       <div className="mt-6 flex flex-col gap-10">

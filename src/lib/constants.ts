@@ -59,6 +59,11 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
     title: "전등/콘센트",
     description: "전등 및 콘센트 교체 작업입니다.",
   },
+  {
+    id: "etc",
+    title: "기타수리",
+    description: "목록에 없는 자잘한 생활수리도 편하게 문의해주세요. 사진을 보내주시면 작업 가능 여부와 예상 비용을 안내해드립니다.",
+  },
 ];
 
 export type Review = {

@@ -10,42 +10,35 @@ export default function ServicesPage() {
         반듯집수리는 자재 준비 여부에 따라 비용 안내 방식이 달라집니다.
       </p>
 
-      <div className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2">
+      <div className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-3">
         <div className="rounded-lg border border-slate-200 p-4">
           <h2 className="text-base font-bold text-slate-900">
-            고객님이 자재를 직접 준비하신 경우
+            고객 자재 준비 시
           </h2>
           <p className="mt-2 text-sm text-slate-600">
-            고객님이 교체할 제품을 준비하시면 예상 인건비만 안내드립니다.
+            교체할 제품을 고객님이 직접 준비하시면, 보내주신 사진과 작업
+            내용을 확인한 뒤 예상 인건비를 먼저 안내드립니다.
           </p>
         </div>
         <div className="rounded-lg border border-slate-200 p-4">
           <h2 className="text-base font-bold text-slate-900">
-            반듯집수리가 자재를 준비하는 경우
+            자재 준비가 필요한 경우
           </h2>
           <p className="mt-2 text-sm text-slate-600">
-            제품 준비가 필요한 경우 예상 인건비와 자재비를 나누어 사전에
+            제품 준비가 필요한 경우에는 예상 인건비와 자재비를 구분하여
             안내드립니다.
           </p>
         </div>
+        <div className="rounded-lg border border-slate-200 p-4">
+          <h2 className="text-base font-bold text-slate-900">
+            여러 작업을 함께 신청하는 경우
+          </h2>
+          <p className="mt-2 text-sm text-slate-600">
+            한 번의 방문으로 여러 작업을 요청하시면, 전체 작업 내용과 현장
+            조건을 함께 확인해 통합 예상액을 안내드립니다.
+          </p>
+        </div>
       </div>
-
-      <div className="mt-6 rounded-lg bg-blue-50 p-4">
-        <h2 className="text-base font-bold text-blue-900">인건비 기준</h2>
-        <ul className="mt-2 flex flex-col gap-1 text-sm text-blue-800">
-          <li>· 시간당 9만원 (총 작업시간 기준)</li>
-          <li>· 단독 방문 작업은 기본 작업비 15만원부터</li>
-          <li>
-            · 여러 작업을 함께 신청하시면 전체 예상 작업시간을 합산해 안내드립니다.
-          </li>
-        </ul>
-      </div>
-
-      <p className="mt-4 text-xs leading-relaxed text-slate-500">
-        자재비는 제품 종류·규격·브랜드에 따라 달라지므로 사진과 규격 확인 후
-        별도로 사전 안내드리며, 고객님의 동의 없이 자재를 구매하거나 추가
-        비용을 청구하지 않습니다.
-      </p>
 
       <h2 className="mt-10 text-lg font-bold text-slate-900">
         작업 카테고리

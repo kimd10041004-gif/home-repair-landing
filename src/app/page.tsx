@@ -6,6 +6,7 @@ const TRUST_POINTS = [
   "작업 전 사전예상액 안내",
   "동의 없는 추가 작업 없음",
   "작업 전후 사진·내역 제공",
+  "전화 상담 즉시 가능",
 ];
 
 export default function HomePage() {

@@ -3,7 +3,7 @@ import { BRAND } from "@/lib/constants";
 
 const TRUST_POINTS = [
   "사진 기준 예상 견적",
-  "작업 전 최종 금액 확정",
+  "작업 전 사전예상액 안내",
   "동의 없는 추가 작업 없음",
   "작업 전후 사진·내역 제공",
 ];
@@ -18,11 +18,11 @@ export default function HomePage() {
         <h1 className="mt-3 text-2xl font-bold leading-snug text-slate-900 sm:text-3xl">
           사진으로 먼저 확인하고,
           <br />
-          작업 전 금액을 사전확정합니다.
+          작업 전 금액을 사전예상으로 안내합니다.
         </h1>
         <p className="mt-4 text-sm leading-relaxed text-slate-600 sm:text-base">
           고장 부위 사진을 최소 3장 보내주시면 작업 환경과 예상 범위를 먼저
-          확인해 안내드립니다. 현장에서는 작업을 시작하기 전에 최종 금액을
+          확인해 안내드립니다. 현장에서는 작업을 시작하기 전에 사전예상액을
           안내하며, 고객님의 동의 없이 추가 작업을 진행하지 않습니다.
         </p>
         <p className="mt-4 text-sm font-medium text-slate-700">
@@ -67,9 +67,9 @@ export default function HomePage() {
               </p>
             </div>
             <div className="rounded-lg bg-white p-4 shadow-sm">
-              <p className="font-semibold text-slate-900">투명한 가격 안내</p>
+              <p className="font-semibold text-slate-900">사전예상액 안내</p>
               <p className="mt-1 text-sm text-slate-600">
-                작업별 예상 가격대를 미리 공개하고, 현장 확정 금액에 동의 후 작업합니다.
+                사진 기준으로 예상 금액을 먼저 안내해드리고, 현장에서 안내드린 금액에 동의 후 작업합니다.
               </p>
             </div>
             <div className="rounded-lg bg-white p-4 shadow-sm">

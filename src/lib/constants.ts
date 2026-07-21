@@ -20,12 +20,11 @@ export const NAV_ITEMS = [
 ] as const;
 
 export const PRICE_NOTE =
-  "현장 상태/제품/난이도에 따라 비용이 달라질 수 있습니다. 사진을 보내주시면 예상 비용을 먼저 안내해드립니다.";
+  "표시된 금액은 사진을 기준으로 안내하는 사전예상액입니다. 현장 구조, 작업 난이도, 이동 거리 및 추가 작업 여부에 따라 달라질 수 있으며, 변경이 필요한 경우 작업 전에 먼저 설명드리고 동의를 받습니다.";
 
 export type ServiceCategory = {
   id: string;
   title: string;
-  priceRange: string;
   description: string;
 };
 
@@ -33,37 +32,31 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
   {
     id: "faucet",
     title: "수전교체",
-    priceRange: "8만원 ~ 12만원",
-    description: "주방·욕실 수전 교체 작업입니다.",
+    description: "주방·욕실 수전 교체 작업입니다. 제품별 가격 차이가 커서 예상 인건비와 자재비를 나누어 안내드립니다.",
   },
   {
     id: "drain",
     title: "배수구",
-    priceRange: "5만원 ~ 8만원",
     description: "막힘·누수 등 배수구 관련 작업입니다.",
   },
   {
     id: "doorknob",
     title: "문고리",
-    priceRange: "9만원 ~ 15만원",
     description: "문고리 교체 및 수리 작업입니다.",
   },
   {
     id: "doorlock",
     title: "도어락",
-    priceRange: "별도 문의",
-    description: "제품·설치 난이도에 따라 별도 견적이 필요합니다.",
+    description: "디지털 도어락은 제품·설치 난이도에 따라 자재비 차이가 커서 예상 인건비와 자재비를 나누어 사전 안내드립니다.",
   },
   {
     id: "screen",
     title: "방충망",
-    priceRange: "5만원 ~ 8만원",
-    description: "방충망 교체 및 보수 작업입니다. 규격 확인을 위해 줄자 측정 사진이 필요합니다.",
+    description: "방충망 교체 및 보수 작업입니다. 규격 확인을 위해 줄자 측정 사진이 필요하며, 예상 인건비와 자재비를 나누어 안내드립니다.",
   },
   {
     id: "electric",
     title: "전등/콘센트",
-    priceRange: "개당 2만원 ~ 5만원",
     description: "전등 및 콘센트 교체 작업입니다.",
   },
 ];

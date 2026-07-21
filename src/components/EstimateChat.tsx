@@ -209,7 +209,7 @@ export default function EstimateChat() {
             <div
               className={`max-w-[85%] whitespace-pre-line rounded-2xl px-4 py-2 text-sm leading-relaxed ${
                 m.from === "user"
-                  ? "bg-blue-600 text-white"
+                  ? "bg-brand-navy text-white"
                   : "bg-slate-100 text-slate-800"
               }`}
             >
@@ -255,7 +255,7 @@ export default function EstimateChat() {
               type="button"
               disabled={photos.length < MIN_PHOTOS}
               onClick={confirmPhotos}
-              className="w-fit rounded-lg bg-blue-600 px-5 py-2 text-sm font-semibold text-white disabled:cursor-not-allowed disabled:bg-slate-300"
+              className="w-fit rounded-lg bg-brand-navy px-5 py-2 text-sm font-semibold text-white disabled:cursor-not-allowed disabled:bg-slate-300"
             >
               다음 단계로
             </button>
@@ -279,7 +279,7 @@ export default function EstimateChat() {
             />
             <button
               type="submit"
-              className="rounded-lg bg-blue-600 px-4 py-2 text-sm font-semibold text-white"
+              className="rounded-lg bg-brand-navy px-4 py-2 text-sm font-semibold text-white"
             >
               전송
             </button>
@@ -307,7 +307,7 @@ export default function EstimateChat() {
               type="button"
               disabled={!consentChecked || submitting}
               onClick={handleSubmit}
-              className="w-fit rounded-lg bg-blue-600 px-5 py-2 text-sm font-semibold text-white disabled:cursor-not-allowed disabled:bg-slate-300"
+              className="w-fit rounded-lg bg-brand-navy px-5 py-2 text-sm font-semibold text-white disabled:cursor-not-allowed disabled:bg-slate-300"
             >
               {uploading ? "사진 업로드 중..." : submitting ? "제출 중..." : "문의 제출하기"}
             </button>

@@ -24,7 +24,7 @@ const STEPS = [
 export default function GuidePage() {
   return (
     <div className="mx-auto max-w-3xl px-4 py-10">
-      <h1 className="text-xl font-bold text-slate-900 sm:text-2xl">
+      <h1 className="text-xl font-bold text-brand-navy sm:text-2xl">
         이용 안내
       </h1>
       <p className="mt-2 text-sm text-slate-600">
@@ -34,7 +34,7 @@ export default function GuidePage() {
       <ol className="mt-6 flex flex-col gap-6">
         {STEPS.map((step) => (
           <li key={step.title} className="rounded-lg border border-slate-200 p-4">
-            <h2 className="font-bold text-slate-900">{step.title}</h2>
+            <h2 className="font-bold text-brand-navy">{step.title}</h2>
             <p className="mt-1 text-sm leading-relaxed text-slate-600">
               {step.desc}
             </p>
@@ -42,9 +42,9 @@ export default function GuidePage() {
         ))}
       </ol>
 
-      <div className="mt-8 rounded-lg bg-blue-50 p-5">
-        <h2 className="font-bold text-blue-900">신뢰 포인트</h2>
-        <p className="mt-2 text-sm leading-relaxed text-blue-800">
+      <div className="mt-8 rounded-lg bg-brand-cream p-5">
+        <h2 className="font-bold text-brand-navy">신뢰 포인트</h2>
+        <p className="mt-2 text-sm leading-relaxed text-slate-700">
           작업 시작 전 사전예상액을 고객 동의 하에 안내하며, 동의 없는 추가
           작업은 진행하지 않습니다. 작업 전/중/후 사진을 제공하여 어떤 작업이
           어떻게 이루어졌는지 투명하게 확인하실 수 있습니다.

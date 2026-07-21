@@ -7,7 +7,7 @@ import { BRAND } from "@/lib/constants";
  */
 export default function CtaBar() {
   return (
-    <div className="border-y border-black/10 bg-slate-50">
+    <div className="border-y border-black/10 bg-brand-cream">
       <div className="mx-auto flex max-w-5xl flex-col items-center gap-3 px-4 py-4 sm:flex-row sm:justify-center">
         <a
           href={BRAND.kakaoUrl}
@@ -19,13 +19,13 @@ export default function CtaBar() {
         </a>
         <Link
           href="/estimate"
-          className="w-full rounded-lg bg-blue-600 px-5 py-3 text-center font-semibold text-white transition hover:bg-blue-500 sm:w-auto"
+          className="w-full rounded-lg bg-brand-navy px-5 py-3 text-center font-semibold text-white transition hover:bg-brand-navy-dark sm:w-auto"
         >
           사진 견적 신청하기
         </Link>
         <a
           href={`tel:${BRAND.phone}`}
-          className="w-full rounded-lg bg-green-600 px-5 py-3 text-center font-semibold text-white transition hover:bg-green-500 sm:w-auto"
+          className="w-full rounded-lg bg-brand-teal px-5 py-3 text-center font-semibold text-white transition hover:bg-brand-teal-light sm:w-auto"
         >
           📞 전화 상담 {BRAND.phone}
         </a>

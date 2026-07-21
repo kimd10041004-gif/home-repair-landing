@@ -26,6 +26,7 @@ export type ServiceCategory = {
   id: string;
   title: string;
   description: string;
+  imageSrc?: string;
 };
 
 export const SERVICE_CATEGORIES: ServiceCategory[] = [
@@ -33,6 +34,7 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
     id: "faucet",
     title: "수전교체",
     description: "주방·욕실 수전 교체 작업입니다. 제품별 가격 차이가 커서 예상 인건비와 자재비를 나누어 안내드립니다.",
+    imageSrc: "/brand/kitchen-faucet.png",
   },
   {
     id: "drain",
@@ -48,16 +50,19 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
     id: "doorlock",
     title: "도어락",
     description: "디지털 도어락은 제품·설치 난이도에 따라 자재비 차이가 커서 예상 인건비와 자재비를 나누어 사전 안내드립니다.",
+    imageSrc: "/brand/entryway-doorlock.png",
   },
   {
     id: "screen",
     title: "방충망",
     description: "방충망 교체 및 보수 작업입니다. 규격 확인을 위해 줄자 측정 사진이 필요하며, 예상 인건비와 자재비를 나누어 안내드립니다.",
+    imageSrc: "/brand/window-screen.png",
   },
   {
     id: "electric",
     title: "전등/콘센트",
     description: "전등 및 콘센트 교체 작업입니다.",
+    imageSrc: "/brand/outlet-switch.png",
   },
   {
     id: "etc",

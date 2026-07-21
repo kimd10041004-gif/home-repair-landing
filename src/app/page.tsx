@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { BRAND } from "@/lib/constants";
 
@@ -12,69 +13,84 @@ const TRUST_POINTS = [
 export default function HomePage() {
   return (
     <div>
-      <section className="mx-auto max-w-3xl px-4 py-12 text-center sm:py-16">
-        <p className="text-sm font-semibold text-blue-600">
-          {BRAND.tagline}, {BRAND.name}
-        </p>
-        <h1 className="mt-3 text-2xl font-bold leading-snug text-slate-900 sm:text-3xl">
-          사진으로 먼저 확인하고,
-          <br />
-          작업 전 금액을 사전예상으로 안내합니다.
-        </h1>
-        <p className="mt-4 text-sm leading-relaxed text-slate-600 sm:text-base">
-          고장 부위 사진을 최소 3장 보내주시면 작업 환경과 예상 범위를 먼저
-          확인해 안내드립니다. 현장에서는 작업을 시작하기 전에 사전예상액을
-          안내하며, 고객님의 동의 없이 추가 작업을 진행하지 않습니다.
-        </p>
-        <p className="mt-4 text-sm font-medium text-slate-700">
-          {BRAND.serviceArea}
-        </p>
+      <section className="bg-brand-cream">
+        <div className="mx-auto grid max-w-5xl grid-cols-1 items-center gap-8 px-4 py-12 sm:py-16 lg:grid-cols-2">
+          <div className="text-center lg:text-left">
+            <p className="text-sm font-semibold text-brand-teal">
+              {BRAND.tagline}, {BRAND.name}
+            </p>
+            <h1 className="mt-3 text-2xl font-bold leading-snug text-brand-navy sm:text-3xl">
+              사진으로 먼저 확인하고,
+              <br />
+              작업 전 금액을 사전예상으로 안내합니다.
+            </h1>
+            <p className="mt-4 text-sm leading-relaxed text-slate-600 sm:text-base">
+              고장 부위 사진을 최소 3장 보내주시면 작업 환경과 예상 범위를 먼저
+              확인해 안내드립니다. 현장에서는 작업을 시작하기 전에 사전예상액을
+              안내하며, 고객님의 동의 없이 추가 작업을 진행하지 않습니다.
+            </p>
+            <p className="mt-4 text-sm font-medium text-slate-700">
+              {BRAND.serviceArea}
+            </p>
 
-        <div className="mt-6 flex flex-col items-center justify-center gap-3 sm:flex-row">
-          <Link
-            href="/estimate"
-            className="w-full rounded-lg bg-blue-600 px-6 py-3 text-center font-semibold text-white hover:bg-blue-500 sm:w-auto"
-          >
-            사진 견적 신청하기
-          </Link>
-          <Link
-            href="/services"
-            className="w-full rounded-lg border border-slate-300 px-6 py-3 text-center font-semibold text-slate-700 hover:bg-slate-100 sm:w-auto"
-          >
-            서비스와 가격 보기
-          </Link>
+            <div className="mt-6 flex flex-col items-center justify-center gap-3 sm:flex-row lg:justify-start">
+              <Link
+                href="/estimate"
+                className="w-full rounded-lg bg-brand-navy px-6 py-3 text-center font-semibold text-white hover:bg-brand-navy-dark sm:w-auto"
+              >
+                사진 견적 신청하기
+              </Link>
+              <Link
+                href="/services"
+                className="w-full rounded-lg border border-slate-300 bg-white px-6 py-3 text-center font-semibold text-slate-700 hover:bg-slate-50 sm:w-auto"
+              >
+                서비스와 가격 보기
+              </Link>
+            </div>
+
+            <ul className="mt-8 grid grid-cols-1 gap-2 text-left text-sm text-slate-700 sm:grid-cols-2">
+              {TRUST_POINTS.map((point) => (
+                <li key={point} className="flex items-center gap-2 rounded-md bg-white px-3 py-2 shadow-sm">
+                  <span className="text-brand-teal">✓</span>
+                  {point}
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div className="relative hidden aspect-[4/3] w-full overflow-hidden rounded-2xl shadow-md lg:block">
+            <Image
+              src="/brand/hero-banner.png"
+              alt="반듯집수리 작업 현장 이미지"
+              fill
+              sizes="(min-width: 1024px) 480px, 0px"
+              className="object-cover"
+              priority
+            />
+          </div>
         </div>
-
-        <ul className="mt-8 grid grid-cols-1 gap-2 text-left text-sm text-slate-700 sm:grid-cols-2">
-          {TRUST_POINTS.map((point) => (
-            <li key={point} className="flex items-center gap-2 rounded-md bg-slate-50 px-3 py-2">
-              <span className="text-green-600">✓</span>
-              {point}
-            </li>
-          ))}
-        </ul>
       </section>
 
-      <section className="border-t border-black/5 bg-slate-50">
+      <section className="border-t border-black/5 bg-white">
         <div className="mx-auto max-w-3xl px-4 py-10">
-          <h2 className="text-lg font-bold text-slate-900">
+          <h2 className="text-lg font-bold text-brand-navy">
             반듯집수리는 이런 곳입니다
           </h2>
           <div className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-3">
-            <div className="rounded-lg bg-white p-4 shadow-sm">
-              <p className="font-semibold text-slate-900">예약형 방문 서비스</p>
+            <div className="rounded-lg border border-slate-100 bg-brand-cream p-4 shadow-sm">
+              <p className="font-semibold text-brand-navy">예약형 방문 서비스</p>
               <p className="mt-1 text-sm text-slate-600">
                 미리 사진과 정보를 남겨주시면 방문 전에 준비된 상태로 찾아갑니다.
               </p>
             </div>
-            <div className="rounded-lg bg-white p-4 shadow-sm">
-              <p className="font-semibold text-slate-900">사전예상액 안내</p>
+            <div className="rounded-lg border border-slate-100 bg-brand-cream p-4 shadow-sm">
+              <p className="font-semibold text-brand-navy">사전예상액 안내</p>
               <p className="mt-1 text-sm text-slate-600">
                 사진 기준으로 예상 금액을 먼저 안내해드리고, 현장에서 안내드린 금액에 동의 후 작업합니다.
               </p>
             </div>
-            <div className="rounded-lg bg-white p-4 shadow-sm">
-              <p className="font-semibold text-slate-900">기록으로 남는 작업</p>
+            <div className="rounded-lg border border-slate-100 bg-brand-cream p-4 shadow-sm">
+              <p className="font-semibold text-brand-navy">기록으로 남는 작업</p>
               <p className="mt-1 text-sm text-slate-600">
                 작업 전후 사진과 내역을 제공해 어떤 작업이 이루어졌는지 확인할 수 있습니다.
               </p>

@@ -7,6 +7,13 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+
+  /* 반듯집수리 브랜드 팔레트 (로고 기준) */
+  --brand-navy: #1e293b;
+  --brand-navy-dark: #16213a;
+  --brand-teal: #2a9d8f;
+  --brand-teal-light: #3db3a4;
+  --brand-cream: #faf6f0;
 }
 
 @theme inline {
@@ -14,6 +21,12 @@
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+
+  --color-brand-navy: var(--brand-navy);
+  --color-brand-navy-dark: var(--brand-navy-dark);
+  --color-brand-teal: var(--brand-teal);
+  --color-brand-teal-light: var(--brand-teal-light);
+  --color-brand-cream: var(--brand-cream);
 }
 
 body {

@@ -9,12 +9,12 @@ const HISTORY = [
 export default function AboutPage() {
   return (
     <div className="mx-auto max-w-3xl px-4 py-10">
-      <h1 className="text-xl font-bold text-slate-900 sm:text-2xl">
+      <h1 className="text-xl font-bold text-brand-navy sm:text-2xl">
         회사 소개
       </h1>
 
       <section className="mt-6">
-        <h2 className="font-bold text-slate-900">사업자 정보</h2>
+        <h2 className="font-bold text-brand-navy">사업자 정보</h2>
         <dl className="mt-2 grid grid-cols-1 gap-1 text-sm text-slate-600 sm:grid-cols-2">
           <div>
             <dt className="inline font-medium text-slate-700">상호: </dt>
@@ -36,16 +36,16 @@ export default function AboutPage() {
       </section>
 
       <section className="mt-8">
-        <h2 className="font-bold text-slate-900">서비스 지역</h2>
+        <h2 className="font-bold text-brand-navy">서비스 지역</h2>
         <p className="mt-2 text-sm text-slate-600">{BRAND.serviceArea}</p>
       </section>
 
       <section className="mt-8">
-        <h2 className="font-bold text-slate-900">연혁</h2>
+        <h2 className="font-bold text-brand-navy">연혁</h2>
         <ul className="mt-2 flex flex-col gap-2">
           {HISTORY.map((item) => (
             <li key={item.year} className="flex gap-3 text-sm">
-              <span className="w-14 shrink-0 font-semibold text-blue-600">
+              <span className="w-14 shrink-0 font-semibold text-brand-teal">
                 {item.year}
               </span>
               <span className="text-slate-600">{item.event}</span>

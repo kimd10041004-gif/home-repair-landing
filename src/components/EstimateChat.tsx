@@ -478,10 +478,38 @@ export default function EstimateChat() {
               type="button"
               disabled={!consentChecked || submitting}
               onClick={handleSubmit}
-              className="w-fit rounded-lg bg-brand-navy px-5 py-2 text-sm font-semibold text-white disabled:cursor-not-allowed disabled:bg-slate-300"
+              className="flex w-fit items-center gap-2 rounded-lg bg-brand-navy px-5 py-2 text-sm font-semibold text-white disabled:cursor-not-allowed disabled:bg-slate-300"
             >
+              {(uploading || submitting) && (
+                <svg
+                  className="h-4 w-4 animate-spin text-white"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  aria-hidden="true"
+                >
+                  <circle
+                    className="opacity-25"
+                    cx="12"
+                    cy="12"
+                    r="10"
+                    stroke="currentColor"
+                    strokeWidth="4"
+                  />
+                  <path
+                    className="opacity-75"
+                    fill="currentColor"
+                    d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"
+                  />
+                </svg>
+              )}
               {uploading ? "사진 업로드 중..." : submitting ? "제출 중..." : "신청서 제출하기"}
             </button>
+            {(uploading || submitting) && (
+              <p className="text-xs text-slate-500">
+                사진 용량에 따라 최대 20~30초 정도 걸릴 수 있어요. 화면을 벗어나지 말고 잠시만
+                기다려 주세요.
+              </p>
+            )}
           </div>
         )}
 

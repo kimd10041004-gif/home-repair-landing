@@ -4,7 +4,7 @@ import AiExampleBadge from "@/components/AiExampleBadge";
 
 const HISTORY = [
   { year: "2023", event: "반듯집수리 서비스 시작 (고양·일산 지역)" },
-  { year: "2024", event: "서비스 지역을 서울·경기 외곽까지 확대" },
+  { year: "2024", event: "서비스 지역을 서울·경기 전지역으로 확대" },
   { year: "2025", event: "사진 기반 사전 견적 시스템 도입" },
 ];
 
@@ -45,6 +45,7 @@ export default function AboutPage() {
       <section className="mt-8">
         <h2 className="font-bold text-brand-navy">서비스 지역</h2>
         <p className="mt-2 text-sm text-slate-600">{BRAND.serviceArea}</p>
+        <p className="mt-1 text-xs text-slate-500">{BRAND.serviceAreaNote}</p>
       </section>
 
       <section className="mt-8">

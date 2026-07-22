@@ -1,7 +1,8 @@
 export const BRAND = {
   name: "반듯집수리",
-  tagline: "고양·일산 중심 예약형 집수리",
-  serviceArea: "고양·일산 중심, 서울·경기 외곽까지 가능",
+  tagline: "예약형 집수리",
+  serviceArea: "서울·경기 전지역 방문 가능합니다",
+  serviceAreaNote: "다만 외곽 지역은 출장비가 추가될 수 있습니다.",
   phone: "010-0000-0000",
   kakaoUrl: "http://pf.kakao.com/_kHyfX/chat",
   businessName: "반듯집수리",

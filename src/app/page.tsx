@@ -34,6 +34,7 @@ export default function HomePage() {
             <p className="mt-4 text-sm font-medium text-slate-700">
               {BRAND.serviceArea}
             </p>
+            <p className="mt-1 text-xs text-slate-500">{BRAND.serviceAreaNote}</p>
 
             <div className="mt-6 flex flex-col items-center justify-center gap-3 sm:flex-row lg:justify-start">
               <Link
@@ -135,18 +136,18 @@ export default function HomePage() {
       </section>
 
       <section className="border-t border-black/5 bg-white">
-        <div className="mx-auto max-w-2xl px-4 py-10 text-center">
+        <div className="mx-auto max-w-4xl px-4 py-10 text-center">
           <h2 className="text-lg font-bold text-brand-navy">작업내용 소개</h2>
           <p className="mt-2 text-sm text-slate-600">
             반듯집수리가 다루는 작업들을 한눈에 확인해보세요.
           </p>
-          <div className="relative mx-auto mt-6 aspect-square w-full max-w-xs overflow-hidden rounded-2xl shadow-md">
+          <div className="relative mx-auto mt-6 aspect-[16/9] w-full overflow-hidden rounded-2xl border border-slate-100 shadow-md">
             <Image
-              src="/brand/promo-card-services.png"
+              src="/brand/promo-card-services-3.png"
               alt="반듯집수리 작업내용 소개 - 수전, 배수구, 문고리/도어락, 전등/콘센트, 방충망"
               fill
-              sizes="(min-width: 640px) 320px, 100vw"
-              className="object-cover"
+              sizes="(min-width: 1024px) 896px, 100vw"
+              className="object-contain"
             />
           </div>
           <Link

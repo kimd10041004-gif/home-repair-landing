@@ -2,9 +2,12 @@
 
 import { useRef, useState } from "react";
 import {
+  BRAND,
   BUNDLE_ITEMS,
   BUNDLE_NONE_OPTION,
+  ESTIMATE_DISCLAIMER_TEXT,
   PHOTO_SLOTS_BY_CATEGORY,
+  PHOTO_VALIDATION_ERROR_BY_CATEGORY,
   PRIVACY_CONSENT_TEXT,
   WORK_CATEGORIES,
   WORK_TYPES_BY_CATEGORY,
@@ -257,13 +260,7 @@ export default function EstimateChat() {
       }
 
       pushUser("개인정보 수집·이용에 동의합니다.");
-      pushBot(
-        "신청이 정상적으로 접수되었습니다! 🙇\n\n" +
-          "보내주신 사진을 기준으로 작업환경과 예상 비용범위를 먼저 안내해드립니다. " +
-          "사진만으로 확인하기 어려운 배관 내부상태, 숨은 파손 또는 기존 마감상태가 있을 수 있습니다. " +
-          "최종 작업금액은 현장을 확인한 후 작업을 시작하기 전에 안내하며, 고객님의 동의를 받은 뒤 작업을 진행합니다. " +
-          "안내받지 않은 추가작업은 고객님의 동의 없이 진행하지 않습니다."
-      );
+      pushBot(ESTIMATE_DISCLAIMER_TEXT);
       setStep("done");
       setSubmitted(true);
     } catch (err) {
@@ -400,8 +397,10 @@ export default function EstimateChat() {
             >
               다음 단계로
             </button>
-            {!requiredSlotsFilled && (
-              <p className="text-xs text-slate-500">필수(*) 표시된 사진을 모두 첨부해주세요.</p>
+            {!requiredSlotsFilled && category && (
+              <p className="text-xs text-red-600">
+                {PHOTO_VALIDATION_ERROR_BY_CATEGORY[category]}
+              </p>
             )}
           </div>
         )}
@@ -487,9 +486,22 @@ export default function EstimateChat() {
         )}
 
         {step === "done" && submitted && (
-          <p className="text-sm font-medium text-green-700">
-            접수가 완료되었습니다. 감사합니다!
-          </p>
+          <div className="flex flex-col gap-2 border-t border-slate-100 pt-3 sm:flex-row">
+            <a
+              href={BRAND.kakaoUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="rounded-lg border border-slate-300 px-4 py-2 text-center text-sm font-semibold text-slate-700 hover:bg-slate-50"
+            >
+              추가 내용·사진 카카오톡 문의
+            </a>
+            <a
+              href={`tel:${BRAND.phone}`}
+              className="rounded-lg border border-slate-300 px-4 py-2 text-center text-sm font-semibold text-slate-700 hover:bg-slate-50"
+            >
+              전화로 추가 문의
+            </a>
+          </div>
         )}
       </div>
     </div>

@@ -3,7 +3,7 @@ export const BRAND = {
   tagline: "예약형 집수리",
   serviceArea: "서울·경기 전지역 방문 가능합니다",
   serviceAreaNote: "다만 외곽 지역은 출장비가 추가될 수 있습니다.",
-  phone: "010-0000-0000",
+  phone: "010-2370-5091",
   kakaoUrl: "http://pf.kakao.com/_kHyfX/chat",
   businessName: "반듯집수리",
   businessRegistrationNumber: "000-00-00000",
@@ -79,7 +79,7 @@ export const PHOTO_SLOTS_BY_CATEGORY: Record<WorkCategoryId, PhotoSlot[]> = {
       id: "overall",
       label: "전체 사진",
       required: true,
-      hint: "고장/교체가 필요한 부위 전체가 보이도록 촬영",
+      hint: "고장 부위와 주변 작업 공간이 함께 보이도록 촬영해 주세요.",
       goodExample: "부위 전체와 주변 환경이 함께 보이는 사진",
       badExample: "너무 가까이 찍혀 주변이 안 보이거나 흔들린 사진",
     },
@@ -87,7 +87,7 @@ export const PHOTO_SLOTS_BY_CATEGORY: Record<WorkCategoryId, PhotoSlot[]> = {
       id: "closeup",
       label: "근접 사진",
       required: true,
-      hint: "문제가 되는 부분을 가까이서 촬영",
+      hint: "누수, 파손, 부식 등 문제가 발생한 부분을 선명하게 촬영해 주세요.",
       goodExample: "누수·파손·고장 부위가 선명하게 보이는 사진",
       badExample: "초점이 맞지 않아 문제 부위가 흐릿한 사진",
     },
@@ -95,7 +95,7 @@ export const PHOTO_SLOTS_BY_CATEGORY: Record<WorkCategoryId, PhotoSlot[]> = {
       id: "connector",
       label: "연결부·제품정보 사진",
       required: true,
-      hint: "제품명, 모델명, 규격 라벨 등이 보이도록 촬영",
+      hint: "연결부, 모델명, 제조사 또는 제품 규격이 보이도록 촬영해 주세요.",
       goodExample: "제품 뒷면·측면의 모델명 스티커가 보이는 사진",
       badExample: "라벨 부분이 가려지거나 잘려 나온 사진",
     },
@@ -121,7 +121,7 @@ export const PHOTO_SLOTS_BY_CATEGORY: Record<WorkCategoryId, PhotoSlot[]> = {
       id: "widthMeasure",
       label: "가로 측정 사진",
       required: true,
-      hint: "줄자로 가로 길이를 잰 상태를 촬영",
+      hint: "줄자를 가로 방향으로 대고 시작점과 끝점, 숫자가 모두 보이도록 촬영해 주세요.",
       goodExample: "줄자 눈금과 측정 대상이 함께 선명하게 보이는 사진",
       badExample: "줄자 눈금이 보이지 않거나 초점이 안 맞는 사진",
     },
@@ -129,7 +129,7 @@ export const PHOTO_SLOTS_BY_CATEGORY: Record<WorkCategoryId, PhotoSlot[]> = {
       id: "heightMeasure",
       label: "세로 측정 사진",
       required: true,
-      hint: "줄자로 세로 길이를 잰 상태를 촬영",
+      hint: "줄자를 세로 방향으로 대고 위·아래 기준점과 숫자가 모두 보이도록 촬영해 주세요.",
       goodExample: "줄자 눈금과 측정 대상이 함께 선명하게 보이는 사진",
       badExample: "줄자 눈금이 보이지 않거나 초점이 안 맞는 사진",
     },
@@ -142,6 +142,12 @@ export const PHOTO_SLOTS_BY_CATEGORY: Record<WorkCategoryId, PhotoSlot[]> = {
       badExample: "",
     },
   ],
+};
+
+// 필수 업로드칸 미충족 시 카테고리별로 다르게 노출하는 제출 차단 안내 문구
+export const PHOTO_VALIDATION_ERROR_BY_CATEGORY: Record<WorkCategoryId, string> = {
+  general: "정확한 견적 확인을 위해 필수 사진 3장을 모두 등록해 주세요.",
+  interior: "정면 전체 사진과 가로·세로 측정 사진을 모두 등록해 주세요.",
 };
 
 export const WORKSPACE_OPTIONS = [
@@ -174,10 +180,10 @@ export const PRIVACY_CONSENT_TEXT =
 
 // 접수완료 화면 등에 표시하는 예상견적 안내 원칙 문구 (용어 원칙: "예상 견적/비용범위", 확정견적 금지)
 export const ESTIMATE_DISCLAIMER_TEXT =
-  "보내주신 사진을 기준으로 작업환경과 예상 비용범위를 먼저 안내해드립니다. " +
-  "사진만으로 확인하기 어려운 배관 내부상태, 숨은 파손 또는 기존 마감상태가 있을 수 있습니다. " +
-  "최종 작업금액은 현장을 확인한 후 작업을 시작하기 전에 안내하며, 고객님의 동의를 받은 뒤 작업을 진행합니다. " +
-  "안내받지 않은 추가작업은 고객님의 동의 없이 진행하지 않습니다.";
+  "견적 신청이 접수되었습니다.\n" +
+  "보내주신 사진과 내용을 확인한 후 사진 기준 예상 작업 범위와 비용을 안내해 드립니다.\n" +
+  "사진만으로 확인하기 어려운 부분이 있는 경우 카카오톡 또는 전화로 추가 사진과 정보를 요청드릴 수 있습니다.\n" +
+  "최종 작업금액은 현장을 확인한 뒤 작업 시작 전에 안내하며, 고객님의 동의를 받은 후 작업을 진행합니다.";
 
 export type ServiceCategory = {
   id: string;

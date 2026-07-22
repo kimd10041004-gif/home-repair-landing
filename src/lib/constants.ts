@@ -23,6 +23,162 @@ export const NAV_ITEMS = [
 export const PRICE_NOTE =
   "작업비는 작업 종류, 난이도, 현장 구조, 이동 거리 등에 따라 달라질 수 있습니다. 보내주신 사진을 기준으로 사전예상액을 안내하며, 현장에서 추가 작업이나 금액 변경이 필요한 경우에는 작업 전에 먼저 설명드리고 동의를 받습니다.";
 
+// ── 견적 신청폼: 작업유형 조건분기 ────────────────────────────────
+export type WorkCategoryId = "general" | "interior";
+
+export const WORK_CATEGORIES: {
+  id: WorkCategoryId;
+  label: string;
+  examples: string;
+}[] = [
+  {
+    id: "general",
+    label: "일반 생활수리",
+    examples: "수전·누수·배수구·전등·콘센트·도어락 등",
+  },
+  {
+    id: "interior",
+    label: "인테리어·규격교체",
+    examples: "방충망·문·창문·타일·벽/바닥·거울·선반·가구 등",
+  },
+];
+
+export const WORK_TYPES_BY_CATEGORY: Record<WorkCategoryId, string[]> = {
+  general: [
+    "수전교체",
+    "누수수리",
+    "배수구",
+    "전등/콘센트",
+    "도어락",
+    "기타 생활수리",
+  ],
+  interior: [
+    "방충망",
+    "문 교체",
+    "창문",
+    "타일",
+    "벽/바닥",
+    "거울/선반/가구",
+    "기타 인테리어·규격교체",
+  ],
+};
+
+export type PhotoSlot = {
+  id: string;
+  label: string;
+  required: boolean;
+  hint: string;
+  goodExample: string;
+  badExample: string;
+};
+
+// 작업유형(일반수리 vs 규격교체)에 따라 필수 업로드칸 구성이 달라집니다.
+export const PHOTO_SLOTS_BY_CATEGORY: Record<WorkCategoryId, PhotoSlot[]> = {
+  general: [
+    {
+      id: "overall",
+      label: "전체 사진",
+      required: true,
+      hint: "고장/교체가 필요한 부위 전체가 보이도록 촬영",
+      goodExample: "부위 전체와 주변 환경이 함께 보이는 사진",
+      badExample: "너무 가까이 찍혀 주변이 안 보이거나 흔들린 사진",
+    },
+    {
+      id: "closeup",
+      label: "근접 사진",
+      required: true,
+      hint: "문제가 되는 부분을 가까이서 촬영",
+      goodExample: "누수·파손·고장 부위가 선명하게 보이는 사진",
+      badExample: "초점이 맞지 않아 문제 부위가 흐릿한 사진",
+    },
+    {
+      id: "connector",
+      label: "연결부·제품정보 사진",
+      required: true,
+      hint: "제품명, 모델명, 규격 라벨 등이 보이도록 촬영",
+      goodExample: "제품 뒷면·측면의 모델명 스티커가 보이는 사진",
+      badExample: "라벨 부분이 가려지거나 잘려 나온 사진",
+    },
+    {
+      id: "extra",
+      label: "추가 사진 (선택)",
+      required: false,
+      hint: "설명이 더 필요한 부분이 있다면 추가로 첨부",
+      goodExample: "",
+      badExample: "",
+    },
+  ],
+  interior: [
+    {
+      id: "front",
+      label: "정면 전체 사진",
+      required: true,
+      hint: "설치·교체할 부위의 정면 전체가 보이도록 촬영",
+      goodExample: "방충망/문/창문 등 전체 틀이 다 보이는 정면 사진",
+      badExample: "비스듬히 찍혀 전체 규격을 가늠하기 어려운 사진",
+    },
+    {
+      id: "widthMeasure",
+      label: "가로 측정 사진",
+      required: true,
+      hint: "줄자로 가로 길이를 잰 상태를 촬영",
+      goodExample: "줄자 눈금과 측정 대상이 함께 선명하게 보이는 사진",
+      badExample: "줄자 눈금이 보이지 않거나 초점이 안 맞는 사진",
+    },
+    {
+      id: "heightMeasure",
+      label: "세로 측정 사진",
+      required: true,
+      hint: "줄자로 세로 길이를 잰 상태를 촬영",
+      goodExample: "줄자 눈금과 측정 대상이 함께 선명하게 보이는 사진",
+      badExample: "줄자 눈금이 보이지 않거나 초점이 안 맞는 사진",
+    },
+    {
+      id: "extra",
+      label: "두께·깊이·연결부 추가 사진 (선택)",
+      required: false,
+      hint: "두께, 깊이, 연결부 등 추가로 확인이 필요한 부분",
+      goodExample: "",
+      badExample: "",
+    },
+  ],
+};
+
+export const WORKSPACE_OPTIONS = [
+  "주방",
+  "욕실",
+  "거실",
+  "방",
+  "현관",
+  "발코니/베란다",
+  "기타",
+];
+
+// 방문 시 함께 점검을 유도하기 위한 마지막 단계 선택 항목("현재 작업만 필요"는 단독 선택)
+export const BUNDLE_ITEMS = [
+  "전등·스위치",
+  "수전·배수",
+  "문고리·도어락",
+  "실리콘·부분마감",
+  "방충망·창문",
+  "벽·바닥·타일",
+  "현재 작업만 필요",
+] as const;
+export const BUNDLE_NONE_OPTION = "현재 작업만 필요";
+
+export const PRIVACY_CONSENT_TEXT =
+  "수집목적: 방문 견적 상담 및 예약, 작업 진행을 위해 개인정보를 수집·이용합니다.\n" +
+  "수집항목: 이름, 연락처, 방문지역·주소, 상담내용(작업공간·작업종류·문제증상 등), 첨부사진, 희망 방문일정.\n" +
+  "보유기간: 상담·작업 완료 후 관련 법령에 따른 보관기간까지 보관하며, 정확한 보유기간은 추후 확정 예정입니다.\n" +
+  "고객님은 개인정보 수집·이용에 대한 동의를 거부할 권리가 있으며, 동의하지 않으실 경우 견적 상담 접수가 제한될 수 있습니다.";
+
+// 접수완료 화면 등에 표시하는 예상견적 안내 원칙 문구 (용어 원칙: "예상 견적/비용범위", 확정견적 금지)
+export const ESTIMATE_DISCLAIMER_TEXT =
+  "보내주신 사진을 기준으로 작업환경과 예상 비용범위를 먼저 안내해드립니다. " +
+  "사진만으로 확인하기 어려운 배관 내부상태, 숨은 파손 또는 기존 마감상태가 있을 수 있습니다. " +
+  "최종 작업금액은 현장을 확인한 후 작업을 시작하기 전에 안내하며, 고객님의 동의를 받은 뒤 작업을 진행합니다. " +
+  "안내받지 않은 추가작업은 고객님의 동의 없이 진행하지 않습니다.";
+
 export type ServiceCategory = {
   id: string;
   title: string;

@@ -1,6 +1,16 @@
 "use client";
 
 import { useRef, useState } from "react";
+import {
+  BUNDLE_ITEMS,
+  BUNDLE_NONE_OPTION,
+  PHOTO_SLOTS_BY_CATEGORY,
+  PRIVACY_CONSENT_TEXT,
+  WORK_CATEGORIES,
+  WORK_TYPES_BY_CATEGORY,
+  WORKSPACE_OPTIONS,
+  type WorkCategoryId,
+} from "@/lib/constants";
 
 type ChatMessage = {
   id: string;
@@ -9,17 +19,19 @@ type ChatMessage = {
 };
 
 type StepId =
-  | "photos"
-  | "contact"
-  | "address"
+  | "workspace"
+  | "category"
+  | "workType"
   | "symptom"
+  | "photos"
   | "material"
   | "schedule"
-  | "extra"
+  | "bundle"
+  | "name"
+  | "contact"
+  | "address"
   | "consent"
   | "done";
-
-const MIN_PHOTOS = 3;
 
 function uid() {
   return Math.random().toString(36).slice(2, 10);
@@ -31,19 +43,19 @@ export default function EstimateChat() {
       id: uid(),
       from: "bot",
       text:
-        "안녕하세요! 반듯집수리 사진 견적 챗봇입니다. 😊\n" +
-        "몇 가지 질문에 답해주시면 예상 비용과 방문 일정을 안내해드릴게요.\n\n" +
-        "먼저, 고장/교체가 필요한 부위 사진을 최소 3장 올려주세요.\n" +
-        "· 전체 사진 (전체적인 상태가 보이도록)\n" +
-        "· 근접 사진 (문제 부위를 가까이서)\n" +
-        "· 연결부·모델명 사진 (제품명, 규격 라벨 등)\n\n" +
-        "방충망·문·타일처럼 규격이 중요한 작업은 줄자로 가로/세로를 잰 측정 사진도 함께 보내주세요.",
+        "안녕하세요! 반듯집수리 사진 견적 신청서입니다. 😊\n" +
+        "몇 가지 질문에 답해주시면 사진 기준 예상 견적과 방문 일정을 안내해드릴게요.\n\n" +
+        "먼저, 작업이 필요한 공간을 선택해주세요.",
     },
   ]);
-  const [step, setStep] = useState<StepId>("photos");
+  const [step, setStep] = useState<StepId>("workspace");
   const [textInput, setTextInput] = useState("");
-  const [photos, setPhotos] = useState<File[]>([]);
-  const [photoPreviews, setPhotoPreviews] = useState<string[]>([]);
+
+  const [category, setCategory] = useState<WorkCategoryId | null>(null);
+  const [photos, setPhotos] = useState<Record<string, File[]>>({});
+  const [photoPreviews, setPhotoPreviews] = useState<Record<string, string[]>>({});
+  const [bundleSelected, setBundleSelected] = useState<string[]>([]);
+
   const [uploading, setUploading] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
@@ -51,12 +63,15 @@ export default function EstimateChat() {
   const [consentChecked, setConsentChecked] = useState(false);
 
   const answers = useRef({
-    contact: "",
-    address: "",
+    workspace: "",
+    category: "" as WorkCategoryId | "",
+    workType: "",
     symptom: "",
     material: "",
     schedule: "",
-    extra: "",
+    name: "",
+    contact: "",
+    address: "",
   });
 
   function pushBot(text: string) {
@@ -66,52 +81,100 @@ export default function EstimateChat() {
     setMessages((prev) => [...prev, { id: uid(), from: "user", text }]);
   }
 
-  function handlePhotoSelect(files: FileList | null) {
+  function selectWorkspace(value: string) {
+    answers.current.workspace = value;
+    pushUser(value);
+    pushBot(
+      "어떤 종류의 작업인가요? 사진 기준으로 필요한 촬영 방법이 다르니 아래 두 가지 중에서 골라주세요."
+    );
+    setStep("category");
+  }
+
+  function selectCategory(id: WorkCategoryId, label: string) {
+    setCategory(id);
+    answers.current.category = id;
+    pushUser(label);
+    pushBot("세부 작업 종류를 선택해주세요.");
+    setStep("workType");
+  }
+
+  function selectWorkType(value: string) {
+    answers.current.workType = value;
+    pushUser(value);
+    pushBot(
+      "어떤 문제가 있으신가요? 증상이나 원하시는 작업을 자유롭게 적어주세요.\n" +
+        "(예: 주방 수전에서 물이 새요, 방충망이 찢어져서 교체하고 싶어요)"
+    );
+    setStep("symptom");
+  }
+
+  function handlePhotoSelect(slotId: string, files: FileList | null) {
     if (!files) return;
     const newFiles = Array.from(files);
-    setPhotos((prev) => [...prev, ...newFiles]);
-    setPhotoPreviews((prev) => [
+    setPhotos((prev) => ({ ...prev, [slotId]: [...(prev[slotId] ?? []), ...newFiles] }));
+    setPhotoPreviews((prev) => ({
       ...prev,
-      ...newFiles.map((f) => URL.createObjectURL(f)),
-    ]);
+      [slotId]: [...(prev[slotId] ?? []), ...newFiles.map((f) => URL.createObjectURL(f))],
+    }));
   }
 
-  function removePhoto(index: number) {
-    setPhotos((prev) => prev.filter((_, i) => i !== index));
-    setPhotoPreviews((prev) => prev.filter((_, i) => i !== index));
+  function removePhoto(slotId: string, index: number) {
+    setPhotos((prev) => ({
+      ...prev,
+      [slotId]: (prev[slotId] ?? []).filter((_, i) => i !== index),
+    }));
+    setPhotoPreviews((prev) => ({
+      ...prev,
+      [slotId]: (prev[slotId] ?? []).filter((_, i) => i !== index),
+    }));
   }
+
+  const currentPhotoSlots = category ? PHOTO_SLOTS_BY_CATEGORY[category] : [];
+  const requiredSlotsFilled = currentPhotoSlots
+    .filter((s) => s.required)
+    .every((s) => (photos[s.id]?.length ?? 0) > 0);
 
   function confirmPhotos() {
-    if (photos.length < MIN_PHOTOS) return;
-    pushUser(`사진 ${photos.length}장을 첨부했습니다.`);
-    pushBot("사진 확인했습니다! 연락받으실 연락처를 입력해주세요. (휴대폰 번호)");
-    setStep("contact");
+    if (!requiredSlotsFilled) return;
+    const total = Object.values(photos).reduce((sum, arr) => sum + arr.length, 0);
+    pushUser(`사진 ${total}장을 첨부했습니다.`);
+    pushBot(
+      "직접 구매해두신 자재(수전, 문고리, 방충망 등)가 있으신가요? 있다면 어떤 제품인지 알려주세요. 없으면 '없음'이라고 적어주세요."
+    );
+    setStep("material");
+  }
+
+  function toggleBundleItem(item: string) {
+    setBundleSelected((prev) => {
+      if (item === BUNDLE_NONE_OPTION) {
+        return prev.includes(item) ? [] : [BUNDLE_NONE_OPTION];
+      }
+      const withoutNone = prev.filter((v) => v !== BUNDLE_NONE_OPTION);
+      return withoutNone.includes(item)
+        ? withoutNone.filter((v) => v !== item)
+        : [...withoutNone, item];
+    });
+  }
+
+  function confirmBundle() {
+    pushUser(bundleSelected.length > 0 ? bundleSelected.join(", ") : "선택 안 함");
+    pushBot("이름을 입력해주세요.");
+    setStep("name");
   }
 
   function submitTextStep() {
     const value = textInput.trim();
     if (!value) return;
 
-    if (step === "contact") {
-      answers.current.contact = value;
-      pushUser(value);
-      pushBot("방문이 필요한 주소(또는 지역)를 입력해주세요.");
-      setStep("address");
-    } else if (step === "address") {
-      answers.current.address = value;
-      pushUser(value);
-      pushBot(
-        "어떤 문제가 있으신가요? 증상이나 원하시는 작업을 자유롭게 적어주세요.\n" +
-          "(예: 주방 수전에서 물이 새요, 방충망이 찢어져서 교체하고 싶어요)"
-      );
-      setStep("symptom");
-    } else if (step === "symptom") {
+    if (step === "symptom") {
       answers.current.symptom = value;
       pushUser(value);
+      const slots = category ? PHOTO_SLOTS_BY_CATEGORY[category] : [];
+      const requiredLabels = slots.filter((s) => s.required).map((s) => `· ${s.label}`).join("\n");
       pushBot(
-        "혹시 본인이 직접 구매해두신 자재(수전, 문고리, 방충망 등)가 있으신가요? 있다면 어떤 제품인지 알려주세요. 없으면 '없음'이라고 적어주세요."
+        `사진을 첨부해주세요. 아래 항목은 필수이며, 미등록 시 제출이 제한됩니다.\n${requiredLabels}`
       );
-      setStep("material");
+      setStep("photos");
     } else if (step === "material") {
       answers.current.material = value;
       pushUser(value);
@@ -120,16 +183,22 @@ export default function EstimateChat() {
     } else if (step === "schedule") {
       answers.current.schedule = value;
       pushUser(value);
-      pushBot(
-        "혹시 이번 방문에 함께 점검받고 싶은 다른 수리 항목이 있으신가요? 없으면 '없음'이라고 적어주세요."
-      );
-      setStep("extra");
-    } else if (step === "extra") {
-      answers.current.extra = value;
+      pushBot("방문 시 함께 점검받고 싶은 부분이 있나요? 해당하는 항목을 모두 선택해주세요.");
+      setStep("bundle");
+    } else if (step === "name") {
+      answers.current.name = value;
       pushUser(value);
-      pushBot(
-        "마지막으로 개인정보 수집·이용 동의가 필요합니다. 아래 동의 체크 후 제출해주세요."
-      );
+      pushBot("연락받으실 연락처를 입력해주세요. (휴대폰 번호)");
+      setStep("contact");
+    } else if (step === "contact") {
+      answers.current.contact = value;
+      pushUser(value);
+      pushBot("방문이 필요한 지역(주소)을 입력해주세요.");
+      setStep("address");
+    } else if (step === "address") {
+      answers.current.address = value;
+      pushUser(value);
+      pushBot("마지막으로 개인정보 수집·이용 동의가 필요합니다. 아래 내용을 확인 후 동의해주세요.");
       setStep("consent");
     }
     setTextInput("");
@@ -141,14 +210,17 @@ export default function EstimateChat() {
     setSubmitError(null);
     try {
       setUploading(true);
+      const slotEntries = Object.entries(photos);
       const photoUrls: string[] = [];
-      for (const file of photos) {
-        const formData = new FormData();
-        formData.append("file", file);
-        const res = await fetch("/api/upload", { method: "POST", body: formData });
-        if (!res.ok) throw new Error("사진 업로드에 실패했습니다.");
-        const data = await res.json();
-        photoUrls.push(data.url);
+      for (const [, files] of slotEntries) {
+        for (const file of files) {
+          const formData = new FormData();
+          formData.append("file", file);
+          const res = await fetch("/api/upload", { method: "POST", body: formData });
+          if (!res.ok) throw new Error("사진 업로드에 실패했습니다.");
+          const data = await res.json();
+          photoUrls.push(data.url);
+        }
       }
       setUploading(false);
 
@@ -164,13 +236,17 @@ export default function EstimateChat() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
+          name: answers.current.name,
           photoUrls,
           contact: answers.current.contact,
           address: answers.current.address,
+          workspace: answers.current.workspace,
+          category: answers.current.category,
+          workType: answers.current.workType,
           symptom: symptomWithMaterial,
           hasOwnMaterial,
           preferredSchedule: answers.current.schedule,
-          extraItems: answers.current.extra,
+          bundleItems: bundleSelected,
           consent: consentChecked,
         }),
       });
@@ -182,7 +258,11 @@ export default function EstimateChat() {
 
       pushUser("개인정보 수집·이용에 동의합니다.");
       pushBot(
-        "문의가 정상적으로 접수되었습니다! 확인 후 빠르게 연락드리겠습니다. 감사합니다. 🙇"
+        "신청이 정상적으로 접수되었습니다! 🙇\n\n" +
+          "보내주신 사진을 기준으로 작업환경과 예상 비용범위를 먼저 안내해드립니다. " +
+          "사진만으로 확인하기 어려운 배관 내부상태, 숨은 파손 또는 기존 마감상태가 있을 수 있습니다. " +
+          "최종 작업금액은 현장을 확인한 후 작업을 시작하기 전에 안내하며, 고객님의 동의를 받은 뒤 작업을 진행합니다. " +
+          "안내받지 않은 추가작업은 고객님의 동의 없이 진행하지 않습니다."
       );
       setStep("done");
       setSubmitted(true);
@@ -194,7 +274,7 @@ export default function EstimateChat() {
     }
   }
 
-  const isTextStep = ["contact", "address", "symptom", "material", "schedule", "extra"].includes(
+  const isTextStep = ["symptom", "material", "schedule", "name", "contact", "address"].includes(
     step
   );
 
@@ -220,42 +300,134 @@ export default function EstimateChat() {
       </div>
 
       <div className="border-t border-slate-100 p-4">
-        {step === "photos" && (
-          <div className="flex flex-col gap-3">
-            <label className="w-fit cursor-pointer rounded-lg border border-dashed border-slate-300 px-4 py-2 text-sm text-slate-600 hover:bg-slate-50">
-              사진 선택하기
-              <input
-                type="file"
-                accept="image/*"
-                multiple
-                className="hidden"
-                onChange={(e) => handlePhotoSelect(e.target.files)}
-              />
-            </label>
-            {photoPreviews.length > 0 && (
-              <div className="flex flex-wrap gap-2">
-                {photoPreviews.map((src, i) => (
-                  <div key={src} className="relative h-20 w-20 overflow-hidden rounded-md border border-slate-200">
-                    <img src={src} alt={`업로드 사진 ${i + 1}`} className="h-full w-full object-cover" />
-                    <button
-                      type="button"
-                      onClick={() => removePhoto(i)}
-                      className="absolute right-0 top-0 bg-black/60 px-1 text-xs text-white"
-                    >
-                      ✕
-                    </button>
+        {step === "workspace" && (
+          <div className="flex flex-wrap gap-2">
+            {WORKSPACE_OPTIONS.map((opt) => (
+              <button
+                key={opt}
+                type="button"
+                onClick={() => selectWorkspace(opt)}
+                className="rounded-lg border border-slate-300 px-4 py-2 text-sm text-slate-700 hover:bg-slate-50"
+              >
+                {opt}
+              </button>
+            ))}
+          </div>
+        )}
+
+        {step === "category" && (
+          <div className="flex flex-col gap-2">
+            {WORK_CATEGORIES.map((c) => (
+              <button
+                key={c.id}
+                type="button"
+                onClick={() => selectCategory(c.id, c.label)}
+                className="rounded-lg border border-slate-300 px-4 py-3 text-left text-sm hover:bg-slate-50"
+              >
+                <span className="font-semibold text-brand-navy">{c.label}</span>
+                <span className="ml-2 text-xs text-slate-500">{c.examples}</span>
+              </button>
+            ))}
+          </div>
+        )}
+
+        {step === "workType" && category && (
+          <div className="flex flex-wrap gap-2">
+            {WORK_TYPES_BY_CATEGORY[category].map((opt) => (
+              <button
+                key={opt}
+                type="button"
+                onClick={() => selectWorkType(opt)}
+                className="rounded-lg border border-slate-300 px-4 py-2 text-sm text-slate-700 hover:bg-slate-50"
+              >
+                {opt}
+              </button>
+            ))}
+          </div>
+        )}
+
+        {step === "photos" && category && (
+          <div className="flex flex-col gap-4">
+            {currentPhotoSlots.map((slot) => (
+              <div key={slot.id} className="rounded-lg border border-slate-200 p-3">
+                <div className="flex items-center justify-between">
+                  <p className="text-sm font-semibold text-slate-800">
+                    {slot.label}
+                    {slot.required && <span className="ml-1 text-red-500">*</span>}
+                  </p>
+                  <span className="text-xs text-slate-400">
+                    {(photos[slot.id]?.length ?? 0)}장
+                  </span>
+                </div>
+                <p className="mt-1 text-xs text-slate-500">{slot.hint}</p>
+                {(slot.goodExample || slot.badExample) && (
+                  <div className="mt-1 flex flex-col gap-0.5 text-[11px] text-slate-500">
+                    {slot.goodExample && <p>✅ 올바른 예시: {slot.goodExample}</p>}
+                    {slot.badExample && <p>❌ 잘못된 예시: {slot.badExample}</p>}
                   </div>
-                ))}
+                )}
+                <div className="mt-2 flex flex-wrap gap-2">
+                  {(photoPreviews[slot.id] ?? []).map((src, i) => (
+                    <div key={src} className="relative h-16 w-16 overflow-hidden rounded-md border border-slate-200">
+                      <img src={src} alt={`${slot.label} ${i + 1}`} className="h-full w-full object-cover" />
+                      <button
+                        type="button"
+                        onClick={() => removePhoto(slot.id, i)}
+                        className="absolute right-0 top-0 bg-black/60 px-1 text-xs text-white"
+                      >
+                        ✕
+                      </button>
+                    </div>
+                  ))}
+                  <label className="flex h-16 w-16 cursor-pointer items-center justify-center rounded-md border border-dashed border-slate-300 text-xs text-slate-500 hover:bg-slate-50">
+                    +추가
+                    <input
+                      type="file"
+                      accept="image/*"
+                      multiple
+                      className="hidden"
+                      onChange={(e) => handlePhotoSelect(slot.id, e.target.files)}
+                    />
+                  </label>
+                </div>
               </div>
-            )}
-            <p className="text-xs text-slate-500">
-              {photos.length}/{MIN_PHOTOS}장 (최소 {MIN_PHOTOS}장 필요)
-            </p>
+            ))}
             <button
               type="button"
-              disabled={photos.length < MIN_PHOTOS}
+              disabled={!requiredSlotsFilled}
               onClick={confirmPhotos}
               className="w-fit rounded-lg bg-brand-navy px-5 py-2 text-sm font-semibold text-white disabled:cursor-not-allowed disabled:bg-slate-300"
+            >
+              다음 단계로
+            </button>
+            {!requiredSlotsFilled && (
+              <p className="text-xs text-slate-500">필수(*) 표시된 사진을 모두 첨부해주세요.</p>
+            )}
+          </div>
+        )}
+
+        {step === "bundle" && (
+          <div className="flex flex-col gap-3">
+            <div className="flex flex-wrap gap-2">
+              {BUNDLE_ITEMS.map((item) => (
+                <button
+                  key={item}
+                  type="button"
+                  onClick={() => toggleBundleItem(item)}
+                  className={`rounded-lg border px-3 py-2 text-sm ${
+                    bundleSelected.includes(item)
+                      ? "border-brand-navy bg-brand-navy text-white"
+                      : "border-slate-300 text-slate-700 hover:bg-slate-50"
+                  }`}
+                >
+                  {item}
+                </button>
+              ))}
+            </div>
+            <button
+              type="button"
+              onClick={confirmBundle}
+              className="w-fit rounded-lg bg-brand-navy px-5 py-2 text-sm font-semibold text-white"
             >
               다음 단계로
             </button>
@@ -288,6 +460,9 @@ export default function EstimateChat() {
 
         {step === "consent" && (
           <div className="flex flex-col gap-3">
+            <div className="whitespace-pre-line rounded-lg bg-slate-50 p-3 text-xs leading-relaxed text-slate-600">
+              {PRIVACY_CONSENT_TEXT}
+            </div>
             <label className="flex items-start gap-2 text-sm text-slate-600">
               <input
                 type="checkbox"
@@ -295,10 +470,7 @@ export default function EstimateChat() {
                 onChange={(e) => setConsentChecked(e.target.checked)}
                 className="mt-1"
               />
-              <span>
-                견적 상담 및 방문 예약을 위해 연락처, 주소 등 개인정보를 수집·이용하는 것에 동의합니다.
-                수집된 정보는 상담 및 작업 진행 목적 외에는 사용되지 않습니다.
-              </span>
+              <span>위 개인정보 수집·이용 안내에 동의합니다.</span>
             </label>
             {submitError && (
               <p className="text-sm text-red-600">{submitError}</p>
@@ -309,7 +481,7 @@ export default function EstimateChat() {
               onClick={handleSubmit}
               className="w-fit rounded-lg bg-brand-navy px-5 py-2 text-sm font-semibold text-white disabled:cursor-not-allowed disabled:bg-slate-300"
             >
-              {uploading ? "사진 업로드 중..." : submitting ? "제출 중..." : "문의 제출하기"}
+              {uploading ? "사진 업로드 중..." : submitting ? "제출 중..." : "신청서 제출하기"}
             </button>
           </div>
         )}

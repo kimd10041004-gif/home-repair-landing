@@ -14,12 +14,17 @@ export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
     const {
+      name,
       photoUrls,
       contact,
       address,
+      workspace,
+      category,
+      workType,
       symptom,
       hasOwnMaterial,
       preferredSchedule,
+      bundleItems,
       extraItems,
       consent,
     } = body ?? {};
@@ -30,7 +35,7 @@ export async function POST(req: NextRequest) {
         { status: 400 }
       );
     }
-    if (!contact || !address || !symptom || !preferredSchedule) {
+    if (!name || !contact || !address || !symptom || !preferredSchedule) {
       return NextResponse.json(
         { error: "필수 항목이 누락되었습니다." },
         { status: 400 }
@@ -47,12 +52,18 @@ export async function POST(req: NextRequest) {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
+        name,
         photoUrls,
         contact,
         address,
+        workspace: workspace ?? "",
+        category: category ?? "",
+        workType: workType ?? "",
         symptom,
         hasOwnMaterial: Boolean(hasOwnMaterial),
         preferredSchedule,
+        bundleItems: Array.isArray(bundleItems) ? bundleItems : [],
+        // extraItems는 이전 버전과의 하위호환을 위해 유지 (묶음유도 답변은 bundleItems로 전달)
         extraItems: extraItems ?? "",
         consent: Boolean(consent),
       }),

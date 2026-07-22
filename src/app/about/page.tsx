@@ -46,6 +46,15 @@ export default function AboutPage() {
         <h2 className="font-bold text-brand-navy">서비스 지역</h2>
         <p className="mt-2 text-sm text-slate-600">{BRAND.serviceArea}</p>
         <p className="mt-1 text-xs text-slate-500">{BRAND.serviceAreaNote}</p>
+        <div className="relative mx-auto mt-4 aspect-[16/9] w-full max-w-2xl overflow-hidden rounded-2xl border border-slate-100 shadow-sm">
+          <Image
+            src="/brand/service-area-map.png"
+            alt="반듯집수리 출장 가능 지역 안내: 고양·일산 중심, 서울 및 파주·의정부·구리·하남·성남·안양·김포 등 인접 지역 방문 가능"
+            fill
+            sizes="(min-width: 768px) 672px, 100vw"
+            className="object-contain"
+          />
+        </div>
       </section>
 
       <section className="mt-8">

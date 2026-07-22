@@ -75,6 +75,30 @@ export default function HomePage() {
       </section>
 
       <section className="border-t border-black/5 bg-white">
+        <div className="mx-auto max-w-4xl px-4 py-10 text-center">
+          <h2 className="text-lg font-bold text-brand-navy">출장 가능 지역</h2>
+          <p className="mt-2 text-sm text-slate-600">
+            {BRAND.serviceArea} ({BRAND.serviceAreaNote})
+          </p>
+          <div className="relative mx-auto mt-6 aspect-[16/9] w-full overflow-hidden rounded-2xl border border-slate-100 shadow-md">
+            <Image
+              src="/brand/service-area-map.png"
+              alt="반듯집수리 출장 가능 지역 안내: 고양·일산 중심, 서울 및 파주·의정부·구리·하남·성남·안양·김포 등 인접 지역 방문 가능"
+              fill
+              sizes="(min-width: 1024px) 896px, 100vw"
+              className="object-contain"
+            />
+          </div>
+          <Link
+            href="/about"
+            className="mt-6 inline-block rounded-lg bg-brand-navy px-6 py-3 text-center font-semibold text-white hover:bg-brand-navy-dark"
+          >
+            출장 가능 지역 자세히 보기
+          </Link>
+        </div>
+      </section>
+
+      <section className="border-t border-black/5 bg-white">
         <div className="mx-auto max-w-3xl px-4 py-10">
           <h2 className="text-lg font-bold text-brand-navy">
             반듯집수리는 이런 곳입니다

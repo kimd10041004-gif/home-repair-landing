@@ -17,6 +17,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://home-repair-landing.vercel.app"),
   title: `${BRAND.name} | ${BRAND.tagline}`,
   description:
     "사진으로 먼저 확인하고, 작업 전 금액을 사전예상으로 안내하는 고양·일산 중심 예약형 집수리 서비스, 반듯집수리.",

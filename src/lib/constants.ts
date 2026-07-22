@@ -89,7 +89,7 @@ export const REVIEWS: Review[] = [
     workType: "수전교체",
     content:
       "주방 수전에서 물이 새서 문의드렸는데, 사진만 보내드렸는데도 예상 비용을 미리 안내해주셔서 부담 없이 예약했습니다. 방문하셔서 상태 확인 후 최종 금액을 먼저 말씀해주시고 동의 후 작업을 시작하셔서 믿음이 갔습니다. 교체 후 물도 잘 나오고 마감도 깔끔합니다.",
-    photoUrl: "/reviews/review-placeholder-1.svg",
+    photoUrl: "/brand/kitchen-faucet-3.png",
   },
   {
     id: "r2",
@@ -97,7 +97,7 @@ export const REVIEWS: Review[] = [
     workType: "방충망 교체",
     content:
       "베란다 방충망이 낡아서 전체 교체를 요청드렸습니다. 사이즈가 특이해서 미리 줄자로 가로세로 재서 사진을 보내달라고 하시더라구요. 덕분에 방문 당일 바로 맞는 자재로 작업이 끝났습니다. 작업 전후 사진도 챙겨주셔서 확인하기 편했습니다.",
-    photoUrl: "/reviews/review-placeholder-2.svg",
+    photoUrl: "/brand/window-screen-2.png",
   },
   {
     id: "r3",
@@ -105,6 +105,6 @@ export const REVIEWS: Review[] = [
     workType: "문고리 교체",
     content:
       "오래된 방문 손잡이가 헐거워져서 문의드렸습니다. 방문 전 상담 챗봇으로 사진을 보내니 예상 비용대와 필요한 준비물을 미리 알려주셔서 좋았습니다. 실제 방문해서도 안내받은 범위 내에서 견적이 나왔고 추가 비용 없이 마무리됐습니다.",
-    photoUrl: "/reviews/review-placeholder-3.svg",
+    photoUrl: "/brand/doorlock-3.png",
   },
 ];

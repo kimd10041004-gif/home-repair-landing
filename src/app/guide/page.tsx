@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 const STEPS = [
   {
     title: "1. 사진 견적 신청",
@@ -21,6 +23,13 @@ const STEPS = [
   },
 ];
 
+const GUIDE_PHOTOS = [
+  { src: "/brand/customer-handoff.png", alt: "작업 완료 후 고객님과 인사하는 모습" },
+  { src: "/brand/paint-work-room.png", alt: "도장 작업 준비된 방" },
+  { src: "/brand/kitchen-faucet-4.png", alt: "싱크대 배수구 클로즈업 사진 예시" },
+  { src: "/brand/doorlock-4.png", alt: "도어락 설치 완료 사진 예시" },
+];
+
 export default function GuidePage() {
   return (
     <div className="mx-auto max-w-3xl px-4 py-10">
@@ -30,6 +39,16 @@ export default function GuidePage() {
       <p className="mt-2 text-sm text-slate-600">
         반듯집수리는 아래와 같은 방식으로 작업을 진행합니다.
       </p>
+
+      <div className="relative mt-6 aspect-video w-full overflow-hidden rounded-2xl shadow-md">
+        <Image
+          src="/brand/collage-8panel.png"
+          alt="반듯집수리가 작업을 진행하는 방식 요약"
+          fill
+          sizes="(min-width: 768px) 720px, 100vw"
+          className="object-cover"
+        />
+      </div>
 
       <ol className="mt-6 flex flex-col gap-6">
         {STEPS.map((step) => (
@@ -41,6 +60,24 @@ export default function GuidePage() {
           </li>
         ))}
       </ol>
+
+      <h2 className="mt-10 font-bold text-brand-navy">현장 사진으로 보는 작업 모습</h2>
+      <div className="mt-4 grid grid-cols-2 gap-3">
+        {GUIDE_PHOTOS.map((photo) => (
+          <div
+            key={photo.src}
+            className="relative aspect-square w-full overflow-hidden rounded-lg shadow-sm"
+          >
+            <Image
+              src={photo.src}
+              alt={photo.alt}
+              fill
+              sizes="(min-width: 640px) 340px, 50vw"
+              className="object-cover"
+            />
+          </div>
+        ))}
+      </div>
 
       <div className="mt-8 rounded-lg bg-brand-cream p-5">
         <h2 className="font-bold text-brand-navy">신뢰 포인트</h2>

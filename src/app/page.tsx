@@ -21,7 +21,7 @@ const WORK_PHOTOS = [
   { src: "/brand/livingroom-paint.png", alt: "거실 벽면 도장 작업 현장" },
 ];
 
-const FEATURED_SERVICES = SERVICE_CATEGORIES.filter((s) => s.imageSrc);
+const FEATURED_SERVICES = SERVICE_CATEGORIES.filter((s) => s.imageSrc).slice(0, 4);
 
 export default function HomePage() {
   return (

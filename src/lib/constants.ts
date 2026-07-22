@@ -40,11 +40,13 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
     id: "drain",
     title: "배수구",
     description: "막힘·누수 등 배수구 관련 작업입니다.",
+    imageSrc: "/brand/kitchen-faucet-2.png",
   },
   {
     id: "doorknob",
     title: "문고리",
     description: "문고리 교체 및 수리 작업입니다.",
+    imageSrc: "/brand/doorlock-2.png",
   },
   {
     id: "doorlock",

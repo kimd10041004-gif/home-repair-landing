@@ -10,18 +10,6 @@ const TRUST_POINTS = [
   "전화 상담 즉시 가능",
 ];
 
-const WORK_PHOTOS = [
-  { src: "/brand/kitchen-faucet.png", alt: "주방 수전 작업 현장" },
-  { src: "/brand/entryway-doorlock.png", alt: "도어락 작업 현장" },
-  { src: "/brand/window-screen.png", alt: "방충망 작업 현장" },
-  { src: "/brand/outlet-switch.png", alt: "콘센트·전등 작업 현장" },
-  { src: "/brand/kitchen-faucet-2.png", alt: "주방 수전 작업 현장 2" },
-  { src: "/brand/doorlock-2.png", alt: "도어락 클로즈업 작업 현장" },
-  { src: "/brand/switch-outlet-2.png", alt: "스위치·콘센트 클로즈업 작업 현장" },
-  { src: "/brand/livingroom-paint.png", alt: "거실 벽면 도장 작업 현장" },
-  { src: "/brand/outlet-switch-3.png", alt: "천장 조명 교체 작업 현장" },
-];
-
 const FEATURED_SERVICES = SERVICE_CATEGORIES.filter((s) => s.imageSrc).slice(0, 4);
 
 export default function HomePage() {
@@ -109,23 +97,6 @@ export default function HomePage() {
                 작업 전후 사진과 내역을 제공해 어떤 작업이 이루어졌는지 확인할 수 있습니다.
               </p>
             </div>
-          </div>
-
-          <div className="mt-6 grid grid-cols-2 gap-3 sm:grid-cols-4">
-            {WORK_PHOTOS.map((photo) => (
-              <div
-                key={photo.src}
-                className="relative aspect-square w-full overflow-hidden rounded-lg shadow-sm"
-              >
-                <Image
-                  src={photo.src}
-                  alt={photo.alt}
-                  fill
-                  sizes="(min-width: 640px) 25vw, 50vw"
-                  className="object-cover"
-                />
-              </div>
-            ))}
           </div>
         </div>
       </section>

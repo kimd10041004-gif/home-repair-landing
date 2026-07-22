@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { BRAND } from "@/lib/constants";
+import AiExampleBadge from "@/components/AiExampleBadge";
 
 const HISTORY = [
   { year: "2023", event: "반듯집수리 서비스 시작 (고양·일산 지역)" },
@@ -8,14 +9,8 @@ const HISTORY = [
 ];
 
 const WORK_PHOTOS = [
-  { src: "/brand/kitchen-faucet.png", alt: "주방 수전 작업 현장" },
-  { src: "/brand/entryway-doorlock.png", alt: "도어락 작업 현장" },
-  { src: "/brand/window-screen.png", alt: "방충망 작업 현장" },
-  { src: "/brand/outlet-switch.png", alt: "콘센트·전등 작업 현장" },
-  { src: "/brand/kitchen-faucet-2.png", alt: "주방 수전 작업 현장 2" },
-  { src: "/brand/doorlock-2.png", alt: "도어락 클로즈업 작업 현장" },
   { src: "/brand/switch-outlet-2.png", alt: "스위치·콘센트 클로즈업 작업 현장" },
-  { src: "/brand/livingroom-paint.png", alt: "거실 벽면 도장 작업 현장" },
+  { src: "/brand/outlet-switch-3.png", alt: "천장 조명 교체 작업 현장", ai: true },
 ];
 
 export default function AboutPage() {
@@ -71,7 +66,7 @@ export default function AboutPage() {
         <p className="mt-2 text-sm text-slate-600">
           현장에서 직접 진행한 작업 사진으로 반듯집수리가 하는 일을 소개합니다.
         </p>
-        <div className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-4">
+        <div className="mt-4 grid grid-cols-2 gap-3">
           {WORK_PHOTOS.map((photo) => (
             <div
               key={photo.src}
@@ -84,6 +79,7 @@ export default function AboutPage() {
                 sizes="(min-width: 640px) 340px, 50vw"
                 className="object-cover"
               />
+              {photo.ai && <AiExampleBadge />}
             </div>
           ))}
         </div>

@@ -1,4 +1,5 @@
 import Image from "next/image";
+import AiExampleBadge from "@/components/AiExampleBadge";
 
 const STEPS = [
   {
@@ -40,14 +41,15 @@ export default function GuidePage() {
         반듯집수리는 아래와 같은 방식으로 작업을 진행합니다.
       </p>
 
-      <div className="relative mt-6 aspect-video w-full overflow-hidden rounded-2xl shadow-md">
+      <div className="relative mx-auto mt-6 aspect-[3/2] w-full max-w-xl overflow-hidden rounded-2xl border border-slate-100 bg-white shadow-md">
         <Image
           src="/brand/collage-8panel.png"
           alt="반듯집수리가 작업을 진행하는 방식 요약"
           fill
-          sizes="(min-width: 768px) 720px, 100vw"
-          className="object-cover"
+          sizes="(min-width: 768px) 576px, 100vw"
+          className="object-contain"
         />
+        <AiExampleBadge />
       </div>
 
       <ol className="mt-6 flex flex-col gap-6">
@@ -75,6 +77,7 @@ export default function GuidePage() {
               sizes="(min-width: 640px) 340px, 50vw"
               className="object-cover"
             />
+            <AiExampleBadge />
           </div>
         ))}
       </div>

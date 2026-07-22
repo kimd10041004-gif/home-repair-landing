@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { REVIEWS } from "@/lib/constants";
+import AiExampleBadge from "@/components/AiExampleBadge";
 
 export default function ReviewsPage() {
   return (
@@ -11,13 +12,13 @@ export default function ReviewsPage() {
         실제로 진행한 작업 내용과 고객님이 남겨주신 후기를 소개합니다.
       </p>
 
-      <div className="relative mx-auto mt-6 aspect-square w-full max-w-xs overflow-hidden rounded-2xl shadow-md">
+      <div className="relative mx-auto mt-6 aspect-[16/9] w-full max-w-lg overflow-hidden rounded-2xl border border-slate-100 bg-white shadow-md">
         <Image
           src="/brand/promo-card-services-2.png"
           alt="반듯집수리 작업내용 소개 카드"
           fill
-          sizes="(min-width: 640px) 320px, 100vw"
-          className="object-cover"
+          sizes="(min-width: 640px) 512px, 100vw"
+          className="object-contain"
         />
       </div>
 
@@ -44,6 +45,7 @@ export default function ReviewsPage() {
                 sizes="(min-width: 640px) 640px, 100vw"
                 className="object-cover"
               />
+              <AiExampleBadge />
             </div>
 
             <p className="mt-4 whitespace-pre-line text-sm leading-relaxed text-slate-700 sm:text-base">

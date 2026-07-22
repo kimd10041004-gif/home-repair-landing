@@ -15,9 +15,13 @@ const WORK_PHOTOS = [
   { src: "/brand/entryway-doorlock.png", alt: "도어락 작업 현장" },
   { src: "/brand/window-screen.png", alt: "방충망 작업 현장" },
   { src: "/brand/outlet-switch.png", alt: "콘센트·전등 작업 현장" },
+  { src: "/brand/kitchen-faucet-2.png", alt: "주방 수전 작업 현장 2" },
+  { src: "/brand/doorlock-2.png", alt: "도어락 클로즈업 작업 현장" },
+  { src: "/brand/switch-outlet-2.png", alt: "스위치·콘센트 클로즈업 작업 현장" },
+  { src: "/brand/livingroom-paint.png", alt: "거실 벽면 도장 작업 현장" },
 ];
 
-const FEATURED_SERVICES = SERVICE_CATEGORIES.filter((s) => s.imageSrc).slice(0, 4);
+const FEATURED_SERVICES = SERVICE_CATEGORIES.filter((s) => s.imageSrc);
 
 export default function HomePage() {
   return (

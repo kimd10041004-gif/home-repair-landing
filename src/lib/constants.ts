@@ -185,6 +185,11 @@ export const ESTIMATE_DISCLAIMER_TEXT =
   "사진만으로 확인하기 어려운 부분이 있는 경우 카카오톡 또는 전화로 추가 사진과 정보를 요청드릴 수 있습니다.\n" +
   "최종 작업금액은 현장을 확인한 뒤 작업 시작 전에 안내하며, 고객님의 동의를 받은 후 작업을 진행합니다.";
 
+// 방문 일정이 확정될 때(상담 단계에서) 안내되는 예약금 정책 문구
+export const DEPOSIT_NOTICE_TEXT =
+  "예약금 안내: 방문 일정이 확정되면 예약금 4만원을 입금해주셔야 예약이 확정됩니다. " +
+  "예약금은 일정 확보 및 사전 준비 비용으로 사용되어 환불이 어려운 점 양해 부탁드립니다.";
+
 export type ServiceCategory = {
   id: string;
   title: string;

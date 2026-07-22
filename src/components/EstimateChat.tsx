@@ -5,6 +5,7 @@ import {
   BRAND,
   BUNDLE_ITEMS,
   BUNDLE_NONE_OPTION,
+  DEPOSIT_NOTICE_TEXT,
   ESTIMATE_DISCLAIMER_TEXT,
   PHOTO_SLOTS_BY_CATEGORY,
   PHOTO_VALIDATION_ERROR_BY_CATEGORY,
@@ -261,6 +262,7 @@ export default function EstimateChat() {
 
       pushUser("개인정보 수집·이용에 동의합니다.");
       pushBot(ESTIMATE_DISCLAIMER_TEXT);
+      pushBot(DEPOSIT_NOTICE_TEXT);
       setStep("done");
       setSubmitted(true);
     } catch (err) {

@@ -1,5 +1,6 @@
 import Image from "next/image";
 import AiExampleBadge from "@/components/AiExampleBadge";
+import { DEPOSIT_NOTICE_TEXT } from "@/lib/constants";
 
 const STEPS = [
   {
@@ -89,6 +90,18 @@ export default function GuidePage() {
           작업은 진행하지 않습니다. 작업 전/중/후 사진을 제공하여 어떤 작업이
           어떻게 이루어졌는지 투명하게 확인하실 수 있습니다.
         </p>
+      </div>
+
+      <div className="mt-4 flex gap-3 rounded-lg border border-brand-teal/30 bg-white p-5">
+        <span className="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-brand-navy text-xs font-bold text-white">
+          i
+        </span>
+        <div>
+          <h2 className="font-bold text-brand-navy">예약금 안내</h2>
+          <p className="mt-1 text-sm leading-relaxed text-slate-700">
+            {DEPOSIT_NOTICE_TEXT}
+          </p>
+        </div>
       </div>
     </div>
   );

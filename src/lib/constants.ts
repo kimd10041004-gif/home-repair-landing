@@ -533,7 +533,7 @@ export const TENANT_CARE_PACKAGES: TenantCarePackage[] = [
   {
     id: "light",
     name: "라이트",
-    priceWon: 590000,
+    priceWon: 150000,
     targetNote: "소형 설치·교체 작업 중심",
     visitNote: "본 시공 1회",
     includes: [
@@ -546,7 +546,7 @@ export const TENANT_CARE_PACKAGES: TenantCarePackage[] = [
   {
     id: "standard",
     name: "스탠다드",
-    priceWon: 990000,
+    priceWon: 250000,
     targetNote: "여러 작업을 함께 진행",
     visitNote: "본 시공 1회",
     includes: [
@@ -559,7 +559,7 @@ export const TENANT_CARE_PACKAGES: TenantCarePackage[] = [
   {
     id: "total",
     name: "토탈",
-    priceWon: 1490000,
+    priceWon: 500000,
     targetNote: "필요 시 현장 실측 포함",
     visitNote: "필요 시 현장 실측 1회 + 본 시공 1회",
     includes: [
@@ -714,7 +714,7 @@ export const SMART_HOME_PACKAGES: SmartHomePackage[] = [
   {
     id: "start",
     name: "스마트 스타트",
-    priceWon: 490000,
+    priceWon: 150000,
     priceFrom: false,
     deviceLimit: "일반 장비 최대 4개",
     automationLimit: "자동화 최대 2개",
@@ -723,7 +723,7 @@ export const SMART_HOME_PACKAGES: SmartHomePackage[] = [
   {
     id: "life",
     name: "스마트 라이프",
-    priceWon: 990000,
+    priceWon: 200000,
     priceFrom: false,
     deviceLimit: "일반 장비 최대 10개",
     automationLimit: "자동화 최대 5개",
@@ -732,7 +732,7 @@ export const SMART_HOME_PACKAGES: SmartHomePackage[] = [
   {
     id: "fullhome",
     name: "스마트 풀홈",
-    priceWon: 1990000,
+    priceWon: 300000,
     priceFrom: true,
     deviceLimit: "일반 장비 최대 20개",
     automationLimit: "자동화 최대 10개",
@@ -826,7 +826,6 @@ export const SMART_HOME_CUSTOMER_PROTECTION = [
   "부모님 케어 기능은 거주자 동의를 전제로 설정합니다.",
   "의료·건강상태를 판단하는 서비스가 아닙니다.",
   "인터넷·클라우드 장애 시 일부 원격 기능이 제한될 수 있습니다.",
-  "매립형 전기작업 등 자격·등록이 필요한 작업은 전문업체에 이관합니다.",
 ];
 
 export const SMART_HOME_DEVICE_OPTIONS = [
@@ -835,7 +834,7 @@ export const SMART_HOME_DEVICE_OPTIONS = [
   "각종 센서(누수/문열림/동작)",
   "스마트 커튼·블라인드",
   "홈캠",
-  "도어락(전문업체 이관 대상)",
+  "도어락",
   "생활가전 연동",
   "기타(추가 요청사항에 작성)",
 ];

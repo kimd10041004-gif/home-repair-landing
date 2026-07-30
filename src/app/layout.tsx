@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Nav from "@/components/Nav";
 import MobileBottomBar from "@/components/MobileBottomBar";
+import DesktopFloatingCta from "@/components/DesktopFloatingCta";
 import Footer from "@/components/Footer";
 import { SITE, getVisibleBusinessFields } from "@/lib/constants";
 
@@ -63,11 +64,22 @@ export default function RootLayout({
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }}
         />
+        {/* 본문 바로가기 링크: 평소에는 화면 밖에 숨어있다가 키보드 포커스를 받으면
+            화면 좌상단에 나타난다(최종 개편안 8번). */}
+        <a
+          href="#main-content"
+          className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-50 focus:rounded-lg focus:bg-brand-navy focus:px-4 focus:py-3 focus:text-sm focus:font-semibold focus:text-white"
+        >
+          본문 바로가기
+        </a>
         <Nav />
-        {/* 모바일 하단 고정바(높이 약 4.5rem)에 본문이 가려지지 않도록 여백 확보 */}
-        <main className="flex-1 pb-20 md:pb-0">{children}</main>
+        {/* 모바일 하단 고정바(안전영역 포함 약 5rem)에 본문이 가려지지 않도록 여백 확보 */}
+        <main id="main-content" className="flex-1 pb-24 md:pb-0">
+          {children}
+        </main>
         <Footer />
         <MobileBottomBar />
+        <DesktopFloatingCta />
       </body>
     </html>
   );

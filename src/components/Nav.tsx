@@ -25,8 +25,8 @@ export default function Nav() {
           <Image
             src="/brand/logo.png"
             alt={`${SITE.name} 로고`}
-            width={36}
-            height={36}
+            width={44}
+            height={44}
             className="rounded-md"
             priority
           />
@@ -41,7 +41,7 @@ export default function Nav() {
               href={item.href}
               className={
                 isActive(item.href)
-                  ? "font-semibold text-brand-teal"
+                  ? "font-semibold text-brand-teal-dark"
                   : "text-slate-600 hover:text-brand-navy"
               }
             >
@@ -50,7 +50,7 @@ export default function Nav() {
           ))}
           <Link
             href="/estimate"
-            className="rounded-lg bg-brand-teal px-4 py-2 font-semibold text-white transition hover:bg-brand-teal-light"
+            className="rounded-lg bg-brand-navy px-4 py-2 font-semibold text-white transition hover:bg-brand-navy-dark"
           >
             {ESTIMATE_CTA_LABEL}
           </Link>
@@ -90,7 +90,7 @@ export default function Nav() {
               onClick={() => setMenuOpen(false)}
               className={`min-h-11 rounded-md px-3 py-3 text-sm ${
                 isActive(item.href)
-                  ? "bg-brand-cream font-semibold text-brand-teal"
+                  ? "bg-brand-cream font-semibold text-brand-teal-dark"
                   : "text-slate-700 hover:bg-slate-50"
               }`}
             >
@@ -100,7 +100,7 @@ export default function Nav() {
           <Link
             href="/estimate"
             onClick={() => setMenuOpen(false)}
-            className="mt-2 min-h-11 rounded-lg bg-brand-teal px-4 py-3 text-center font-semibold text-white"
+            className="mt-2 min-h-11 rounded-lg bg-brand-navy px-4 py-3 text-center font-semibold text-white"
           >
             {ESTIMATE_CTA_LABEL}
           </Link>

@@ -39,7 +39,7 @@ export default function WorkCasesTabs() {
             onClick={() => setActive(cat)}
             className={`min-h-11 rounded-t-md px-4 py-2 text-sm font-semibold ${
               active === cat
-                ? "border-b-2 border-brand-teal text-brand-teal"
+                ? "border-b-2 border-brand-teal-dark text-brand-teal-dark"
                 : "text-slate-500 hover:text-brand-navy"
             }`}
           >
@@ -55,9 +55,6 @@ export default function WorkCasesTabs() {
             className="border-b border-slate-200 pb-10 last:border-b-0"
           >
             <div className="flex flex-wrap items-center gap-2 text-sm">
-              <span className="rounded-full bg-brand-cream px-3 py-1 font-medium text-brand-teal">
-                {item.region}
-              </span>
               <span className="rounded-full bg-slate-100 px-3 py-1 font-medium text-slate-700">
                 {item.workType}
               </span>
@@ -72,7 +69,7 @@ export default function WorkCasesTabs() {
               </span>
             </div>
 
-            <div className="relative mt-4 aspect-video w-full overflow-hidden rounded-lg shadow-sm">
+            <div className="relative mt-4 aspect-video w-full overflow-hidden rounded-lg">
               <Image
                 src={item.photoUrl}
                 alt={`${item.workType} 작업 사진`}

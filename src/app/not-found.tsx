@@ -3,8 +3,8 @@ import Link from "next/link";
 export default function NotFound() {
   return (
     <div className="mx-auto flex max-w-lg flex-col items-center px-4 py-24 text-center">
-      <p className="text-sm font-semibold text-brand-teal">404</p>
-      <h1 className="mt-2 text-xl font-bold text-brand-navy sm:text-2xl">
+      <p className="text-sm font-semibold text-brand-teal-dark">404</p>
+      <h1 className="mt-2 text-[26px] font-bold text-brand-navy sm:text-[32px]">
         페이지를 찾을 수 없습니다
       </h1>
       <p className="mt-3 text-sm leading-relaxed text-slate-600">

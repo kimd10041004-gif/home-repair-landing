@@ -1,11 +1,14 @@
 import { SITE } from "@/lib/constants";
+import { IconChat, IconPhone } from "@/components/icons";
 
 /**
- * 모바일 전용 하단 고정 상담 바.
- * - 전화 상담·사진 상담 두 버튼만 유지해 버튼 반복을 지나치게 만들지 않는다.
- * - 각 버튼은 최소 44px 높이를 보장하고, safe-area-inset-bottom을 반영해
+ * 모바일 전용 하단 고정 상담 바(최종 개편안 1번).
+ * - 데스크톱 우측 고정 버튼이 숨겨지는 767px 이하 화면에서 "전화 상담 · 카카오 상담"
+ *   두 버튼으로 대체한다. 기존에 있던 "사진 상담" 버튼은 여기서 제거하고,
+ *   각 페이지 본문의 주 CTA(사진 상담 시작)로만 유지한다.
+ * - 각 버튼은 최소 48px 높이를 보장하고, safe-area-inset-bottom을 반영해
  *   기기 하단 제스처 영역과 겹치지 않게 한다.
- * - md 이상 화면에서는 숨기고, 데스크톱은 헤더의 CTA 버튼을 사용한다.
+ * - md 이상 화면에서는 숨기고, 데스크톱은 우측 고정 버튼(DesktopFloatingCta)을 사용한다.
  */
 export default function MobileBottomBar() {
   return (
@@ -15,15 +18,19 @@ export default function MobileBottomBar() {
     >
       <a
         href={`tel:${SITE.phone}`}
-        className="flex min-h-11 flex-1 items-center justify-center rounded-lg bg-brand-navy px-3 text-center text-sm font-semibold text-white"
+        className="flex min-h-12 flex-1 items-center justify-center gap-2 rounded-lg bg-brand-navy px-3 text-center text-sm font-semibold text-white"
       >
-        📞 전화 상담
+        <IconPhone className="h-5 w-5 shrink-0" />
+        전화 상담
       </a>
       <a
-        href="/estimate"
-        className="flex min-h-11 flex-1 items-center justify-center rounded-lg bg-brand-teal px-3 text-center text-sm font-semibold text-white"
+        href={SITE.kakaoUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="flex min-h-12 flex-1 items-center justify-center gap-2 rounded-lg bg-yellow-400 px-3 text-center text-sm font-semibold text-slate-900"
       >
-        사진 상담 시작
+        <IconChat className="h-5 w-5 shrink-0" />
+        카카오 상담
       </a>
     </div>
   );

@@ -19,14 +19,14 @@ export default function AboutPage() {
 
   return (
     <div className="mx-auto max-w-3xl px-4 py-10">
-      <h1 className="text-xl font-bold text-brand-navy sm:text-2xl">
+      <h1 className="text-[26px] font-bold text-brand-navy sm:text-[32px]">
         회사 소개
       </h1>
 
       {/* 값이 입력된 사업자정보 항목만 표시하고, 미입력 항목은 표시하지 않는다. */}
       {businessFields.length > 0 && (
         <section className="mt-6">
-          <h2 className="font-bold text-brand-navy">사업자 정보</h2>
+          <h2 className="text-[26px] font-bold text-brand-navy sm:text-[32px]">사업자 정보</h2>
           <dl className="mt-2 grid grid-cols-1 gap-1 text-sm text-slate-600 sm:grid-cols-2">
             {businessFields.map((field) => (
               <div key={field.label}>
@@ -39,9 +39,9 @@ export default function AboutPage() {
       )}
 
       <section className="mt-8">
-        <h2 className="font-bold text-brand-navy">서비스 지역</h2>
+        <h2 className="text-[26px] font-bold text-brand-navy sm:text-[32px]">서비스 지역</h2>
         <p className="mt-2 text-sm text-slate-600">{SITE.serviceArea}</p>
-        <div className="relative mx-auto mt-4 aspect-[16/9] w-full max-w-2xl overflow-hidden rounded-2xl border border-slate-100 shadow-sm">
+        <div className="relative mx-auto mt-4 aspect-[16/9] w-full max-w-2xl overflow-hidden rounded-2xl border border-slate-100">
           <Image
             src="/brand/service-area-map.png"
             alt="반듯집수리 출장 가능 지역 안내: 서울·경기 전 지역 방문 가능"
@@ -53,15 +53,15 @@ export default function AboutPage() {
       </section>
 
       <section className="mt-10">
-        <h2 className="font-bold text-brand-navy">우리가 하는 일</h2>
+        <h2 className="text-[26px] font-bold text-brand-navy sm:text-[32px]">우리가 하는 일</h2>
         <p className="mt-2 text-sm text-slate-600">
-          현장에서 직접 진행한 작업 사진으로 반듯집수리가 하는 일을 소개합니다.
+          반듯집수리가 진행하는 작업 방식을 보여주는 설명용 이미지입니다.
         </p>
         <div className="mt-4 grid grid-cols-2 gap-3">
           {WORK_PHOTOS.map((photo) => (
             <div
               key={photo.src}
-              className="relative aspect-square w-full overflow-hidden rounded-lg shadow-sm"
+              className="relative aspect-square w-full overflow-hidden rounded-2xl"
             >
               <Image
                 src={photo.src}

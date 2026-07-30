@@ -1,13 +1,15 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import AiExampleBadge from "@/components/AiExampleBadge";
-import { DEPOSIT_NOTICE_TEXT } from "@/lib/constants";
+import { DEPOSIT_NOTICE_TEXT, GUIDE_EXTRA_FAQ, MAIN_FAQ } from "@/lib/constants";
 
 export const metadata: Metadata = {
   title: "이용 안내",
   description: "반듯집수리의 상담부터 작업 완료까지 진행 절차와 계약금 정책을 안내합니다.",
   alternates: { canonical: "/guide" },
 };
+
+const ALL_FAQ = [...MAIN_FAQ, ...GUIDE_EXTRA_FAQ];
 
 const STEPS = [
   {
@@ -42,14 +44,14 @@ const GUIDE_PHOTOS = [
 export default function GuidePage() {
   return (
     <div className="mx-auto max-w-3xl px-4 py-10">
-      <h1 className="text-xl font-bold text-brand-navy sm:text-2xl">
+      <h1 className="text-[26px] font-bold text-brand-navy sm:text-[32px]">
         이용 안내
       </h1>
       <p className="mt-2 text-sm text-slate-600">
         반듯집수리는 아래와 같은 방식으로 작업을 진행합니다.
       </p>
 
-      <div className="relative mx-auto mt-6 aspect-[3/2] w-full max-w-xl overflow-hidden rounded-2xl border border-slate-100 bg-white shadow-md">
+      <div className="relative mx-auto mt-6 aspect-[3/2] w-full max-w-xl overflow-hidden rounded-2xl border border-slate-100 bg-white">
         <Image
           src="/brand/collage-8panel.png"
           alt="반듯집수리가 작업을 진행하는 방식 요약"
@@ -62,8 +64,8 @@ export default function GuidePage() {
 
       <ol className="mt-6 flex flex-col gap-6">
         {STEPS.map((step) => (
-          <li key={step.title} className="rounded-lg border border-slate-200 p-4">
-            <h2 className="font-bold text-brand-navy">{step.title}</h2>
+          <li key={step.title} className="rounded-2xl border border-slate-200 p-4">
+            <h3 className="text-lg font-bold text-brand-navy">{step.title}</h3>
             <p className="mt-1 text-sm leading-relaxed text-slate-600">
               {step.desc}
             </p>
@@ -71,12 +73,14 @@ export default function GuidePage() {
         ))}
       </ol>
 
-      <h2 className="mt-10 font-bold text-brand-navy">현장 사진으로 보는 작업 모습</h2>
+      <h2 className="mt-10 text-[26px] font-bold text-brand-navy sm:text-[32px]">
+        현장 사진으로 보는 작업 모습
+      </h2>
       <div className="mt-4 grid grid-cols-2 gap-3">
         {GUIDE_PHOTOS.map((photo) => (
           <div
             key={photo.src}
-            className="relative aspect-square w-full overflow-hidden rounded-lg shadow-sm"
+            className="relative aspect-square w-full overflow-hidden rounded-2xl"
           >
             <Image
               src={photo.src}
@@ -90,8 +94,8 @@ export default function GuidePage() {
         ))}
       </div>
 
-      <div className="mt-8 rounded-lg bg-brand-cream p-5">
-        <h2 className="font-bold text-brand-navy">신뢰 포인트</h2>
+      <div className="mt-8 rounded-2xl bg-brand-cream p-5">
+        <h2 className="text-[26px] font-bold text-brand-navy sm:text-[32px]">신뢰 포인트</h2>
         <p className="mt-2 text-sm leading-relaxed text-slate-700">
           작업 시작 전 사전예상액을 고객 동의 하에 안내하며, 동의 없는 추가
           작업은 진행하지 않습니다. 작업 전/중/후 사진을 제공하여 어떤 작업이
@@ -99,16 +103,31 @@ export default function GuidePage() {
         </p>
       </div>
 
-      <div className="mt-4 flex gap-3 rounded-lg border border-brand-teal/30 bg-white p-5">
+      <div className="mt-4 flex gap-3 rounded-2xl border border-brand-teal/30 bg-white p-5">
         <span className="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-brand-navy text-xs font-bold text-white">
           i
         </span>
         <div>
-          <h2 className="font-bold text-brand-navy">계약금 안내</h2>
+          <h2 className="text-[26px] font-bold text-brand-navy sm:text-[32px]">계약금 안내</h2>
           <p className="mt-1 text-sm leading-relaxed text-slate-700">
             {DEPOSIT_NOTICE_TEXT}
           </p>
         </div>
+      </div>
+
+      {/* 메인페이지 FAQ 6개 + 이용안내 전용 추가 FAQ = 전체 FAQ (최종 개편안 3-⑦) */}
+      <h2 id="faq" className="mt-10 scroll-mt-24 text-[26px] font-bold text-brand-navy sm:text-[32px]">
+        전체 자주 묻는 질문
+      </h2>
+      <div className="mt-4 flex flex-col gap-3">
+        {ALL_FAQ.map((item) => (
+          <details key={item.q} className="rounded-2xl border border-slate-200 p-4">
+            <summary className="cursor-pointer text-base font-semibold text-brand-navy">
+              {item.q}
+            </summary>
+            <p className="mt-2 text-base leading-relaxed text-slate-600">{item.a}</p>
+          </details>
+        ))}
       </div>
     </div>
   );

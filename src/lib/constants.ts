@@ -11,7 +11,7 @@ export const SITE = {
   tagline: "예약형 집수리",
   serviceArea: "서울·경기 전 지역 방문 가능합니다",
   phone: "010-2370-5091",
-  kakaoUrl: "http://pf.kakao.com/_kHyfX/chat",
+  kakaoUrl: "https://pf.kakao.com/_kHyfX/chat",
 } as const;
 
 // ── 사업자정보: 값이 없는 항목은 화면에 절대 표시하지 않는다 ────────────────
@@ -53,14 +53,15 @@ export const BRAND = {
   businessOwner: RAW_BUSINESS_INFO.대표자,
 } as const;
 
-// ── 헤더 내비게이션 (스펙 7번: 서비스/케어 패키지/스마트홈/작업사례/이용안내/상담) ──
+// ── 헤더 내비게이션 (2026-07-30 최종 개편안 2번: 서비스/케어 패키지/스마트홈/작업 예시/이용안내) ──
+// "상담" 메뉴는 삭제한다 — 우측 고정 상담 버튼과 각 페이지의 사진 상담 CTA가 있어 중복이다.
+// "작업사례"는 실제 고객 사례가 쌓이기 전까지 "작업 예시"로 표기한다.
 export const NAV_ITEMS = [
   { href: "/services", label: "서비스" },
   { href: "/tenant-care", label: "케어 패키지" },
   { href: "/smart-home", label: "스마트홈" },
-  { href: "/reviews", label: "작업사례" },
+  { href: "/reviews", label: "작업 예시" },
   { href: "/guide", label: "이용안내" },
-  { href: "/estimate", label: "상담" },
 ] as const;
 
 // 모바일 전체 메뉴에는 헤더에 없는 회사소개도 함께 노출한다.
@@ -80,6 +81,11 @@ export const EXTRA_LABOR_FEE_NOTICE =
   "추가공임은 작업자 1인 기준 30분당 50,000원이며, 2인 이상 투입 시 인원에 비례합니다. 추가 작업은 내용·금액·승인 시각을 안내하고 고객님이 동의한 뒤에만 진행합니다.";
 export const ESTIMATE_VALIDITY_NOTICE = "견적 유효기간은 발송일로부터 7일입니다.";
 export const VAT_NOTICE = "홈페이지에 공개된 모든 금액은 부가가치세(VAT)를 포함한 금액입니다.";
+
+// 서비스별 A/S 안내를 통일하기 위한 공통 문구(스펙 8번 "서비스별 A/S 안내 통일").
+// 세입자·주거 케어는 asPolicyBody(TENANT_CARE_DETAIL)에 더 상세한 조항을 별도로 둔다.
+export const SERVICE_AS_NOTICE =
+  "반듯집수리의 설치·시공상 하자에 대한 기본 보증기간은 작업 완료일로부터 6개월입니다. 시공상 하자로 확인되는 경우 무상 A/S를 진행하며 출장·점검비를 청구하지 않습니다.";
 
 export const COMMON_OPERATION_NOTES = [
   "서비스 지역: 서울·경기 전 지역",
@@ -110,24 +116,22 @@ export const DEPOSIT_SUMMARY_NOTES = [
   "계약금 30%는 자동 환불불가 위약금이 아니며, 취소·환불은 관계 법령과 실제 제공된 범위를 기준으로 정산합니다.",
 ] as const;
 
-// ── 상담 진행 절차(스펙 8-⑥) ─────────────────────────────────────────────
+// ── 상담 진행 절차 ────────────────────────────────────────────────────────
+// 메인페이지 "⑥ 진행 과정과 신뢰 기준" 통합 영역은 5단계로 축소한다(최종 개편안 3-⑥).
+// 이용안내(/guide) 페이지에는 기존의 더 상세한 5단계 설명을 별도로 유지한다.
 export const CONSULT_PROCESS_STEPS = [
   "사진과 요청사항 접수",
   "사전예상액과 방문 범위 안내",
-  "필요한 경우 실측 및 견적서 발송",
-  "계약금 30% 결제 후 일정 확정",
+  "견적서 확인 및 계약금 30% 결제",
   "현장 확인과 고객 동의 후 작업",
-  "작동 확인·정리·사용 안내",
-  "잔금 결제",
+  "작동 확인·정리·잔금 결제",
 ] as const;
 
+// 메인페이지 신뢰 기준은 4개만 노출한다(최종 개편안 3-⑥).
 export const TRUST_CRITERIA = [
-  "사진 기준 사전예상액",
-  "현장 확인 후 최종 금액 확정",
   "동의 없는 추가 작업 없음",
   "작업 전·중·후 기록",
   "제품 하자와 설치 하자 구분",
-  "고객 계정과 개인정보 보호",
   "작업 후 주변 정리",
 ] as const;
 
@@ -288,6 +292,70 @@ export const PRIVACY_CONSENT_TEXT =
   "고객님은 개인정보 수집·이용에 대한 동의를 거부할 권리가 있으며, 동의하지 않으실 경우 견적 상담 접수가 제한될 수 있습니다.\n" +
   "포트폴리오·후기 활용, 광고성 정보 수신은 별도의 선택 동의 항목이며, 선택 동의를 거부하셔도 상담·계약·시공·A/S 진행에는 제한이 없습니다.";
 
+// ── 개인정보처리방침 (최종 개편안 8번: 사업자정보와 마찬가지로 미확정 값은 절대
+// 임의로 만들지 않고 "확정 예정" 문구로만 표시한다) ─────────────────────────
+export const PRIVACY_PHOTO_RETENTION_NOTICE =
+  "상담을 위해 첨부해주신 사진은 상담·견적·작업 진행 목적으로만 사용하며, 상담이 " +
+  "종료되거나 작업이 완료된 이후 일정 기간이 지나면 삭제합니다. 정확한 보관·삭제 " +
+  "기간은 추후 확정 예정이며, 확정되는 대로 이 페이지에 반영합니다. 삭제를 " +
+  "원하시면 아래 연락처로 요청해주실 수 있습니다.";
+
+export const PRIVACY_POLICY_SECTIONS = [
+  {
+    title: "1. 수집하는 개인정보 항목",
+    body: [
+      "필수항목: 이름, 연락처(전화번호), 방문지역·주소, 상담내용(작업공간·작업종류·문제증상 등), 첨부사진, 희망 방문일정",
+      "서비스 이용 과정에서 자동으로 생성되어 수집될 수 있는 정보: 접속 IP, 접속 일시(스팸·부정이용 방지 목적)",
+    ],
+  },
+  {
+    title: "2. 개인정보의 수집 및 이용 목적",
+    body: [
+      "사진 상담·방문 견적·예약 접수 및 일정 조율",
+      "작업 진행, A/S 및 사후 문의 응대",
+      "부정이용 방지 및 서비스 안정적 운영(요청 빈도 제한 등)",
+    ],
+  },
+  {
+    title: "3. 개인정보의 보유 및 이용기간",
+    body: [
+      PRIVACY_PHOTO_RETENTION_NOTICE,
+      "이름·연락처·상담내용 등 상담 기록은 상담·작업 완료 후 관련 법령에 따른 보관기간까지 보관하며, 정확한 보유기간은 추후 확정 예정입니다.",
+      "관계 법령(전자상거래 등에서의 소비자보호에 관한 법률 등)에 따라 별도 보관이 필요한 정보는 해당 법령에서 정한 기간 동안 보관합니다.",
+    ],
+  },
+  {
+    title: "4. 개인정보의 제3자 제공",
+    body: [
+      "고객님의 동의 없이 개인정보를 제3자에게 제공하지 않습니다.",
+      "다만 법령에 특별한 규정이 있거나 수사기관이 적법한 절차에 따라 요청하는 경우는 예외로 합니다.",
+    ],
+  },
+  {
+    title: "5. 개인정보 처리위탁",
+    body: [
+      "사진 첨부파일 저장을 위해 클라우드 스토리지 제공업체(Vercel Blob Storage)를 이용하고 있으며, 위탁받은 업체는 위탁 목적 범위 내에서만 개인정보를 처리합니다.",
+    ],
+  },
+  {
+    title: "6. 정보주체의 권리와 행사 방법",
+    body: [
+      "고객님은 언제든지 본인의 개인정보에 대한 열람, 정정, 삭제, 처리정지를 요청하실 수 있습니다.",
+      "요청은 아래 연락처(전화 또는 카카오톡 채널)로 접수해주시면 지체 없이 조치합니다.",
+    ],
+  },
+  {
+    title: "7. 개인정보 보호책임자 및 문의처",
+    body: [
+      "개인정보 관련 문의는 아래 연락처로 접수해주세요.",
+    ],
+  },
+  {
+    title: "8. 시행일",
+    body: ["이 개인정보처리방침의 시행일은 확정 예정입니다."],
+  },
+] as const;
+
 // 접수완료 화면 등에 표시하는 예상견적 안내 원칙 문구 (용어 원칙: "예상 견적/비용범위", 확정견적 금지)
 export const ESTIMATE_DISCLAIMER_TEXT =
   "견적 신청이 접수되었습니다.\n" +
@@ -299,7 +367,7 @@ export const ESTIMATE_DISCLAIMER_TEXT =
 // (구 고정 예약금 40,000원 정책은 완전히 폐기되었다 — 스펙 4번)
 export const DEPOSIT_NOTICE_TEXT = DEPOSIT_POLICY_TEXT;
 
-// ── ① 생활 집수리 (스펙 2-A, 8-③) ────────────────────────────────────────
+// ── ① 생활 집수리 (최종 개편안 3-③: 6개 카드로 축소) ───────────────────────
 export type RepairCategory = {
   id: string;
   title: string;
@@ -308,11 +376,12 @@ export type RepairCategory = {
   imageSrc?: string;
 };
 
+// 목록에 없는 작업은 카드로 만들지 않고 별도의 "기타 작업 사진상담" 버튼으로 통합한다.
 export const REPAIR_CATEGORIES: RepairCategory[] = [
   {
     id: "water",
     title: "수도·배수",
-    representativeWork: "수전 교체·누수 점검·싱크대 배수구 교체",
+    representativeWork: "수전 교체·배수구 교체·누수 점검",
     description:
       "주방·욕실 수전 교체와 누수 점검, 배수구 막힘·교체 작업입니다. 자재비는 별도이며 제품별 가격 차이가 큽니다.",
     imageSrc: "/brand/kitchen-faucet.png",
@@ -347,25 +416,18 @@ export const REPAIR_CATEGORIES: RepairCategory[] = [
   },
   {
     id: "bathroom-kitchen",
-    title: "욕실·주방 설치",
-    representativeWork: "욕실·주방 소품 설치",
-    description: "욕실·주방 소품 설치 작업입니다. 자재비는 별도입니다.",
-  },
-  {
-    id: "living-goods",
-    title: "생활소품 설치",
-    representativeWork: "생활소품 설치",
-    description: "생활소품 설치 작업입니다. 자재비는 별도입니다.",
-  },
-  {
-    id: "etc",
-    title: "기타 사진상담",
-    representativeWork: "기타 생활 불편 수리",
-    description:
-      "목록에 없는 자잘한 생활 불편도 편하게 문의해주세요. 사진을 보내주시면 작업 가능 여부와 예상 비용을 안내해드립니다.",
-    imageSrc: "/brand/livingroom-paint.png",
+    title: "욕실·주방·생활소품",
+    representativeWork: "욕실·주방·생활소품 설치",
+    description: "욕실·주방 소품과 생활소품 설치 작업입니다. 자재비는 별도입니다.",
   },
 ];
+
+// 메인/서비스 페이지에서 카드 목록 대신 사용하는 "기타 작업" 통합 버튼 문구.
+export const REPAIR_OTHER_CTA = {
+  title: "기타 작업 사진상담",
+  description:
+    "목록에 없는 자잘한 생활 불편도 편하게 문의해주세요. 사진을 보내주시면 작업 가능 여부와 예상 비용을 안내해드립니다.",
+};
 
 export const REPAIR_POLICY_NOTES = [
   `단독 방문 최소 결제금액 ${MIN_SINGLE_VISIT_WON.toLocaleString("ko-KR")}원`,
@@ -696,23 +758,62 @@ export const SMART_HOME_EXCLUDED_DEVICES = [
   "구조변경이나 전문 인력이 필요한 작업",
 ];
 
+export type SmartHomeScenarioIconId =
+  | "door-exit"
+  | "moon"
+  | "droplet-alert"
+  | "family-check";
+
 export type SmartHomeScenario = {
   id: string;
   title: string;
-  icon: string;
+  iconId: SmartHomeScenarioIconId;
   description: string;
+  // 카드 선택 시 아래에 보여주는 "정적인 결과"(스펙 3-⑤). 실시간 견적 계산이 아니라
+  // 미리 정해둔 예시 문구를 그대로 보여준다.
+  resultFeatures: string;
+  resultRecommendation: string;
 };
 
+// 최종 개편안 3-⑤: 8개 시나리오를 4개로 축소한다.
 export const SMART_HOME_SCENARIOS: SmartHomeScenario[] = [
-  { id: "away", title: "외출모드", icon: "🚪", description: "외출 시 조명·플러그·커튼을 한 번에 정리합니다." },
-  { id: "home", title: "귀가모드", icon: "🏠", description: "귀가 시각에 맞춰 조명과 실내 환경을 미리 준비합니다." },
-  { id: "sleep", title: "취침모드", icon: "🌙", description: "취침 시간에 조명을 끄고 대기전력을 차단합니다." },
-  { id: "leak", title: "누수알림", icon: "💧", description: "누수 감지 센서가 이상을 감지하면 알림을 보냅니다." },
-  { id: "door-window", title: "문·창문 열림 알림", icon: "🔔", description: "문이나 창문이 열리면 즉시 알림을 받습니다." },
-  { id: "parents", title: "부모님 안심 알림", icon: "👨‍👩‍👧", description: "거주자 동의를 전제로 생활 패턴 이상 시 알림을 보냅니다." },
-  { id: "tenant-nodrill", title: "세입자용 비타공 스마트홈", icon: "🔌", description: "타공 없이 설치 가능한 장비 중심으로 구성합니다." },
-  { id: "window-auto", title: "창문 자동화", icon: "🪟", description: "조건부 실측형 옵션이며 모든 창문에 적용되지는 않습니다." },
+  {
+    id: "away",
+    title: "외출할 때",
+    iconId: "door-exit",
+    description: "외출 시 조명·플러그·커튼을 한 번에 정리합니다.",
+    resultFeatures: "외출모드 · 조명·플러그 자동 정리",
+    resultRecommendation: "스마트 스타트 검토 대상",
+  },
+  {
+    id: "sleep",
+    title: "잠들기 전",
+    iconId: "moon",
+    description: "취침 시간에 맞춰 조명을 끄고 대기전력을 차단합니다.",
+    resultFeatures: "취침모드 · 조명·대기전력 자동 차단",
+    resultRecommendation: "스마트 스타트 검토 대상",
+  },
+  {
+    id: "leak-door",
+    title: "누수·문 열림이 감지될 때",
+    iconId: "droplet-alert",
+    description: "누수 감지 센서와 문 열림 감지가 이상을 알아채면 알림을 보냅니다.",
+    resultFeatures: "외출모드 · 누수알림 · 문 열림 알림",
+    resultRecommendation: "스마트 라이프 검토 대상",
+  },
+  {
+    id: "parents",
+    title: "부모님 생활상태를 확인할 때",
+    iconId: "family-check",
+    description: "거주자 동의를 전제로 생활 패턴 이상 시 알림을 보냅니다.",
+    resultFeatures: "부모님 안심 알림 · 생활패턴 이상 감지",
+    resultRecommendation: "스마트 라이프 검토 대상",
+  },
 ];
+
+export const SMART_HOME_SCENARIO_FOOTNOTE =
+  "장비 호환성과 최종 구성은 모델과 현장 상태 확인 후 결정됩니다.";
+
 
 export const SMART_HOME_ANXIETY_OPTION_NOTICE =
   "여성 1인 가구 등을 위한 안심 자동화 옵션은 알림·자동화 기능으로만 안내하며, 공포심을 자극하는 이미지나 문구는 사용하지 않습니다.";
@@ -789,35 +890,44 @@ export const SMART_HOME_FAQ = [
   },
 ] as const;
 
-// ── 메인 FAQ (스펙 8-⑦, 12문항) ───────────────────────────────────────────
+// ── 메인 FAQ (최종 개편안 3-⑦: 6문항만 유지, 나머지는 이용안내 전체보기로 이동) ──
 export const MAIN_FAQ = [
   {
     q: "출장비는 얼마인가요?",
     a: `출장비는 방문 1회당 ${TRAVEL_FEE_WON.toLocaleString("ko-KR")}원이며, 서울·경기 전 지역 동일하게 적용됩니다. 같은 방문의 여러 작업에는 출장비가 한 번만 적용됩니다.`,
   },
   {
-    q: "사진만으로 견적이 확정되나요?",
+    q: "사진만으로 금액이 확정되나요?",
     a: "사진으로 안내하는 금액은 사전예상액입니다. 최종 금액은 현장 상태와 작업 범위를 확인한 뒤 확정됩니다.",
-  },
-  {
-    q: "계약금은 얼마인가요?",
-    a: "제품·자재비를 제외한 계약대상 서비스 금액의 30%를 계약금으로 결제하면 일정이 확정됩니다. 계약금은 잔금에서 전액 차감됩니다.",
-  },
-  {
-    q: "제품·자재비는 언제 결제하나요?",
-    a: "반듯집수리가 대리구매하는 제품비·자재비는 고객 승인 후 구매 전에 전액 별도로 결제합니다.",
   },
   {
     q: "자재를 직접 준비해도 되나요?",
     a: "네, 가능합니다. 다만 제품명·모델명·규격을 사전에 확인해 설치 가능 여부를 안내해드립니다.",
   },
   {
-    q: "제품 구매대행이 가능한가요?",
-    a: `가능합니다. 기본 구매대행비는 동일 판매처 1회 주문 기준 ${PURCHASE_AGENCY_FEE_WON.toLocaleString("ko-KR")}원이며, 추가 주문·특수 운반은 사전 승인 후 별도로 안내합니다.`,
+    q: "계약금은 얼마인가요?",
+    a: "제품·자재비를 제외한 계약대상 서비스 금액의 30%를 계약금으로 결제하면 일정이 확정됩니다. 계약금은 잔금에서 전액 차감됩니다.",
   },
   {
     q: "집수리와 스마트홈을 함께 신청할 수 있나요?",
     a: "두 서비스는 가격과 신청 흐름이 완전히 분리되어 있습니다. 각 서비스별로 별도 상담을 진행해주세요.",
+  },
+  {
+    q: "A/S 범위는 어떻게 되나요?",
+    a: "반듯집수리의 설치·시공상 하자는 작업 완료일로부터 6개월간 무상 A/S가 적용됩니다. 제품 자체 결함은 시공 문제와 구분하여 안내합니다.",
+  },
+] as const;
+
+// 메인 FAQ에서 빠진 나머지 문항은 이용안내(/guide) 페이지의 "전체 FAQ 더 보기" 영역에서
+// 계속 확인할 수 있도록 별도 상수로 보존한다(최종 개편안 3-⑦).
+export const GUIDE_EXTRA_FAQ = [
+  {
+    q: "제품·자재비는 언제 결제하나요?",
+    a: "반듯집수리가 대리구매하는 제품비·자재비는 고객 승인 후 구매 전에 전액 별도로 결제합니다.",
+  },
+  {
+    q: "제품 구매대행이 가능한가요?",
+    a: `가능합니다. 기본 구매대행비는 동일 판매처 1회 주문 기준 ${PURCHASE_AGENCY_FEE_WON.toLocaleString("ko-KR")}원이며, 추가 주문·특수 운반은 사전 승인 후 별도로 안내합니다.`,
   },
   {
     q: "세입자도 설치할 수 있나요?",
@@ -835,19 +945,14 @@ export const MAIN_FAQ = [
     q: "창문 자동개폐는 모든 창문에 가능한가요?",
     a: "창호 구조, 전원, 구동력, 수동 해제와 안전장치를 확인한 뒤 조건부로 제공되는 실측형 옵션이며, 모든 창문에 적용되는 것은 아닙니다.",
   },
-  {
-    q: "A/S 범위는 어떻게 되나요?",
-    a: "반듯집수리의 설치·시공상 하자는 작업 완료일로부터 6개월간 무상 A/S가 적용됩니다. 제품 자체 결함은 시공 문제와 구분하여 안내합니다.",
-  },
 ] as const;
 
-// ── 작업사례 (스펙 10번) ─────────────────────────────────────────────────
+// ── 작업 예시 (최종 개편안 7번: 실제 고객 사례가 쌓이기 전까지 예시/시험 콘텐츠로 운영) ──
 export type WorkCaseCategory = "repair" | "tenant-care" | "smart-home";
 
 export type WorkCase = {
   id: string;
   category: WorkCaseCategory;
-  region: string;
   workType: string;
   problemSolved: string;
   scope: string;
@@ -860,12 +965,12 @@ export type WorkCase = {
 
 // 기존에 있던 3건의 후기 콘텐츠는 실제 시공 여부를 확인할 수 없어(사진에는 이미
 // "이해를 돕기 위한 이미지입니다" 배지가 붙어 있음), 삭제하지 않고 "실제 사례 여부"를
-// 명확히 표시하는 예시/시연 콘텐츠로 재분류해서 이관한다(스펙 10번, 15번 준수).
+// 명확히 표시하는 예시/시연 콘텐츠로 재분류해서 이관했다. 최종 개편안 7번에 따라
+// 시험 콘텐츠에서 지역명은 완전히 제거한다.
 export const WORK_CASES: WorkCase[] = [
   {
     id: "r1",
     category: "repair",
-    region: "일산동구",
     workType: "수전교체",
     problemSolved: "주방 수전 누수",
     scope: "주방 수전 탈거 후 신품 수전 교체",
@@ -878,7 +983,6 @@ export const WORK_CASES: WorkCase[] = [
   {
     id: "r2",
     category: "repair",
-    region: "일산서구",
     workType: "방충망 교체",
     problemSolved: "베란다 방충망 파손",
     scope: "기존 방충망 철거 후 규격 실측·재제작 방충망 설치",
@@ -891,7 +995,6 @@ export const WORK_CASES: WorkCase[] = [
   {
     id: "r3",
     category: "repair",
-    region: "덕양구",
     workType: "문고리 교체",
     problemSolved: "방문 손잡이 헐거움",
     scope: "기존 손잡이 철거 후 신품 손잡이 설치",

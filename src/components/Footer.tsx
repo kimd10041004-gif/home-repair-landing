@@ -23,6 +23,9 @@ export default function Footer() {
           <Link href="/tenant-care#임차인확인" className="hover:text-brand-navy">
             세입자·주거 케어 필수 확인사항
           </Link>
+          <Link href="/privacy" className="hover:text-brand-navy">
+            개인정보처리방침
+          </Link>
           <Link href="/about" className="hover:text-brand-navy">
             회사소개
           </Link>

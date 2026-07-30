@@ -129,16 +129,19 @@ export default function SmartHomeForm() {
             className="rounded-md border border-slate-300 px-3 py-2"
             value={name}
             onChange={(e) => setName(e.target.value)}
+            autoComplete="name"
             required
           />
         </label>
         <label className="flex flex-col gap-1 text-sm">
           <span className="font-medium text-slate-700">연락처 *</span>
           <input
+            type="tel"
             className="rounded-md border border-slate-300 px-3 py-2"
             value={contact}
             onChange={(e) => setContact(e.target.value)}
             placeholder="010-0000-0000"
+            autoComplete="tel"
             required
           />
         </label>
@@ -151,6 +154,7 @@ export default function SmartHomeForm() {
             value={region}
             onChange={(e) => setRegion(e.target.value)}
             placeholder="예: 고양시 일산동구 (상세 주소는 방문 견적 단계에서 안내드립니다)"
+            autoComplete="address-level2"
             required
           />
         </label>

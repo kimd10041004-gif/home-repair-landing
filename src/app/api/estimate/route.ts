@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { checkRateLimit, getClientIp } from "@/lib/rate-limit";
 
 /**
  * 이 라우트는 견적 문의를 이 프로젝트의 DB에 저장하지 않습니다.
@@ -11,6 +12,15 @@ const PUBLIC_ESTIMATE_ENDPOINT =
   "https://home-repair-promo.vercel.app/api/public-estimate";
 
 export async function POST(req: NextRequest) {
+  const ip = getClientIp(req);
+  const { allowed, retryAfterSeconds } = checkRateLimit(`estimate:${ip}`, 5, 60_000);
+  if (!allowed) {
+    return NextResponse.json(
+      { error: "요청이 너무 많습니다. 잠시 후 다시 시도해주세요." },
+      { status: 429, headers: { "Retry-After": String(retryAfterSeconds) } }
+    );
+  }
+
   try {
     const body = await req.json();
     const {

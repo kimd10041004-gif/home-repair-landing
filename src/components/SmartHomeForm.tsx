@@ -2,30 +2,27 @@
 
 import { useState } from "react";
 import {
-  TENANT_CARE,
-  TENANT_CARE_CONSENTS,
-  TENANT_CARE_PACKAGES,
+  SMART_HOME_CONSENTS,
+  SMART_HOME_DEVICE_OPTIONS,
+  SMART_HOME_PACKAGES,
   TENANT_CARE_RESIDENCE_TYPES,
-  TENANT_CARE_WORK_ITEMS,
 } from "@/lib/constants";
 
 /**
- * 세입자·주거 케어 전용 상담 신청 폼.
+ * 스마트홈 IoT 케어 전용 상담 신청 폼.
  * - 상세 주소는 최초 상담 단계에서 받지 않고 "시·구·동" 수준의 작업 지역만 입력받는다.
  * - 동의 체크박스는 전부 기본 미선택 상태이며, 선택 동의를 거부해도 제출에는 영향이 없다.
  * - 민감정보(주민등록번호, 생년월일 등)는 입력받지 않는다.
  */
-export default function TenantCareForm() {
+export default function SmartHomeForm() {
   const [name, setName] = useState("");
   const [contact, setContact] = useState("");
   const [region, setRegion] = useState("");
   const [residenceType, setResidenceType] = useState<string>(
     TENANT_CARE_RESIDENCE_TYPES[0]
   );
-  const [packageId, setPackageId] = useState(TENANT_CARE_PACKAGES[0].id);
-  const [workItems, setWorkItems] = useState<string[]>([]);
-  const [workQuantities, setWorkQuantities] = useState("");
-  const [hasOwnMaterial, setHasOwnMaterial] = useState<"yes" | "no">("no");
+  const [packageId, setPackageId] = useState(SMART_HOME_PACKAGES[0].id);
+  const [devices, setDevices] = useState<string[]>([]);
   const [schedule1, setSchedule1] = useState("");
   const [schedule2, setSchedule2] = useState("");
   const [files, setFiles] = useState<File[]>([]);
@@ -36,13 +33,13 @@ export default function TenantCareForm() {
   const [error, setError] = useState<string | null>(null);
   const [done, setDone] = useState(false);
 
-  function toggleWorkItem(item: string) {
-    setWorkItems((prev) =>
+  function toggleDevice(item: string) {
+    setDevices((prev) =>
       prev.includes(item) ? prev.filter((v) => v !== item) : [...prev, item]
     );
   }
 
-  const requiredConsents = TENANT_CARE_CONSENTS.filter((c) => c.required);
+  const requiredConsents = SMART_HOME_CONSENTS.filter((c) => c.required);
   const allRequiredChecked = requiredConsents.every((c) => consents[c.id]);
 
   async function handleSubmit(e: React.FormEvent) {
@@ -76,7 +73,7 @@ export default function TenantCareForm() {
       }
       setUploading(false);
 
-      const res = await fetch("/api/tenant-care", {
+      const res = await fetch("/api/smart-home", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -85,9 +82,7 @@ export default function TenantCareForm() {
           region,
           residenceType,
           packageId,
-          workItems,
-          workQuantities,
-          hasOwnMaterial: hasOwnMaterial === "yes",
+          devices,
           preferredSchedule1: schedule1,
           preferredSchedule2: schedule2,
           photoUrls,
@@ -114,10 +109,12 @@ export default function TenantCareForm() {
     return (
       <div className="rounded-lg border border-brand-teal/30 bg-brand-cream p-6 text-center">
         <p className="font-semibold text-brand-navy">
-          {TENANT_CARE.submittedNotice1}
+          상담 신청이 접수되었습니다. 사진과 현장 정보를 확인한 후 구성 가능한 장비와 사전예상액을
+          안내해 드립니다.
         </p>
         <p className="mt-2 text-sm text-slate-600">
-          {TENANT_CARE.submittedNotice2}
+          상담 신청만으로 계약이나 예약이 확정되지 않으며, 계약금 30% 결제가 완료되어야 일정이
+          확정됩니다.
         </p>
       </div>
     );
@@ -178,7 +175,7 @@ export default function TenantCareForm() {
             value={packageId}
             onChange={(e) => setPackageId(e.target.value as typeof packageId)}
           >
-            {TENANT_CARE_PACKAGES.map((p) => (
+            {SMART_HOME_PACKAGES.map((p) => (
               <option key={p.id} value={p.id}>
                 {p.name}
               </option>
@@ -189,55 +186,19 @@ export default function TenantCareForm() {
 
       <fieldset className="rounded-md border border-slate-200 p-3">
         <legend className="px-1 text-sm font-medium text-slate-700">
-          필요한 작업 종류 (복수 선택 가능)
+          연결하고 싶은 장비 (복수 선택 가능)
         </legend>
         <div className="mt-2 grid grid-cols-1 gap-2 sm:grid-cols-2">
-          {TENANT_CARE_WORK_ITEMS.map((item) => (
+          {SMART_HOME_DEVICE_OPTIONS.map((item) => (
             <label key={item} className="flex items-center gap-2 text-sm text-slate-700">
               <input
                 type="checkbox"
-                checked={workItems.includes(item)}
-                onChange={() => toggleWorkItem(item)}
+                checked={devices.includes(item)}
+                onChange={() => toggleDevice(item)}
               />
               {item}
             </label>
           ))}
-        </div>
-      </fieldset>
-
-      <label className="flex flex-col gap-1 text-sm">
-        <span className="font-medium text-slate-700">작업별 예상 수량</span>
-        <input
-          className="rounded-md border border-slate-300 px-3 py-2"
-          value={workQuantities}
-          onChange={(e) => setWorkQuantities(e.target.value)}
-          placeholder="예: 전등 2개, 블라인드 3개"
-        />
-      </label>
-
-      <fieldset className="rounded-md border border-slate-200 p-3">
-        <legend className="px-1 text-sm font-medium text-slate-700">
-          고객 자재 준비 여부
-        </legend>
-        <div className="mt-2 flex gap-4 text-sm text-slate-700">
-          <label className="flex items-center gap-2">
-            <input
-              type="radio"
-              name="hasOwnMaterial"
-              checked={hasOwnMaterial === "no"}
-              onChange={() => setHasOwnMaterial("no")}
-            />
-            반듯집수리가 준비
-          </label>
-          <label className="flex items-center gap-2">
-            <input
-              type="radio"
-              name="hasOwnMaterial"
-              checked={hasOwnMaterial === "yes"}
-              onChange={() => setHasOwnMaterial("yes")}
-            />
-            직접 준비
-          </label>
         </div>
       </fieldset>
 
@@ -288,7 +249,7 @@ export default function TenantCareForm() {
       <div className="rounded-md border border-slate-200 p-4">
         <h3 className="font-semibold text-brand-navy">필수 동의</h3>
         <div className="mt-2 flex flex-col gap-2">
-          {TENANT_CARE_CONSENTS.filter((c) => c.required).map((c) => (
+          {SMART_HOME_CONSENTS.filter((c) => c.required).map((c) => (
             <label key={c.id} className="flex items-start gap-2 text-sm text-slate-700">
               <input
                 type="checkbox"
@@ -308,7 +269,7 @@ export default function TenantCareForm() {
           선택 동의는 거부하셔도 상담·견적·계약·시공·A/S 진행에 불이익이 없습니다.
         </p>
         <div className="mt-2 flex flex-col gap-2">
-          {TENANT_CARE_CONSENTS.filter((c) => !c.required).map((c) => (
+          {SMART_HOME_CONSENTS.filter((c) => !c.required).map((c) => (
             <label key={c.id} className="flex items-start gap-2 text-sm text-slate-700">
               <input
                 type="checkbox"

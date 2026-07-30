@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { BRAND, TENANT_CARE, TENANT_CARE_EXCLUSIONS, TENANT_CARE_FAQ, TENANT_CARE_MATERIAL_OPTIONS, TENANT_CARE_PACKAGES } from "@/lib/constants";
 import TenantCareForm from "@/components/TenantCareForm";
@@ -6,9 +7,10 @@ function won(n: number) {
   return n.toLocaleString("ko-KR");
 }
 
-export const metadata = {
+export const metadata: Metadata = {
   title: `${TENANT_CARE.title} - ${TENANT_CARE.subtitle} | ${BRAND.name}`,
   description: TENANT_CARE.description,
+  alternates: { canonical: "/tenant-care" },
 };
 
 export default function TenantCarePage() {
@@ -16,7 +18,7 @@ export default function TenantCarePage() {
     <div className="mx-auto max-w-3xl px-4 py-10">
       {/* 1. 서비스 소개 */}
       <span className="inline-block rounded-full bg-brand-navy px-3 py-1 text-xs font-semibold text-white">
-        세입자 전용 서비스
+        세입자·주거 케어 전용 패키지
       </span>
       <h1 className="mt-3 text-2xl font-bold text-brand-navy sm:text-3xl">
         {TENANT_CARE.title}
@@ -37,9 +39,13 @@ export default function TenantCarePage() {
       {/* 2. 핵심 가격 안내 */}
       <div className="mt-6 rounded-lg border border-brand-teal/30 bg-brand-cream p-5">
         <ul className="flex flex-col gap-1 text-sm font-medium text-brand-navy">
-          {TENANT_CARE.heroHighlights.map((line) => (
-            <li key={line}>· {line}</li>
+          {TENANT_CARE_PACKAGES.map((pkg) => (
+            <li key={pkg.id}>
+              · {pkg.name} {won(pkg.priceWon)}원
+            </li>
           ))}
+          <li>· 계약대상 서비스 금액의 30% 계약금 결제 후 일정 확정</li>
+          <li>· 출장비 방문 1회당 20,000원, 자재비 별도</li>
         </ul>
         <div className="mt-4 flex flex-col gap-3 sm:flex-row">
           <a
@@ -64,7 +70,7 @@ export default function TenantCarePage() {
 
       {/* 3. 패키지 3종 */}
       <h2 className="mt-10 text-lg font-bold text-brand-navy">
-        세입자 안심 케어 패키지
+        세입자·주거 케어 패키지
       </h2>
       <div className="mt-4 grid grid-cols-1 gap-4">
         {TENANT_CARE_PACKAGES.map((pkg) => (
@@ -77,39 +83,20 @@ export default function TenantCarePage() {
               <span className="text-xs text-slate-500">{pkg.targetNote}</span>
             </div>
 
-            <div className="mt-3 grid grid-cols-1 gap-3 sm:grid-cols-2">
-              <div className="rounded-md bg-slate-50 p-3">
-                <p className="text-xs text-slate-500">서울·경기 기본권역</p>
-                <p className="mt-1 text-lg font-bold text-brand-navy">
-                  총 예상 결제금액 {won(pkg.priceBaseWon)}원부터
-                </p>
-              </div>
-              <div className="rounded-md bg-slate-50 p-3">
-                <p className="text-xs text-slate-500">경기 외곽권역</p>
-                <p className="mt-1 text-lg font-bold text-brand-navy">
-                  총 예상 결제금액 {won(pkg.priceOuterWon)}원부터
-                </p>
-              </div>
+            <div className="mt-3 rounded-md bg-slate-50 p-3">
+              <p className="mt-1 text-lg font-bold text-brand-navy">
+                {won(pkg.priceWon)}원
+              </p>
+              <p className="text-xs text-slate-500">{pkg.visitNote}</p>
             </div>
             <p className="mt-2 text-xs font-semibold text-brand-teal">
-              자재비 별도 (부가가치세 포함 금액입니다)
+              자재비·출장비 별도 (부가가치세 포함 금액입니다)
             </p>
 
             <div className="mt-4">
               <p className="text-sm font-semibold text-slate-700">포함 기준</p>
               <ul className="mt-1 flex flex-col gap-0.5 text-sm text-slate-600">
                 {pkg.includes.map((line) => (
-                  <li key={line}>· {line}</li>
-                ))}
-              </ul>
-            </div>
-
-            <div className="mt-3">
-              <p className="text-sm font-semibold text-slate-700">
-                선택 가능한 작업 예시
-              </p>
-              <ul className="mt-1 flex flex-col gap-0.5 text-sm text-slate-600">
-                {pkg.examples.map((line) => (
                   <li key={line}>· {line}</li>
                 ))}
               </ul>

@@ -1,6 +1,13 @@
+import type { Metadata } from "next";
 import Image from "next/image";
 import AiExampleBadge from "@/components/AiExampleBadge";
 import { DEPOSIT_NOTICE_TEXT } from "@/lib/constants";
+
+export const metadata: Metadata = {
+  title: "이용 안내",
+  description: "반듯집수리의 상담부터 작업 완료까지 진행 절차와 계약금 정책을 안내합니다.",
+  alternates: { canonical: "/guide" },
+};
 
 const STEPS = [
   {
@@ -97,7 +104,7 @@ export default function GuidePage() {
           i
         </span>
         <div>
-          <h2 className="font-bold text-brand-navy">예약금 안내</h2>
+          <h2 className="font-bold text-brand-navy">계약금 안내</h2>
           <p className="mt-1 text-sm leading-relaxed text-slate-700">
             {DEPOSIT_NOTICE_TEXT}
           </p>

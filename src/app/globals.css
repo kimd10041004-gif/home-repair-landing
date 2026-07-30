@@ -6,14 +6,15 @@
  */
 :root {
   --background: #ffffff;
-  --foreground: #171717;
+  --foreground: #263238;
 
-  /* 반듯집수리 브랜드 팔레트 (로고 기준) */
-  --brand-navy: #1e293b;
-  --brand-navy-dark: #16213a;
-  --brand-teal: #2a9d8f;
-  --brand-teal-light: #3db3a4;
-  --brand-cream: #faf6f0;
+  /* 반듯집수리 2026-07-30 개편 브랜드 팔레트(스펙 12번) */
+  --brand-navy: #17324d;
+  --brand-navy-dark: #0f2337;
+  --brand-teal: #2f9c8f;
+  --brand-teal-light: #45b3a6;
+  --brand-cream: #f7f5ef;
+  --brand-charcoal: #263238;
 }
 
 @theme inline {
@@ -27,10 +28,23 @@
   --color-brand-teal: var(--brand-teal);
   --color-brand-teal-light: var(--brand-teal-light);
   --color-brand-cream: var(--brand-cream);
+  --color-brand-charcoal: var(--brand-charcoal);
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
+}
+
+/* 움직임에 민감한 사용자를 위해 애니메이션·전환·스크롤 동작을 최소화한다. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
 }

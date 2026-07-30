@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef, useState } from "react";
+import Link from "next/link";
 import {
   BRAND,
   BUNDLE_ITEMS,
@@ -22,7 +23,17 @@ type ChatMessage = {
   text: string;
 };
 
+type ServiceBranch = "repair" | "tenant-care" | "smart-home";
+
+const SERVICE_BRANCH_OPTIONS: { id: ServiceBranch; label: string; description: string }[] = [
+  { id: "repair", label: "생활 집수리", description: "수전·문고리·조명 등 개별 작업" },
+  { id: "tenant-care", label: "세입자·주거 케어", description: "여러 작업을 묶은 패키지" },
+  { id: "smart-home", label: "스마트홈 IoT 케어", description: "장비 설치·자동화 연결" },
+];
+
 type StepId =
+  | "service"
+  | "redirect"
   | "workspace"
   | "category"
   | "workType"
@@ -47,13 +58,14 @@ export default function EstimateChat() {
       id: uid(),
       from: "bot",
       text:
-        "안녕하세요! 반듯집수리 사진 견적 신청서입니다. 😊\n" +
-        "몇 가지 질문에 답해주시면 사진 기준 예상 견적과 방문 일정을 안내해드릴게요.\n\n" +
-        "먼저, 작업이 필요한 공간을 선택해주세요.",
+        "안녕하세요! 반듯집수리 사진 상담 신청서입니다. 😊\n" +
+        "먼저, 어떤 서비스가 필요하신지 선택해주세요.",
     },
   ]);
-  const [step, setStep] = useState<StepId>("workspace");
+  const [step, setStep] = useState<StepId>("service");
+  const [redirectTo, setRedirectTo] = useState<{ href: string; label: string } | null>(null);
   const [textInput, setTextInput] = useState("");
+
 
   const [category, setCategory] = useState<WorkCategoryId | null>(null);
   const [photos, setPhotos] = useState<Record<string, File[]>>({});
@@ -83,6 +95,30 @@ export default function EstimateChat() {
   }
   function pushUser(text: string) {
     setMessages((prev) => [...prev, { id: uid(), from: "user", text }]);
+  }
+
+  function selectService(id: ServiceBranch, label: string) {
+    pushUser(label);
+    if (id === "repair") {
+      pushBot(
+        "생활 집수리는 이 사진 상담에서 바로 진행할 수 있어요. 먼저, 작업이 필요한 공간을 선택해주세요."
+      );
+      setStep("workspace");
+      return;
+    }
+    if (id === "tenant-care") {
+      pushBot(
+        "세입자·주거 케어는 여러 작업을 한 번에 계획하는 패키지 서비스로, 전용 페이지에서 패키지 선택과 상담 신청을 진행합니다."
+      );
+      setRedirectTo({ href: "/tenant-care#tenant-care-form", label: "세입자·주거 케어 상담 신청으로 이동" });
+      setStep("redirect");
+      return;
+    }
+    pushBot(
+      "스마트홈 IoT 케어는 장비·자동화 구성을 확인하는 전용 페이지에서 상담 신청을 진행합니다."
+    );
+    setRedirectTo({ href: "/smart-home#smart-home-form", label: "스마트홈 IoT 케어 상담 신청으로 이동" });
+    setStep("redirect");
   }
 
   function selectWorkspace(value: string) {
@@ -299,6 +335,31 @@ export default function EstimateChat() {
       </div>
 
       <div className="border-t border-slate-100 p-4">
+        {step === "service" && (
+          <div className="flex flex-col gap-2">
+            {SERVICE_BRANCH_OPTIONS.map((opt) => (
+              <button
+                key={opt.id}
+                type="button"
+                onClick={() => selectService(opt.id, opt.label)}
+                className="rounded-lg border border-slate-300 px-4 py-3 text-left text-sm hover:bg-slate-50"
+              >
+                <span className="font-semibold text-brand-navy">{opt.label}</span>
+                <span className="ml-2 text-xs text-slate-500">{opt.description}</span>
+              </button>
+            ))}
+          </div>
+        )}
+
+        {step === "redirect" && redirectTo && (
+          <Link
+            href={redirectTo.href}
+            className="inline-flex min-h-11 items-center justify-center rounded-lg bg-brand-navy px-5 text-sm font-semibold text-white hover:bg-brand-navy-dark"
+          >
+            {redirectTo.label} →
+          </Link>
+        )}
+
         {step === "workspace" && (
           <div className="flex flex-wrap gap-2">
             {WORKSPACE_OPTIONS.map((opt) => (

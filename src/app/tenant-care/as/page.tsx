@@ -1,15 +1,17 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { TENANT_CARE } from "@/lib/constants";
 
-export const metadata = {
-  title: "A/S 및 보증 안내 | 세입자 안심 케어",
+export const metadata: Metadata = {
+  title: "A/S 및 보증 안내 | 세입자·주거 케어",
+  alternates: { canonical: "/tenant-care/as" },
 };
 
 export default function TenantCareAsPage() {
   return (
     <div className="mx-auto max-w-2xl px-4 py-10">
       <Link href="/tenant-care" className="text-sm text-brand-teal">
-        ← 세입자 안심 케어로 돌아가기
+        ← 세입자·주거 케어로 돌아가기
       </Link>
       <h1 className="mt-3 text-xl font-bold text-brand-navy sm:text-2xl">
         {TENANT_CARE.asPolicyTitle}

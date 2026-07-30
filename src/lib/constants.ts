@@ -693,6 +693,8 @@ export const SMART_HOME = {
     "제품비·부자재비·앱·클라우드 구독료는 고객이 부담합니다. 모든 장비가 하나의 앱으로 통합되는 것은 아니며, 모델별 호환성을 사전에 확인한 뒤 안내해 드립니다.",
   windowAutomationNotice:
     "창호 구조, 전원, 구동력, 수동 해제와 안전장치를 확인한 뒤 조건부로 제공되는 실측형 옵션입니다.",
+  ctaNotice:
+    "상담 신청만으로 계약이나 결제가 확정되지 않습니다. 사진 확인 후 견적서와 주요 거래조건을 안내하며, 고객 확인과 계약금 30% 결제가 완료되면 일정이 확정됩니다.",
 } as const;
 
 export type SmartHomePackageId = "start" | "life" | "fullhome";
@@ -715,7 +717,7 @@ export const SMART_HOME_PACKAGES: SmartHomePackage[] = [
     priceWon: 150000,
     priceFrom: false,
     deviceLimit: "일반 장비 최대 4개",
-    automationLimit: "자동화 최대 2개",
+    automationLimit: "자동화 최대 1개",
     visitNote: "방문 1회",
   },
   {
@@ -724,7 +726,7 @@ export const SMART_HOME_PACKAGES: SmartHomePackage[] = [
     priceWon: 200000,
     priceFrom: false,
     deviceLimit: "일반 장비 최대 10개",
-    automationLimit: "자동화 최대 5개",
+    automationLimit: "자동화 최대 3개",
     visitNote: "방문 1회",
   },
   {
@@ -733,7 +735,7 @@ export const SMART_HOME_PACKAGES: SmartHomePackage[] = [
     priceWon: 300000,
     priceFrom: true,
     deviceLimit: "일반 장비 최대 20개",
-    automationLimit: "자동화 최대 10개",
+    automationLimit: "자동화 최대 5개",
     visitNote: "최대 2회 방문",
     extraNote: "현장 실측과 호환성 확인 후 범위 확정",
   },

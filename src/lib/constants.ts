@@ -29,7 +29,7 @@ const RAW_BUSINESS_INFO = {
   사업자등록번호: "",
   통신판매업신고번호: "",
   대표연락처: SITE.phone,
-  카카오톡상담링크: SITE.kakaoUrl,
+  카카오톡채널: "'반듯집수리' 검색",
   이메일: "",
   정책시행일: "",
 } as const;

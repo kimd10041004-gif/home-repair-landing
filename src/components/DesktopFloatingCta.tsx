@@ -78,7 +78,7 @@ export default function DesktopFloatingCta() {
         {isTouchDevice ? (
           <a
             href={`tel:${SITE.phone}`}
-            className="flex h-16 w-16 items-center justify-center gap-2 rounded-full bg-brand-navy text-white shadow-sm xl:h-auto xl:w-auto xl:min-h-14 xl:rounded-lg xl:px-6 xl:py-4"
+            className="flex h-16 w-16 items-center justify-center gap-2 rounded-full bg-brand-navy text-white shadow-sm xl:h-auto xl:w-40 xl:min-h-14 xl:justify-start xl:rounded-lg xl:px-6 xl:py-4"
             aria-label={`전화 상담 ${SITE.phone}로 연결`}
           >
             <IconPhone className="h-6 w-6 shrink-0" />
@@ -90,7 +90,7 @@ export default function DesktopFloatingCta() {
             onClick={() => setPopupOpen((v) => !v)}
             aria-expanded={popupOpen}
             aria-haspopup="dialog"
-            className="flex h-16 w-16 items-center justify-center gap-2 rounded-full bg-brand-navy text-white shadow-sm xl:h-auto xl:w-auto xl:min-h-14 xl:rounded-lg xl:px-6 xl:py-4"
+            className="flex h-16 w-16 items-center justify-center gap-2 rounded-full bg-brand-navy text-white shadow-sm xl:h-auto xl:w-40 xl:min-h-14 xl:justify-start xl:rounded-lg xl:px-6 xl:py-4"
             aria-label="전화 상담 번호 보기"
           >
             <IconPhone className="h-6 w-6 shrink-0" />
@@ -144,7 +144,7 @@ export default function DesktopFloatingCta() {
           href={SITE.kakaoUrl}
           target="_blank"
           rel="noopener noreferrer"
-          className="flex h-16 w-16 items-center justify-center gap-2 rounded-full bg-yellow-400 text-slate-900 shadow-sm xl:h-auto xl:w-auto xl:min-h-14 xl:rounded-lg xl:px-6 xl:py-4"
+          className="flex h-16 w-16 items-center justify-center gap-2 rounded-full bg-yellow-400 text-slate-900 shadow-sm xl:h-auto xl:w-40 xl:min-h-14 xl:justify-start xl:rounded-lg xl:px-6 xl:py-4"
           aria-label="카카오톡 상담 채널 열기"
         >
           <IconChat className="h-6 w-6 shrink-0" />

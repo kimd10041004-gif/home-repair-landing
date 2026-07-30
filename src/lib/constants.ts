@@ -75,7 +75,6 @@ export const ESTIMATE_CTA_LABEL = "사진 상담 시작";
 export const TRAVEL_FEE_WON = 20000;
 export const TRAVEL_FEE_NOTICE =
   "출장비는 방문 1회당 20,000원이며, 같은 방문에서 여러 작업을 진행해도 출장비는 한 번만 적용됩니다. 서울·경기 전 지역 동일하게 적용됩니다.";
-export const MIN_SINGLE_VISIT_WON = 150000;
 export const PURCHASE_AGENCY_FEE_WON = 30000;
 export const EXTRA_LABOR_FEE_NOTICE =
   "추가공임은 작업자 1인 기준 30분당 50,000원이며, 2인 이상 투입 시 인원에 비례합니다. 추가 작업은 내용·금액·승인 시각을 안내하고 고객님이 동의한 뒤에만 진행합니다.";
@@ -122,7 +121,7 @@ export const DEPOSIT_SUMMARY_NOTES = [
 export const CONSULT_PROCESS_STEPS = [
   "사진과 요청사항 접수",
   "사전예상액과 방문 범위 안내",
-  "견적서 확인 및 계약금 30% 결제",
+  "견적서 확인 후 진행(케어·IoT는 계약금 30% 결제)",
   "현장 확인과 고객 동의 후 작업",
   "작동 확인·정리·잔금 결제",
 ] as const;
@@ -430,7 +429,6 @@ export const REPAIR_OTHER_CTA = {
 };
 
 export const REPAIR_POLICY_NOTES = [
-  `단독 방문 최소 결제금액 ${MIN_SINGLE_VISIT_WON.toLocaleString("ko-KR")}원`,
   `출장비 방문 1회당 ${TRAVEL_FEE_WON.toLocaleString("ko-KR")}원 별도`,
   "자재비 별도",
   "공개 금액은 VAT 포함",
@@ -905,7 +903,7 @@ export const MAIN_FAQ = [
   },
   {
     q: "계약금은 얼마인가요?",
-    a: "제품·자재비를 제외한 계약대상 서비스 금액의 30%를 계약금으로 결제하면 일정이 확정됩니다. 계약금은 잔금에서 전액 차감됩니다.",
+    a: "계약금은 세입자·주거 케어와 스마트홈 IoT 케어에만 적용되며, 제품·자재비를 제외한 계약대상 서비스 금액의 30%를 결제하면 일정이 확정됩니다. 생활 집수리(개별 작업)는 계약금이 없으며, 문의 주시면 사진을 확인한 후 바로 견적을 안내해 드립니다.",
   },
   {
     q: "집수리와 스마트홈을 함께 신청할 수 있나요?",

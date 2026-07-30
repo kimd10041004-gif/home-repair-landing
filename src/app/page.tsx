@@ -3,7 +3,6 @@ import Link from "next/link";
 import {
   CONSULT_PROCESS_STEPS,
   MAIN_FAQ,
-  MIN_SINGLE_VISIT_WON,
   REPAIR_CATEGORIES,
   REPAIR_OTHER_CTA,
   SMART_HOME,
@@ -76,8 +75,8 @@ export default function HomePage() {
 
             {/* 가격 핵심 한 줄 요약: 페이지를 끝까지 읽어야 조건을 알게 되는 문제를 없앤다 */}
             <p className="mt-6 text-sm font-semibold text-brand-navy">
-              생활 집수리 최소 결제 {won(MIN_SINGLE_VISIT_WON)}원 · 출장비 방문당 {won(TRAVEL_FEE_WON)}원 ·
-              케어 {won(carePriceFrom)}원부터 · IoT {won(smartHomePriceFrom)}원부터
+              출장비 방문당 {won(TRAVEL_FEE_WON)}원 · 케어 {won(carePriceFrom)}원부터 · IoT{" "}
+              {won(smartHomePriceFrom)}원부터
             </p>
             <p className="mt-1 text-sm text-slate-500">
               자재·제품비는 별도이며, 사진 안내 금액은 사전예상액입니다.
@@ -111,8 +110,6 @@ export default function HomePage() {
               <h3 className="text-lg font-bold text-brand-navy">생활 집수리</h3>
               <p className="mt-3 flex-1 text-base leading-relaxed text-slate-600">
                 필요한 작업을 개별 신청
-                <br />
-                최소 결제 {won(MIN_SINGLE_VISIT_WON)}원
                 <br />
                 출장비 방문당 {won(TRAVEL_FEE_WON)}원
               </p>

@@ -110,6 +110,11 @@ export default function GuidePage() {
         <div>
           <h2 className="text-[26px] font-bold text-brand-navy sm:text-[32px]">계약금 안내</h2>
           <p className="mt-1 text-sm leading-relaxed text-slate-700">
+            생활 집수리(개별 작업)는 계약금이 없습니다. 문의 주시면 사진을 확인한
+            후 바로 견적을 안내해 드립니다. 아래 계약금 정책은 세입자·주거
+            케어와 스마트홈 IoT 케어에만 적용됩니다.
+          </p>
+          <p className="mt-2 text-sm leading-relaxed text-slate-700">
             {DEPOSIT_NOTICE_TEXT}
           </p>
         </div>

@@ -73,8 +73,8 @@ export default function RootLayout({
           본문 바로가기
         </a>
         <Nav />
-        {/* 모바일 하단 고정바(안전영역 포함 약 5rem)에 본문이 가려지지 않도록 여백 확보 */}
-        <main id="main-content" className="flex-1 pb-24 md:pb-0">
+        {/* 모바일 하단 고정바(안전영역 포함, 버튼 확대로 최대 약 112px)에 본문이 가려지지 않도록 여백 확보 */}
+        <main id="main-content" className="flex-1 pb-28 md:pb-0">
           {children}
         </main>
         <Footer />

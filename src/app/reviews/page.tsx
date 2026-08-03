@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import WorkCasesTabs from "@/components/WorkCasesTabs";
+import { getSiteData } from "@/lib/siteData";
 
 export const metadata: Metadata = {
   title: "작업 예시",
@@ -9,7 +10,10 @@ export const metadata: Metadata = {
   alternates: { canonical: "/reviews" },
 };
 
-export default function ReviewsPage() {
+export const revalidate = 60;
+
+export default async function ReviewsPage() {
+  const site = await getSiteData();
   return (
     <div className="mx-auto max-w-3xl px-4 py-10">
       <h1 className="text-[26px] font-bold text-brand-navy sm:text-[32px]">작업 예시</h1>
@@ -27,7 +31,7 @@ export default function ReviewsPage() {
         />
       </div>
 
-      <WorkCasesTabs />
+      <WorkCasesTabs workCases={site.workCases} />
     </div>
   );
 }

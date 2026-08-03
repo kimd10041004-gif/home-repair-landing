@@ -3,17 +3,12 @@ import Link from "next/link";
 import {
   CONSULT_PROCESS_STEPS,
   MAIN_FAQ,
-  MIN_SINGLE_VISIT_WON,
-  REPAIR_CATEGORIES,
   REPAIR_OTHER_CTA,
   SMART_HOME,
-  SMART_HOME_PACKAGES,
   TENANT_CARE,
-  TENANT_CARE_PACKAGES,
-  TRAVEL_FEE_WON,
   TRUST_CRITERIA,
-  type RepairCategory,
 } from "@/lib/constants";
+import { getSiteData, type RepairCategoryData } from "@/lib/siteData";
 import { IconCheck, IconCurtain, IconHomeGoods } from "@/components/icons";
 import SmartHomeScenarioPicker from "@/components/SmartHomeScenarioPicker";
 
@@ -23,7 +18,7 @@ function won(n: number) {
 
 // ③ 생활 집수리 카드에서 사진이 없는 두 카테고리(커튼·블라인드 / 욕실·주방·생활소품)는
 // 이모지 대신 선형 아이콘으로 대체 표시한다(최종 개편안 6번).
-const FALLBACK_ICON: Partial<Record<RepairCategory["id"], (props: { className?: string }) => React.ReactElement>> = {
+const FALLBACK_ICON: Partial<Record<RepairCategoryData["id"], (props: { className?: string }) => React.ReactElement>> = {
   curtain: IconCurtain,
   "bathroom-kitchen": IconHomeGoods,
 };
@@ -35,9 +30,16 @@ const CARE_VISIT_LABEL: Record<string, string> = {
   total: "최대 2회",
 };
 
-export default function HomePage() {
-  const carePriceFrom = TENANT_CARE_PACKAGES[0].priceWon;
-  const smartHomePriceFrom = SMART_HOME_PACKAGES[0].priceWon;
+// 관리자가 사진/가격/서비스를 수정하면 1분 안에 홈페이지에 반영되도록 ISR을 사용한다.
+export const revalidate = 60;
+
+export default async function HomePage() {
+  const site = await getSiteData();
+  const repairCategories = [...site.repairCategories].sort((a, b) => a.order - b.order);
+  const carePriceFrom = site.tenantCarePackages[0]?.priceWon ?? 0;
+  const smartHomePriceFrom = site.smartHomePackages[0]?.priceWon ?? 0;
+  const minSingleVisitWon = site.policy.minSingleVisitWon;
+  const travelFeeWon = site.policy.travelFeeWon;
 
   return (
     <div>
@@ -76,7 +78,7 @@ export default function HomePage() {
 
             {/* 가격 핵심 한 줄 요약: 페이지를 끝까지 읽어야 조건을 알게 되는 문제를 없앤다 */}
             <p className="mt-6 text-sm font-semibold text-brand-navy">
-              생활 집수리 최소 결제 {won(MIN_SINGLE_VISIT_WON)}원 · 출장비 방문당 {won(TRAVEL_FEE_WON)}원 ·
+              생활 집수리 최소 결제 {won(minSingleVisitWon)}원 · 출장비 방문당 {won(travelFeeWon)}원 ·
               케어 {won(carePriceFrom)}원부터 · IoT {won(smartHomePriceFrom)}원부터
             </p>
             <p className="mt-1 text-sm text-slate-500">
@@ -112,9 +114,9 @@ export default function HomePage() {
               <p className="mt-3 flex-1 text-base leading-relaxed text-slate-600">
                 필요한 작업을 개별 신청
                 <br />
-                최소 결제 {won(MIN_SINGLE_VISIT_WON)}원
+                최소 결제 {won(minSingleVisitWon)}원
                 <br />
-                출장비 방문당 {won(TRAVEL_FEE_WON)}원
+                출장비 방문당 {won(travelFeeWon)}원
               </p>
               <span className="mt-4 text-sm font-semibold text-brand-navy">집수리 항목 보기 →</span>
             </Link>
@@ -155,17 +157,17 @@ export default function HomePage() {
         <div className="mx-auto max-w-5xl px-4 py-12">
           <h2 className="text-[26px] font-bold text-brand-navy sm:text-[32px]">생활 집수리</h2>
           <div className="mt-5 grid grid-cols-2 gap-3 sm:grid-cols-3">
-            {REPAIR_CATEGORIES.map((cat) => {
+            {repairCategories.map((cat) => {
               const FallbackIcon = FALLBACK_ICON[cat.id];
               return (
                 <div
                   key={cat.id}
                   className="flex flex-col overflow-hidden rounded-2xl border border-slate-200 bg-brand-cream"
                 >
-                  {cat.imageSrc ? (
+                  {cat.imageUrl ? (
                     <div className="relative h-24 w-full">
                       <Image
-                        src={cat.imageSrc}
+                        src={cat.imageUrl}
                         alt={`${cat.title} 작업 사진`}
                         fill
                         sizes="(min-width: 640px) 220px, 50vw"
@@ -180,6 +182,9 @@ export default function HomePage() {
                   <div className="flex flex-1 flex-col p-3">
                     <h3 className="text-lg font-bold text-brand-navy">{cat.title}</h3>
                     <p className="mt-1 text-sm text-slate-600">{cat.representativeWork}</p>
+                    {cat.priceRangeText && (
+                      <p className="mt-1 text-sm font-bold text-brand-navy">{cat.priceRangeText}</p>
+                    )}
                     <p className="mt-1 text-sm font-medium text-brand-teal-dark">자재비 별도</p>
                   </div>
                 </div>
@@ -213,7 +218,7 @@ export default function HomePage() {
                 </tr>
               </thead>
               <tbody>
-                {TENANT_CARE_PACKAGES.map((pkg) => (
+                {site.tenantCarePackages.map((pkg) => (
                   <tr key={pkg.id} className="border-b border-slate-100 last:border-b-0">
                     <td className="px-4 py-3 font-semibold text-brand-navy">{pkg.name}</td>
                     <td className="px-4 py-3 font-bold text-brand-navy">{won(pkg.priceWon)}원</td>

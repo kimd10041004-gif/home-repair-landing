@@ -7,10 +7,10 @@ import {
   SMART_HOME_CUSTOMER_PROTECTION,
   SMART_HOME_EXCLUDED_DEVICES,
   SMART_HOME_FAQ,
-  SMART_HOME_PACKAGES,
   DEPOSIT_POLICY_TEXT,
   SERVICE_AS_NOTICE,
 } from "@/lib/constants";
+import { getSiteData } from "@/lib/siteData";
 import SmartHomeForm from "@/components/SmartHomeForm";
 import SmartHomeScenarioPicker from "@/components/SmartHomeScenarioPicker";
 
@@ -24,11 +24,16 @@ export const metadata: Metadata = {
   alternates: { canonical: "/smart-home" },
 };
 
+export const revalidate = 60;
+
 // 최종 개편안 5번: 케어·스마트홈 상세페이지 섹션 순서를
 // "생활 변화 중심 히어로 → 시나리오 선택기 → 패키지 비교 → 별도 옵션 →
 //  호환성·인터넷·계정 안내 → 상담 신청 → FAQ" 순으로 재배치한다.
 // 첫 화면에는 가격 카드보다 "무엇이 편해지는지"를 먼저 보여준다.
-export default function SmartHomePage() {
+export default async function SmartHomePage() {
+  const site = await getSiteData();
+  const smartHomePackages = site.smartHomePackages;
+
   return (
     <div className="mx-auto max-w-3xl px-4 py-10">
       {/* 생활 변화 중심 히어로 */}
@@ -69,7 +74,7 @@ export default function SmartHomePage() {
       <h2 className="mt-10 text-[26px] font-bold text-brand-navy sm:text-[32px]">스마트홈 IoT 케어 패키지</h2>
       <p className="mt-2 text-sm leading-relaxed text-slate-500">{SMART_HOME.priceNote}</p>
       <div className="mt-4 grid grid-cols-1 gap-4">
-        {SMART_HOME_PACKAGES.map((pkg) => (
+        {smartHomePackages.map((pkg) => (
           <div key={pkg.id} className="rounded-2xl border border-slate-200 p-5">
             <h3 className="text-lg font-bold text-brand-navy">{pkg.name}</h3>
             <p className="mt-1 text-lg font-bold text-brand-navy">
@@ -131,7 +136,7 @@ export default function SmartHomePage() {
       </p>
       <p className="mt-2 text-sm leading-relaxed text-slate-600">{DEPOSIT_POLICY_TEXT}</p>
       <div className="mt-4">
-        <SmartHomeForm />
+        <SmartHomeForm packages={smartHomePackages} />
       </div>
 
       {/* FAQ */}

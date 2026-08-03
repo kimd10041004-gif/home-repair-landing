@@ -14,14 +14,19 @@ import {
  * - 동의 체크박스는 전부 기본 미선택 상태이며, 선택 동의를 거부해도 제출에는 영향이 없다.
  * - 민감정보(주민등록번호, 생년월일 등)는 입력받지 않는다.
  */
-export default function SmartHomeForm() {
+export default function SmartHomeForm({
+  packages = SMART_HOME_PACKAGES,
+}: {
+  /** 관리자 화면에서 편집한 패키지 이름을 반영하기 위한 선택적 prop(없으면 기본값 사용) */
+  packages?: { id: string; name: string }[];
+}) {
   const [name, setName] = useState("");
   const [contact, setContact] = useState("");
   const [region, setRegion] = useState("");
   const [residenceType, setResidenceType] = useState<string>(
     TENANT_CARE_RESIDENCE_TYPES[0]
   );
-  const [packageId, setPackageId] = useState(SMART_HOME_PACKAGES[0].id);
+  const [packageId, setPackageId] = useState(packages[0].id);
   const [devices, setDevices] = useState<string[]>([]);
   const [schedule1, setSchedule1] = useState("");
   const [schedule2, setSchedule2] = useState("");
@@ -179,7 +184,7 @@ export default function SmartHomeForm() {
             value={packageId}
             onChange={(e) => setPackageId(e.target.value as typeof packageId)}
           >
-            {SMART_HOME_PACKAGES.map((p) => (
+            {packages.map((p) => (
               <option key={p.id} value={p.id}>
                 {p.name}
               </option>

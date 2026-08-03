@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { BRAND, TENANT_CARE, TENANT_CARE_EXCLUSIONS, TENANT_CARE_FAQ, TENANT_CARE_MATERIAL_OPTIONS, TENANT_CARE_PACKAGES } from "@/lib/constants";
+import { BRAND, TENANT_CARE, TENANT_CARE_EXCLUSIONS, TENANT_CARE_FAQ, TENANT_CARE_MATERIAL_OPTIONS } from "@/lib/constants";
+import { getSiteData } from "@/lib/siteData";
 import TenantCareForm from "@/components/TenantCareForm";
 
 function won(n: number) {
@@ -13,12 +14,17 @@ export const metadata: Metadata = {
   alternates: { canonical: "/tenant-care" },
 };
 
+export const revalidate = 60;
+
 // 최종 개편안 5번: 케어 상세페이지 섹션 순서를
 // "제목과 핵심 설명 → 패키지 비교 → 포함·제외 항목 → 자재 준비 방식 →
 //  임차인 확인과 기존 부품 인도 → 계약금·취소·A/S 요약 → 상담 신청 → FAQ" 순으로
 // 재배치한다. 퇴거 시 리턴서비스처럼 긴 약관은 <details> 접기 영역이나
 // /tenant-care/terms, /tenant-care/as 링크로 이동한다.
-export default function TenantCarePage() {
+export default async function TenantCarePage() {
+  const site = await getSiteData();
+  const tenantCarePackages = site.tenantCarePackages;
+
   return (
     <div className="mx-auto max-w-3xl px-4 py-10">
       {/* 1. 제목과 핵심 설명 */}
@@ -76,7 +82,7 @@ export default function TenantCarePage() {
             </tr>
           </thead>
           <tbody>
-            {TENANT_CARE_PACKAGES.map((pkg) => (
+            {tenantCarePackages.map((pkg) => (
               <tr key={pkg.id} className="border-b border-slate-100 last:border-b-0">
                 <td className="px-4 py-3 font-semibold text-brand-navy">{pkg.name}</td>
                 <td className="px-4 py-3 font-bold text-brand-navy">{won(pkg.priceWon)}원</td>
@@ -94,7 +100,7 @@ export default function TenantCarePage() {
       {/* 3. 포함·제외 항목 */}
       <h2 className="mt-10 text-[26px] font-bold text-brand-navy sm:text-[32px]">포함·제외 항목</h2>
       <div className="mt-4 grid grid-cols-1 gap-4">
-        {TENANT_CARE_PACKAGES.map((pkg) => (
+        {tenantCarePackages.map((pkg) => (
           <div key={pkg.id} className="rounded-2xl border border-slate-200 p-5">
             <h3 className="text-lg font-bold text-brand-navy">{pkg.name} 포함 기준</h3>
             <ul className="mt-2 flex flex-col gap-0.5 text-sm text-slate-600">
@@ -218,7 +224,7 @@ export default function TenantCarePage() {
         상세 주소는 방문 견적 또는 일정 확정 단계에서 별도로 안내받습니다.
       </p>
       <div className="mt-4">
-        <TenantCareForm />
+        <TenantCareForm packages={tenantCarePackages} />
       </div>
 
       {/* 8. FAQ */}

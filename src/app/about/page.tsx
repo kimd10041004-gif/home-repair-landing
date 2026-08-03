@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import { SITE, getVisibleBusinessFields } from "@/lib/constants";
+import { getSiteData } from "@/lib/siteData";
 import AiExampleBadge from "@/components/AiExampleBadge";
 
 export const metadata: Metadata = {
@@ -9,13 +10,12 @@ export const metadata: Metadata = {
   alternates: { canonical: "/about" },
 };
 
-const WORK_PHOTOS = [
-  { src: "/brand/switch-outlet-2.png", alt: "스위치·콘센트 클로즈업 작업 현장" },
-  { src: "/brand/outlet-switch-3.png", alt: "천장 조명 교체 작업 현장", ai: true },
-];
+export const revalidate = 60;
 
-export default function AboutPage() {
+export default async function AboutPage() {
   const businessFields = getVisibleBusinessFields();
+  const site = await getSiteData();
+  const workPhotos = [...site.aboutPhotos].sort((a, b) => a.order - b.order);
 
   return (
     <div className="mx-auto max-w-3xl px-4 py-10">
@@ -58,9 +58,9 @@ export default function AboutPage() {
           반듯집수리가 진행하는 작업 방식을 보여주는 설명용 이미지입니다.
         </p>
         <div className="mt-4 grid grid-cols-2 gap-3">
-          {WORK_PHOTOS.map((photo) => (
+          {workPhotos.map((photo) => (
             <div
-              key={photo.src}
+              key={photo.id}
               className="relative aspect-square w-full overflow-hidden rounded-2xl"
             >
               <Image
@@ -70,7 +70,7 @@ export default function AboutPage() {
                 sizes="(min-width: 640px) 340px, 50vw"
                 className="object-cover"
               />
-              {photo.ai && <AiExampleBadge />}
+              {photo.isExample && <AiExampleBadge />}
             </div>
           ))}
         </div>

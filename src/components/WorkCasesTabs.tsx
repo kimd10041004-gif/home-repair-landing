@@ -2,24 +2,27 @@
 
 import { useMemo, useState } from "react";
 import Image from "next/image";
-import {
-  WORK_CASES,
-  WORK_CASE_CATEGORY_LABELS,
-  type WorkCaseCategory,
-} from "@/lib/constants";
+import type { WorkCaseData } from "@/lib/siteData";
 import AiExampleBadge from "@/components/AiExampleBadge";
 
-const CATEGORY_ORDER: WorkCaseCategory[] = ["repair", "tenant-care", "smart-home"];
+type WorkCaseCategory = WorkCaseData["category"];
 
-export default function WorkCasesTabs() {
+const CATEGORY_ORDER: WorkCaseCategory[] = ["repair", "tenant-care", "smart-home"];
+const CATEGORY_LABELS: Record<WorkCaseCategory, string> = {
+  repair: "생활 집수리",
+  "tenant-care": "세입자·주거 케어",
+  "smart-home": "스마트홈 IoT",
+};
+
+export default function WorkCasesTabs({ workCases }: { workCases: WorkCaseData[] }) {
   // 데이터가 있는 탭만 보여준다.
   const availableTabs = useMemo(
-    () => CATEGORY_ORDER.filter((cat) => WORK_CASES.some((c) => c.category === cat)),
-    []
+    () => CATEGORY_ORDER.filter((cat) => workCases.some((c) => c.category === cat)),
+    [workCases]
   );
   const [active, setActive] = useState<WorkCaseCategory>(availableTabs[0]);
 
-  const cases = WORK_CASES.filter((c) => c.category === active);
+  const cases = workCases.filter((c) => c.category === active).sort((a, b) => a.order - b.order);
 
   if (availableTabs.length === 0) {
     return (
@@ -43,7 +46,7 @@ export default function WorkCasesTabs() {
                 : "text-slate-500 hover:text-brand-navy"
             }`}
           >
-            {WORK_CASE_CATEGORY_LABELS[cat]}
+            {CATEGORY_LABELS[cat]}
           </button>
         ))}
       </div>
@@ -69,16 +72,18 @@ export default function WorkCasesTabs() {
               </span>
             </div>
 
-            <div className="relative mt-4 aspect-video w-full overflow-hidden rounded-lg">
-              <Image
-                src={item.photoUrl}
-                alt={`${item.workType} 작업 사진`}
-                fill
-                sizes="(min-width: 640px) 640px, 100vw"
-                className="object-cover"
-              />
-              {!item.isRealCase && <AiExampleBadge />}
-            </div>
+            {item.photoUrl && (
+              <div className="relative mt-4 aspect-video w-full overflow-hidden rounded-lg">
+                <Image
+                  src={item.photoUrl}
+                  alt={`${item.workType} 작업 사진`}
+                  fill
+                  sizes="(min-width: 640px) 640px, 100vw"
+                  className="object-cover"
+                />
+                {!item.isRealCase && <AiExampleBadge />}
+              </div>
+            )}
 
             <dl className="mt-4 flex flex-col gap-2 text-sm leading-relaxed text-slate-700 sm:text-base">
               <div>

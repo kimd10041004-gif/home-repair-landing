@@ -10,6 +10,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/tenant-care/terms",
     "/tenant-care/as",
     "/smart-home",
+    "/airbnb-setup",
     "/reviews",
     "/guide",
     "/estimate",

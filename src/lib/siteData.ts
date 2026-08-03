@@ -74,7 +74,6 @@ export type AboutPhotoData = {
 
 export type SitePolicy = {
   travelFeeWon: number;
-  minSingleVisitWon: number;
   purchaseAgencyFeeWon: number;
 };
 
@@ -97,7 +96,6 @@ export const DEFAULT_SITE_DATA: SiteData = {
   updatedAt: "",
   policy: {
     travelFeeWon: 20000,
-    minSingleVisitWon: 150000,
     purchaseAgencyFeeWon: 30000,
   },
   repairCategories: [
@@ -162,7 +160,7 @@ export const DEFAULT_SITE_DATA: SiteData = {
     {
       id: "light",
       name: "라이트",
-      priceWon: 590000,
+      priceWon: 150000,
       targetNote: "소형 설치·교체 작업 중심",
       visitNote: "본 시공 1회",
       includes: [
@@ -175,7 +173,7 @@ export const DEFAULT_SITE_DATA: SiteData = {
     {
       id: "standard",
       name: "스탠다드",
-      priceWon: 990000,
+      priceWon: 250000,
       targetNote: "여러 작업을 함께 진행",
       visitNote: "본 시공 1회",
       includes: [
@@ -188,7 +186,7 @@ export const DEFAULT_SITE_DATA: SiteData = {
     {
       id: "total",
       name: "토탈",
-      priceWon: 1490000,
+      priceWon: 500000,
       targetNote: "필요 시 현장 실측 포함",
       visitNote: "필요 시 현장 실측 1회 + 본 시공 1회",
       includes: [
@@ -202,30 +200,30 @@ export const DEFAULT_SITE_DATA: SiteData = {
     {
       id: "start",
       name: "스마트 스타트",
-      priceWon: 490000,
+      priceWon: 150000,
       priceFrom: false,
       deviceLimit: "일반 장비 최대 4개",
-      automationLimit: "자동화 최대 2개",
+      automationLimit: "자동화 최대 1개",
       visitNote: "방문 1회",
       extraNote: "",
     },
     {
       id: "life",
       name: "스마트 라이프",
-      priceWon: 990000,
+      priceWon: 200000,
       priceFrom: false,
       deviceLimit: "일반 장비 최대 10개",
-      automationLimit: "자동화 최대 5개",
+      automationLimit: "자동화 최대 3개",
       visitNote: "방문 1회",
       extraNote: "",
     },
     {
       id: "fullhome",
       name: "스마트 풀홈",
-      priceWon: 1990000,
+      priceWon: 300000,
       priceFrom: true,
       deviceLimit: "일반 장비 최대 20개",
-      automationLimit: "자동화 최대 10개",
+      automationLimit: "자동화 최대 5개",
       visitNote: "최대 2회 방문",
       extraNote: "현장 실측과 호환성 확인 후 범위 확정",
     },
@@ -307,10 +305,6 @@ function mergeSiteData(stored: Partial<SiteData> | null | undefined): SiteData {
         typeof stored.policy?.travelFeeWon === "number"
           ? stored.policy.travelFeeWon
           : DEFAULT_SITE_DATA.policy.travelFeeWon,
-      minSingleVisitWon:
-        typeof stored.policy?.minSingleVisitWon === "number"
-          ? stored.policy.minSingleVisitWon
-          : DEFAULT_SITE_DATA.policy.minSingleVisitWon,
       purchaseAgencyFeeWon:
         typeof stored.policy?.purchaseAgencyFeeWon === "number"
           ? stored.policy.purchaseAgencyFeeWon
@@ -492,7 +486,6 @@ export function sanitizeIncomingSiteData(input: unknown): SiteData {
     updatedAt: DEFAULT_SITE_DATA.updatedAt,
     policy: {
       travelFeeWon: num(rawPolicy.travelFeeWon, DEFAULT_SITE_DATA.policy.travelFeeWon),
-      minSingleVisitWon: num(rawPolicy.minSingleVisitWon, DEFAULT_SITE_DATA.policy.minSingleVisitWon),
       purchaseAgencyFeeWon: num(rawPolicy.purchaseAgencyFeeWon, DEFAULT_SITE_DATA.policy.purchaseAgencyFeeWon),
     },
     repairCategories,

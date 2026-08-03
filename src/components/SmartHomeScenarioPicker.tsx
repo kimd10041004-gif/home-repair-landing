@@ -64,22 +64,22 @@ export default function SmartHomeScenarioPicker() {
       <div className="mt-6 flex justify-center">
         <div
           aria-live="polite"
-          className="w-full max-w-xs rounded-[28px] border border-slate-300 bg-white p-3"
+          className="w-full max-w-sm rounded-[28px] border border-slate-300 bg-white p-5"
         >
-          <div className="flex items-center justify-between px-1 text-sm text-slate-400">
+          <div className="flex items-center justify-between px-1 text-base text-slate-400">
             <span>반듯홈 알림</span>
             <span>지금</span>
           </div>
-          <div className="mt-2 flex items-start gap-3 rounded-2xl bg-brand-cream p-3">
-            <SelectedIcon className="mt-0.5 h-6 w-6 shrink-0 text-brand-navy" />
+          <div className="mt-3 flex items-start gap-4 rounded-2xl bg-brand-cream p-4">
+            <SelectedIcon className="mt-0.5 h-8 w-8 shrink-0 text-brand-navy" />
             <div>
-              <p className="text-sm font-bold text-brand-navy">{selected.title}</p>
-              <p className="mt-1 text-sm leading-relaxed text-slate-700">
+              <p className="text-base font-bold text-brand-navy">{selected.title}</p>
+              <p className="mt-1 text-base leading-relaxed text-slate-700">
                 선택한 기능 · {selected.resultFeatures}
               </p>
             </div>
           </div>
-          <p className="mt-3 text-sm font-semibold text-brand-teal-dark">
+          <p className="mt-4 text-base font-semibold text-brand-teal-dark">
             상담 추천 · {selected.resultRecommendation}
           </p>
         </div>

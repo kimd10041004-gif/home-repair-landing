@@ -62,6 +62,7 @@ export default async function SmartHomePage() {
             카카오톡으로 상담하기
           </a>
         </div>
+        <p className="mt-3 text-sm leading-relaxed text-slate-600">{SMART_HOME.ctaNotice}</p>
       </div>
 
       {/* 시나리오 선택기 */}

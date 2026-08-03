@@ -17,7 +17,6 @@ export default async function ServicesPage() {
   const site = await getSiteData();
   const repairCategories = [...site.repairCategories].sort((a, b) => a.order - b.order);
   const repairPolicyNotes = [
-    `단독 방문 최소 결제금액 ${site.policy.minSingleVisitWon.toLocaleString("ko-KR")}원`,
     `출장비 방문 1회당 ${site.policy.travelFeeWon.toLocaleString("ko-KR")}원 별도`,
     "자재비 별도",
     "공개 금액은 VAT 포함",

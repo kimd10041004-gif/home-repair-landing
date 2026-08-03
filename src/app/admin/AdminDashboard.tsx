@@ -561,22 +561,13 @@ function PricingTab({
 
       <section>
         <h2 className="text-lg font-bold text-brand-navy">공통 정책 금액</h2>
-        <div className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-3">
+        <div className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2">
           <div>
             <label className="text-sm text-slate-600">출장비 (원)</label>
             <input
               type="number"
               value={data.policy.travelFeeWon}
               onChange={(e) => update({ policy: { ...data.policy, travelFeeWon: Number(e.target.value) } })}
-              className="mt-1 min-h-9 w-full rounded-lg border border-slate-300 px-2 text-sm"
-            />
-          </div>
-          <div>
-            <label className="text-sm text-slate-600">단독 방문 최소 결제금액 (원)</label>
-            <input
-              type="number"
-              value={data.policy.minSingleVisitWon}
-              onChange={(e) => update({ policy: { ...data.policy, minSingleVisitWon: Number(e.target.value) } })}
               className="mt-1 min-h-9 w-full rounded-lg border border-slate-300 px-2 text-sm"
             />
           </div>

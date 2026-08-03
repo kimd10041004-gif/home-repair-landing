@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import {
+  AIRBNB_SETUP_PACKAGES,
   CONSULT_PROCESS_STEPS,
   MAIN_FAQ,
   REPAIR_OTHER_CTA,
@@ -38,7 +39,7 @@ export default async function HomePage() {
   const repairCategories = [...site.repairCategories].sort((a, b) => a.order - b.order);
   const carePriceFrom = site.tenantCarePackages[0]?.priceWon ?? 0;
   const smartHomePriceFrom = site.smartHomePackages[0]?.priceWon ?? 0;
-  const minSingleVisitWon = site.policy.minSingleVisitWon;
+  const airbnbSetupPriceFrom = AIRBNB_SETUP_PACKAGES[0].priceWon;
   const travelFeeWon = site.policy.travelFeeWon;
 
   return (
@@ -78,8 +79,8 @@ export default async function HomePage() {
 
             {/* 가격 핵심 한 줄 요약: 페이지를 끝까지 읽어야 조건을 알게 되는 문제를 없앤다 */}
             <p className="mt-6 text-sm font-semibold text-brand-navy">
-              생활 집수리 최소 결제 {won(minSingleVisitWon)}원 · 출장비 방문당 {won(travelFeeWon)}원 ·
-              케어 {won(carePriceFrom)}원부터 · IoT {won(smartHomePriceFrom)}원부터
+              출장비 방문당 {won(travelFeeWon)}원 · 케어 {won(carePriceFrom)}원부터 · IoT{" "}
+              {won(smartHomePriceFrom)}원부터 · 에어비앤비 {won(airbnbSetupPriceFrom)}원부터
             </p>
             <p className="mt-1 text-sm text-slate-500">
               자재·제품비는 별도이며, 사진 안내 금액은 사전예상액입니다.
@@ -105,7 +106,7 @@ export default async function HomePage() {
           <h2 className="text-center text-[26px] font-bold text-brand-navy sm:text-[32px]">
             필요한 서비스를 선택해주세요
           </h2>
-          <div className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-3">
+          <div className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
             <Link
               href="/services"
               className="flex flex-col rounded-2xl border border-slate-200 p-5 transition hover:border-brand-teal"
@@ -113,8 +114,6 @@ export default async function HomePage() {
               <h3 className="text-lg font-bold text-brand-navy">생활 집수리</h3>
               <p className="mt-3 flex-1 text-base leading-relaxed text-slate-600">
                 필요한 작업을 개별 신청
-                <br />
-                최소 결제 {won(minSingleVisitWon)}원
                 <br />
                 출장비 방문당 {won(travelFeeWon)}원
               </p>
@@ -147,6 +146,20 @@ export default async function HomePage() {
                 제품비·출장비 별도
               </p>
               <span className="mt-4 text-sm font-semibold text-brand-navy">스마트홈 구성 보기 →</span>
+            </Link>
+            <Link
+              href="/airbnb-setup"
+              className="flex flex-col rounded-2xl border border-slate-200 bg-brand-cream p-5 transition hover:border-brand-teal"
+            >
+              <h3 className="text-lg font-bold text-brand-navy">에어비앤비 세팅 케어</h3>
+              <p className="mt-3 flex-1 text-base leading-relaxed text-slate-600">
+                화장실·가구·마감 공사를 한 번에 준비
+                <br />
+                {won(airbnbSetupPriceFrom)}원부터
+                <br />
+                가구비·자재비·출장비 별도
+              </p>
+              <span className="mt-4 text-sm font-semibold text-brand-navy">에어비앤비 패키지 보기 →</span>
             </Link>
           </div>
         </div>

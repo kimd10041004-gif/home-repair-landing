@@ -5,7 +5,7 @@
  *
  * 화면 너비별 처리:
  * - 1280px 이상: 아이콘+텍스트 버튼
- * - 768~1279px: 52px 원형 아이콘 버튼, 마우스를 올리면 설명 표시
+ * - 768~1279px: 64px 원형 아이콘 버튼, 마우스를 올리면 설명 표시
  * - 767px 이하: 완전히 숨김(이 너비에서는 모바일 하단 고정바가 대신한다)
  *
  * 전화 버튼은 터치(전화 가능) 기기에서는 바로 tel: 링크로 연결되고, 마우스 중심의
@@ -78,11 +78,11 @@ export default function DesktopFloatingCta() {
         {isTouchDevice ? (
           <a
             href={`tel:${SITE.phone}`}
-            className="flex h-13 w-13 items-center justify-center gap-2 rounded-full bg-brand-navy text-white shadow-sm xl:h-auto xl:w-auto xl:min-h-12 xl:rounded-lg xl:px-5 xl:py-3"
+            className="flex h-16 w-16 items-center justify-center gap-2 rounded-full bg-brand-navy text-white shadow-sm xl:h-auto xl:w-40 xl:min-h-14 xl:justify-start xl:rounded-lg xl:px-6 xl:py-4"
             aria-label={`전화 상담 ${SITE.phone}로 연결`}
           >
-            <IconPhone className="h-5 w-5 shrink-0" />
-            <span className="hidden text-sm font-semibold xl:inline">전화 상담</span>
+            <IconPhone className="h-6 w-6 shrink-0" />
+            <span className="hidden text-base font-semibold xl:inline">전화 상담</span>
           </a>
         ) : (
           <button
@@ -90,11 +90,11 @@ export default function DesktopFloatingCta() {
             onClick={() => setPopupOpen((v) => !v)}
             aria-expanded={popupOpen}
             aria-haspopup="dialog"
-            className="flex h-13 w-13 items-center justify-center gap-2 rounded-full bg-brand-navy text-white shadow-sm xl:h-auto xl:w-auto xl:min-h-12 xl:rounded-lg xl:px-5 xl:py-3"
+            className="flex h-16 w-16 items-center justify-center gap-2 rounded-full bg-brand-navy text-white shadow-sm xl:h-auto xl:w-40 xl:min-h-14 xl:justify-start xl:rounded-lg xl:px-6 xl:py-4"
             aria-label="전화 상담 번호 보기"
           >
-            <IconPhone className="h-5 w-5 shrink-0" />
-            <span className="hidden text-sm font-semibold xl:inline">전화 상담</span>
+            <IconPhone className="h-6 w-6 shrink-0" />
+            <span className="hidden text-base font-semibold xl:inline">전화 상담</span>
           </button>
         )}
 
@@ -144,11 +144,11 @@ export default function DesktopFloatingCta() {
           href={SITE.kakaoUrl}
           target="_blank"
           rel="noopener noreferrer"
-          className="flex h-13 w-13 items-center justify-center gap-2 rounded-full bg-yellow-400 text-slate-900 shadow-sm xl:h-auto xl:w-auto xl:min-h-12 xl:rounded-lg xl:px-5 xl:py-3"
+          className="flex h-16 w-16 items-center justify-center gap-2 rounded-full bg-yellow-400 text-slate-900 shadow-sm xl:h-auto xl:w-40 xl:min-h-14 xl:justify-start xl:rounded-lg xl:px-6 xl:py-4"
           aria-label="카카오톡 상담 채널 열기"
         >
-          <IconChat className="h-5 w-5 shrink-0" />
-          <span className="hidden text-sm font-semibold xl:inline">카카오 상담</span>
+          <IconChat className="h-6 w-6 shrink-0" />
+          <span className="hidden text-base font-semibold xl:inline">카카오 상담</span>
         </a>
         <span className="pointer-events-none absolute right-full top-1/2 mr-3 -translate-y-1/2 whitespace-nowrap rounded-md bg-brand-navy px-3 py-1.5 text-sm font-medium text-white opacity-0 transition-opacity group-hover:opacity-100 xl:hidden">
           카카오 상담

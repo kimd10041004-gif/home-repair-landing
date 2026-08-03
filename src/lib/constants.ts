@@ -60,6 +60,7 @@ export const NAV_ITEMS = [
   { href: "/services", label: "서비스" },
   { href: "/tenant-care", label: "케어 패키지" },
   { href: "/smart-home", label: "스마트홈" },
+  { href: "/airbnb-setup", label: "에어비앤비" },
   { href: "/reviews", label: "작업 예시" },
   { href: "/guide", label: "이용안내" },
 ] as const;
@@ -75,7 +76,6 @@ export const ESTIMATE_CTA_LABEL = "사진 상담 시작";
 export const TRAVEL_FEE_WON = 20000;
 export const TRAVEL_FEE_NOTICE =
   "출장비는 방문 1회당 20,000원이며, 같은 방문에서 여러 작업을 진행해도 출장비는 한 번만 적용됩니다. 서울·경기 전 지역 동일하게 적용됩니다.";
-export const MIN_SINGLE_VISIT_WON = 150000;
 export const PURCHASE_AGENCY_FEE_WON = 30000;
 export const EXTRA_LABOR_FEE_NOTICE =
   "추가공임은 작업자 1인 기준 30분당 50,000원이며, 2인 이상 투입 시 인원에 비례합니다. 추가 작업은 내용·금액·승인 시각을 안내하고 고객님이 동의한 뒤에만 진행합니다.";
@@ -122,7 +122,7 @@ export const DEPOSIT_SUMMARY_NOTES = [
 export const CONSULT_PROCESS_STEPS = [
   "사진과 요청사항 접수",
   "사전예상액과 방문 범위 안내",
-  "견적서 확인 및 계약금 30% 결제",
+  "견적서 확인 후 진행(케어·IoT는 계약금 30% 결제)",
   "현장 확인과 고객 동의 후 작업",
   "작동 확인·정리·잔금 결제",
 ] as const;
@@ -430,7 +430,6 @@ export const REPAIR_OTHER_CTA = {
 };
 
 export const REPAIR_POLICY_NOTES = [
-  `단독 방문 최소 결제금액 ${MIN_SINGLE_VISIT_WON.toLocaleString("ko-KR")}원`,
   `출장비 방문 1회당 ${TRAVEL_FEE_WON.toLocaleString("ko-KR")}원 별도`,
   "자재비 별도",
   "공개 금액은 VAT 포함",
@@ -533,7 +532,7 @@ export const TENANT_CARE_PACKAGES: TenantCarePackage[] = [
   {
     id: "light",
     name: "라이트",
-    priceWon: 590000,
+    priceWon: 150000,
     targetNote: "소형 설치·교체 작업 중심",
     visitNote: "본 시공 1회",
     includes: [
@@ -546,7 +545,7 @@ export const TENANT_CARE_PACKAGES: TenantCarePackage[] = [
   {
     id: "standard",
     name: "스탠다드",
-    priceWon: 990000,
+    priceWon: 250000,
     targetNote: "여러 작업을 함께 진행",
     visitNote: "본 시공 1회",
     includes: [
@@ -559,7 +558,7 @@ export const TENANT_CARE_PACKAGES: TenantCarePackage[] = [
   {
     id: "total",
     name: "토탈",
-    priceWon: 1490000,
+    priceWon: 500000,
     targetNote: "필요 시 현장 실측 포함",
     visitNote: "필요 시 현장 실측 1회 + 본 시공 1회",
     includes: [
@@ -695,6 +694,8 @@ export const SMART_HOME = {
     "제품비·부자재비·앱·클라우드 구독료는 고객이 부담합니다. 모든 장비가 하나의 앱으로 통합되는 것은 아니며, 모델별 호환성을 사전에 확인한 뒤 안내해 드립니다.",
   windowAutomationNotice:
     "창호 구조, 전원, 구동력, 수동 해제와 안전장치를 확인한 뒤 조건부로 제공되는 실측형 옵션입니다.",
+  ctaNotice:
+    "상담 신청만으로 계약이나 결제가 확정되지 않습니다. 사진 확인 후 견적서와 주요 거래조건을 안내하며, 고객 확인과 계약금 30% 결제가 완료되면 일정이 확정됩니다.",
 } as const;
 
 export type SmartHomePackageId = "start" | "life" | "fullhome";
@@ -714,28 +715,28 @@ export const SMART_HOME_PACKAGES: SmartHomePackage[] = [
   {
     id: "start",
     name: "스마트 스타트",
-    priceWon: 490000,
+    priceWon: 150000,
     priceFrom: false,
     deviceLimit: "일반 장비 최대 4개",
-    automationLimit: "자동화 최대 2개",
+    automationLimit: "자동화 최대 1개",
     visitNote: "방문 1회",
   },
   {
     id: "life",
     name: "스마트 라이프",
-    priceWon: 990000,
+    priceWon: 200000,
     priceFrom: false,
     deviceLimit: "일반 장비 최대 10개",
-    automationLimit: "자동화 최대 5개",
+    automationLimit: "자동화 최대 3개",
     visitNote: "방문 1회",
   },
   {
     id: "fullhome",
     name: "스마트 풀홈",
-    priceWon: 1990000,
+    priceWon: 300000,
     priceFrom: true,
     deviceLimit: "일반 장비 최대 20개",
-    automationLimit: "자동화 최대 10개",
+    automationLimit: "자동화 최대 5개",
     visitNote: "최대 2회 방문",
     extraNote: "현장 실측과 호환성 확인 후 범위 확정",
   },
@@ -826,7 +827,6 @@ export const SMART_HOME_CUSTOMER_PROTECTION = [
   "부모님 케어 기능은 거주자 동의를 전제로 설정합니다.",
   "의료·건강상태를 판단하는 서비스가 아닙니다.",
   "인터넷·클라우드 장애 시 일부 원격 기능이 제한될 수 있습니다.",
-  "매립형 전기작업 등 자격·등록이 필요한 작업은 전문업체에 이관합니다.",
 ];
 
 export const SMART_HOME_DEVICE_OPTIONS = [
@@ -835,7 +835,7 @@ export const SMART_HOME_DEVICE_OPTIONS = [
   "각종 센서(누수/문열림/동작)",
   "스마트 커튼·블라인드",
   "홈캠",
-  "도어락(전문업체 이관 대상)",
+  "도어락",
   "생활가전 연동",
   "기타(추가 요청사항에 작성)",
 ];
@@ -890,6 +890,218 @@ export const SMART_HOME_FAQ = [
   },
 ] as const;
 
+// ── ④ 에어비앤비 세팅 케어 (화장실·가구·배치·마감 공사를 한 번의 계획으로) ──────
+// 기존 생활 집수리/세입자·주거 케어/스마트홈 서비스·가격과 절대 혼합하지 않는 독립 서비스.
+// 반듯집수리는 시공·세팅 서비스만 제공하며, 숙박업 신고·사업자등록 등 인허가는
+// 대행하거나 보장하지 않는다는 점을 페이지 전반에 명확히 안내한다.
+export const AIRBNB_SETUP = {
+  title: "에어비앤비 세팅 케어",
+  subtitle: "게스트를 맞이할 준비까지, 한 번의 계획으로",
+  intro:
+    "숙소로 운영할 집을 화장실부터 가구·배치, 도배·장판 같은 마감 공사까지 한 번의 계획으로 준비하고 싶으신가요?",
+  description:
+    "반듯집수리 에어비앤비 세팅 케어는 화장실 리모델링, 가구·소품 배치, 도배·장판·조명 등 마감 공사를 한 번의 계획으로 묶어 진행하는 패키지 서비스입니다. 게스트를 맞이하기 좋은 상태로 공간을 준비해 드립니다.",
+  descriptionSub:
+    "숙박업 신고, 사업자등록, 소방·건축 기준 충족 등 인허가 절차는 포함되지 않으며 대행하지 않습니다. 실제 작업 범위와 비용은 사진 상담 후 견적서에 명확히 안내합니다.",
+  ctaPrimary: "사진으로 상담 시작",
+  ctaSecondary: "카카오톡으로 상담하기",
+  ctaNotice:
+    "상담 신청만으로 계약이나 결제가 확정되지 않습니다. 사진 확인 후 견적서와 주요 거래조건을 안내하며, 고객 확인과 계약금 30% 결제가 완료되면 일정이 확정됩니다.",
+  packageFootnote:
+    "안내된 작업 예시가 모두 자동으로 포함되는 것은 아닙니다. 최종 범위는 견적서의 작업 항목과 수량으로 확정됩니다.",
+  exclusionNotice:
+    "패키지 기본 범위에 포함되지 않는 작업은 사진 또는 현장 확인 후 별도의 사전예상액을 안내합니다.",
+  extraWorkNotice1:
+    "상담 시 확정된 작업 범위를 초과하거나 현장에서 새로운 작업이 필요한 경우, 작업 내용과 추가 예상금액을 먼저 안내합니다. 고객님의 동의를 받은 후에만 추가 작업을 진행하며, 사전에 동의받지 않은 추가 비용은 청구하지 않습니다.",
+  extraWorkNotice2:
+    "추가 작업이 당일 진행하기 어렵거나 별도의 자재·가구·인력이 필요한 경우 새로운 일정과 견적을 안내할 수 있습니다.",
+  licenseNoticeTitle: "숙박업 신고·인허가 안내",
+  licenseNoticeBody: [
+    "반듯집수리는 화장실·가구·마감 공사 등 시공·세팅 서비스만 제공하며, 외국인관광 도시민박업 등 숙박업 신고, 사업자등록, 소방·건축 기준 충족 여부는 대행하거나 보장하지 않습니다.",
+    "숙박업 등록 가능 여부(건축물 용도, 지역 규제, 소방 설비 기준 등)는 관할 구청·소방서 등을 통해 고객님이 직접 사전에 확인하시길 권장드립니다.",
+    "임차한 건물인 경우 시설 교체·공사 전에 임대차계약서와 건물 관리규정을 확인하고, 필요한 경우 임대인 또는 관리주체의 사전 동의를 받아야 합니다.",
+  ],
+  depositNoticeTitle: "계약금 안내",
+  depositNoticeBody: [DEPOSIT_POLICY_TEXT],
+  cancelPolicyTitle: "변경·취소·환불 안내",
+  cancelPolicyBody: [REFUND_POLICY_TEXT],
+  asPolicyTitle: "A/S 및 보증 안내",
+  asPolicyBody: [SERVICE_AS_NOTICE],
+  travelFeeNotice: [
+    `출장비는 실제 방문 1회당 ${TRAVEL_FEE_WON.toLocaleString("ko-KR")}원이며, 서울·경기 전 지역 동일하게 적용됩니다.`,
+    "실측과 본 시공으로 두 번 방문하면 출장비 총 40,000원입니다.",
+    "패키지 가격에는 출장비와 자재비·가구비가 포함되어 있지 않으며, 견적서에서 항목별로 구분해 안내합니다.",
+  ],
+  consultFlow: CONSULT_PROCESS_STEPS,
+  submittedNotice1:
+    "상담 신청이 접수되었습니다. 사진과 작업 내용을 확인한 후 작업 범위와 총 예상 결제금액이 포함된 사전견적서를 안내해 드립니다.",
+  submittedNotice2:
+    "상담 신청만으로 계약이나 예약이 확정되지 않으며, 계약금 30% 결제가 완료되어야 일정이 확정됩니다.",
+} as const;
+
+export type AirbnbSetupPackageId = "styling" | "renewal" | "full";
+
+export type AirbnbSetupPackage = {
+  id: AirbnbSetupPackageId;
+  name: string;
+  priceWon: number;
+  priceFrom: boolean;
+  targetNote: string;
+  visitNote: string;
+  includes: string[];
+};
+
+export const AIRBNB_SETUP_PACKAGES: AirbnbSetupPackage[] = [
+  {
+    id: "styling",
+    name: "스타일링",
+    priceWon: 1500000,
+    priceFrom: false,
+    targetNote: "화장실·마감 공사 없이 가구·소품 배치만 필요한 경우",
+    visitNote: "본 시공 1회",
+    includes: [
+      "가구·소품 배치 및 동선 구성",
+      "숙소 등록용 사진 스타일링(조명·소품 연출)",
+      "본 시공 1회",
+      "가구비·자재비·출장비 별도",
+    ],
+  },
+  {
+    id: "renewal",
+    name: "리뉴얼",
+    priceWon: 3000000,
+    priceFrom: false,
+    targetNote: "화장실 부분 개선과 가구·배치를 함께 진행하고 싶은 경우",
+    visitNote: "필요 시 현장 실측 1회 + 본 시공 1회",
+    includes: [
+      "화장실 부분 개선(수전·도기·타일 일부 등)",
+      "가구·소품 배치 및 스타일링",
+      "도배·장판·조명 등 마감 공사 일부",
+      "가구비·자재비·출장비 별도",
+    ],
+  },
+  {
+    id: "full",
+    name: "에어비앤비 풀패키지",
+    priceWon: 5000000,
+    priceFrom: true,
+    targetNote: "화장실부터 가구·마감 공사까지 한 번에 준비하는 경우",
+    visitNote: "현장 실측 1회 + 본 시공(공사 규모에 따라 여러 날 진행)",
+    includes: [
+      "화장실 전체 리모델링",
+      "가구·소품 전체 배치 및 스타일링",
+      "도배·장판·조명·콘센트 등 마감 공사",
+      "숙소 등록용 사진 스타일링",
+      "가구비·자재비·출장비 별도",
+    ],
+  },
+];
+
+export const AIRBNB_SETUP_EXCLUSIONS = [
+  "숙박업 신고, 사업자등록 등 인허가 절차",
+  "스프링클러 등 고정 소방설비 설치",
+  "발코니 확장, 구조 변경 등 대수선 공사",
+  "오·급수관 이설 등 배관 전체 교체",
+  "엘리베이터·공용부 공사",
+  "전문 사진작가 촬영(숙소 등록용 스타일링만 포함)",
+  "가구·가전 제품비",
+  "견적서에 기재되지 않은 작업",
+];
+
+export const AIRBNB_SETUP_MATERIAL_OPTIONS = [
+  {
+    id: "customer",
+    title: "고객이 가구·자재를 직접 준비하는 경우",
+    body: [
+      "고객이 원하는 가구·소품·자재를 직접 구매하여 준비할 수 있습니다.",
+      "작업 전 제품명, 모델명, 규격과 배치 장소 사진을 확인하여 설치·배치 가능 여부를 안내합니다.",
+      "고객이 직접 준비한 제품의 제조상 결함과 자체 불량은 해당 제품의 제조사 또는 판매처 보증기준이 적용됩니다.",
+    ],
+  },
+  {
+    id: "bandeut",
+    title: "반듯집수리가 가구·자재를 준비하는 경우",
+    body: [
+      `가구·자재 준비가 어려운 고객은 구매·운반 대행을 요청할 수 있습니다. 기본 구매대행비는 동일 판매처 1회 주문 기준 ${PURCHASE_AGENCY_FEE_WON.toLocaleString("ko-KR")}원입니다.`,
+      "제품명, 모델명, 수량, 가구·자재비와 구매·운반 대행업무 범위를 견적서에 구분하여 사전 안내합니다.",
+      "고객이 승인하지 않은 제품이나 대행비는 청구하지 않습니다.",
+    ],
+  },
+];
+
+export const AIRBNB_SETUP_CONSENTS: TenantCareConsent[] = [
+  { id: "privacy", label: "개인정보 수집·이용 동의", required: true },
+  {
+    id: "priceTerms",
+    label: "가격·출장비·자재비·계약금 30% 등 주요 거래조건 확인",
+    required: true,
+  },
+  {
+    id: "licenseResponsibility",
+    label:
+      "숙박업 신고·사업자등록 등 인허가는 고객이 직접 진행하며 반듯집수리가 대행·보장하지 않는다는 안내 확인",
+    required: true,
+  },
+  {
+    id: "landlordCheck",
+    label: "임대차계약 및 임대인·관리주체 확인 책임 안내",
+    required: true,
+  },
+  {
+    id: "cancelPolicy",
+    label: "변경·취소·환불 안내 확인",
+    required: true,
+  },
+  {
+    id: "photoUse",
+    label: "작업 전·후 사진의 포트폴리오 활용 동의",
+    required: false,
+  },
+  {
+    id: "reviewUse",
+    label: "고객이 직접 작성한 후기의 공개 활용 동의",
+    required: false,
+  },
+  { id: "marketing", label: "광고성 정보 수신 동의", required: false },
+];
+
+export const AIRBNB_SETUP_WORK_ITEMS = [
+  "화장실 리모델링",
+  "가구·소품 배치",
+  "도배·장판",
+  "조명·콘센트 교체",
+  "방충망",
+  "도어락·스마트락",
+  "기타(추가 요청사항에 작성)",
+];
+
+export const AIRBNB_SETUP_FAQ = [
+  {
+    q: "정말 500만원이면 에어비앤비를 시작할 수 있나요?",
+    a: "화장실 전체 리모델링, 가구·소품 전체 배치, 도배·장판·조명 등 마감 공사를 포함한 풀패키지 기준 대표가격이며, 현장 상태와 선택하신 자재·가구 등급에 따라 최종 금액은 달라질 수 있습니다. 가구·자재비와 숙박업 인허가 관련 비용은 포함되지 않습니다.",
+  },
+  {
+    q: "숙박업 신고나 사업자등록도 대신 해주시나요?",
+    a: "아니요. 반듯집수리는 시공·세팅 서비스만 제공하며, 외국인관광 도시민박업 등 숙박업 신고, 사업자등록, 소방·건축 기준 충족 여부 확인은 고객님이 직접 진행하셔야 합니다.",
+  },
+  {
+    q: "임차한 집인데 진행할 수 있나요?",
+    a: "가능합니다. 다만 시설 교체·공사 전에 임대차계약서와 건물 관리규정을 확인하시고, 필요한 경우 임대인 또는 관리주체의 사전 동의를 받아 주셔야 합니다.",
+  },
+  {
+    q: "가구·소품은 어떤 걸로 채워주나요?",
+    a: "원하시는 컨셉과 예산에 맞춰 가구·소품 목록을 제안해 드리며, 직접 구매를 원하시면 구매대행도 가능합니다. 가구·소품 비용은 시공비와 별도입니다.",
+  },
+  {
+    q: "숙소 등록용 사진도 찍어주시나요?",
+    a: "가구·소품 배치와 조명 연출 등 스타일링은 포함되지만, 전문 사진작가 촬영은 별도 옵션이며 필요 시 제휴 업체를 안내해 드립니다.",
+  },
+  {
+    q: "계약금은 얼마인가요?",
+    a: "제품·자재비를 제외한 계약대상 서비스 금액의 30%를 계약금으로 결제하며, 계약금은 총 작업대금에 포함되어 잔금에서 전액 차감됩니다.",
+  },
+] as const;
+
 // ── 메인 FAQ (최종 개편안 3-⑦: 6문항만 유지, 나머지는 이용안내 전체보기로 이동) ──
 export const MAIN_FAQ = [
   {
@@ -906,7 +1118,7 @@ export const MAIN_FAQ = [
   },
   {
     q: "계약금은 얼마인가요?",
-    a: "제품·자재비를 제외한 계약대상 서비스 금액의 30%를 계약금으로 결제하면 일정이 확정됩니다. 계약금은 잔금에서 전액 차감됩니다.",
+    a: "계약금은 세입자·주거 케어와 스마트홈 IoT 케어에만 적용되며, 제품·자재비를 제외한 계약대상 서비스 금액의 30%를 결제하면 일정이 확정됩니다. 생활 집수리(개별 작업)는 계약금이 없으며, 문의 주시면 사진을 확인한 후 바로 견적을 안내해 드립니다.",
   },
   {
     q: "집수리와 스마트홈을 함께 신청할 수 있나요?",

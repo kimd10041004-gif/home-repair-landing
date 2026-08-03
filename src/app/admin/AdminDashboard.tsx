@@ -7,10 +7,11 @@ import type {
   RepairCategoryData,
   WorkCaseData,
   AboutPhotoData,
+  FaqData,
 } from "@/lib/siteData";
 import PhotoUploadButton from "./PhotoUploadButton";
 
-type Tab = "photos" | "pricing";
+type Tab = "photos" | "pricing" | "copy" | "faq";
 
 function moveItem<T>(list: T[], index: number, direction: -1 | 1): T[] {
   const target = index + direction;
@@ -106,13 +107,35 @@ export default function AdminDashboard({ initialData }: { initialData: SiteData 
         >
           서비스·가격 관리
         </button>
+        <button
+          type="button"
+          onClick={() => setTab("copy")}
+          className={`min-h-11 rounded-t-md px-4 py-2 text-sm font-semibold ${
+            tab === "copy" ? "border-b-2 border-brand-teal-dark text-brand-teal-dark" : "text-slate-500"
+          }`}
+        >
+          문구 관리
+        </button>
+        <button
+          type="button"
+          onClick={() => setTab("faq")}
+          className={`min-h-11 rounded-t-md px-4 py-2 text-sm font-semibold ${
+            tab === "faq" ? "border-b-2 border-brand-teal-dark text-brand-teal-dark" : "text-slate-500"
+          }`}
+        >
+          FAQ 관리
+        </button>
       </div>
 
       <div className="mt-6">
         {tab === "photos" ? (
           <PhotosTab data={data} update={update} />
-        ) : (
+        ) : tab === "pricing" ? (
           <PricingTab data={data} update={update} />
+        ) : tab === "copy" ? (
+          <CopyTab data={data} update={update} />
+        ) : (
+          <FaqTab data={data} update={update} />
         )}
       </div>
 
@@ -408,6 +431,11 @@ function PricingTab({
       smartHomePackages: data.smartHomePackages.map((p) => (p.id === id ? { ...p, ...patch } : p)),
     });
   }
+  function updateAirbnbPkg(id: string, patch: Partial<SiteData["airbnbSetupPackages"][number]>) {
+    update({
+      airbnbSetupPackages: data.airbnbSetupPackages.map((p) => (p.id === id ? { ...p, ...patch } : p)),
+    });
+  }
 
   return (
     <div className="flex flex-col gap-10">
@@ -560,6 +588,41 @@ function PricingTab({
       </section>
 
       <section>
+        <h2 className="text-lg font-bold text-brand-navy">에어비앤비 세팅 케어 가격</h2>
+        <div className="mt-4 flex flex-col gap-3">
+          {data.airbnbSetupPackages.map((p) => (
+            <div key={p.id} className="grid grid-cols-1 gap-2 rounded-xl border border-slate-200 p-3 sm:grid-cols-4">
+              <input
+                value={p.name}
+                onChange={(e) => updateAirbnbPkg(p.id, { name: e.target.value })}
+                className="min-h-9 rounded-lg border border-slate-300 px-2 text-sm font-semibold"
+              />
+              <input
+                type="number"
+                value={p.priceWon}
+                onChange={(e) => updateAirbnbPkg(p.id, { priceWon: Number(e.target.value) })}
+                className="min-h-9 rounded-lg border border-slate-300 px-2 text-sm"
+              />
+              <label className="flex items-center gap-2 text-sm text-slate-600">
+                <input
+                  type="checkbox"
+                  checked={p.priceFrom}
+                  onChange={(e) => updateAirbnbPkg(p.id, { priceFrom: e.target.checked })}
+                />
+                &quot;부터&quot; 표시
+              </label>
+              <input
+                value={p.visitNote}
+                onChange={(e) => updateAirbnbPkg(p.id, { visitNote: e.target.value })}
+                placeholder="방문 안내"
+                className="min-h-9 rounded-lg border border-slate-300 px-2 text-sm"
+              />
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <section>
         <h2 className="text-lg font-bold text-brand-navy">공통 정책 금액</h2>
         <div className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2">
           <div>
@@ -582,6 +645,173 @@ function PricingTab({
           </div>
         </div>
       </section>
+    </div>
+  );
+}
+
+// ── 문구 관리 탭 ───────────────────────────────────────────────────────
+// 마케팅 카피(히어로/소개 문구)만 편집 대상이다. 계약금·A/S·취소·서비스지역 등
+// "고정 정책 문구"는 여기 노출하지 않고 계속 constants.ts에 하드코딩한다.
+function CopyTab({
+  data,
+  update,
+}: {
+  data: SiteData;
+  update: (patch: Partial<SiteData>) => void;
+}) {
+  function updateCopy(patch: Partial<SiteData["copy"]>) {
+    update({ copy: { ...data.copy, ...patch } });
+  }
+
+  const fields: {
+    key: keyof SiteData["copy"];
+    label: string;
+    hint?: string;
+    multiline?: boolean;
+  }[] = [
+    { key: "heroTitle", label: "메인 히어로 제목", hint: "줄바꿈하려면 Enter를 누르세요.", multiline: true },
+    { key: "heroSubtitle", label: "메인 히어로 부제", hint: "줄바꿈하려면 Enter를 누르세요.", multiline: true },
+    { key: "servicesIntro", label: "생활 집수리 페이지 상단 소개문구", multiline: true },
+    { key: "tenantCareIntro", label: "세입자·주거 케어 페이지 도입부", multiline: true },
+    { key: "tenantCareDescription", label: "세입자·주거 케어 페이지 설명", multiline: true },
+    { key: "smartHomeDescription", label: "스마트홈 IoT 페이지 설명", multiline: true },
+    { key: "airbnbSetupIntro", label: "에어비앤비 세팅 케어 페이지 도입부", multiline: true },
+    { key: "airbnbSetupDescription", label: "에어비앤비 세팅 케어 페이지 설명", multiline: true },
+  ];
+
+  return (
+    <div className="flex flex-col gap-6">
+      <p className="rounded-xl bg-brand-cream p-4 text-sm leading-relaxed text-slate-700">
+        여기서는 각 페이지의 소개·설명 문구(마케팅 카피)만 수정할 수 있습니다. 계약금·A/S·취소·서비스
+        지역 안내 등 법적·정책 문구는 실수로 지워지는 것을 막기 위해 이 화면에서 편집할 수 없습니다.
+      </p>
+      {fields.map((f) => (
+        <div key={f.key}>
+          <label className="text-sm font-semibold text-slate-700">{f.label}</label>
+          {f.hint && <p className="text-xs text-slate-400">{f.hint}</p>}
+          <textarea
+            value={data.copy[f.key]}
+            onChange={(e) => updateCopy({ [f.key]: e.target.value })}
+            rows={f.multiline ? 3 : 1}
+            className="mt-1 w-full rounded-lg border border-slate-300 px-3 py-2 text-sm"
+          />
+        </div>
+      ))}
+    </div>
+  );
+}
+
+// ── FAQ 관리 탭 ─────────────────────────────────────────────────────────
+const FAQ_CATEGORIES: { id: FaqData["category"]; label: string }[] = [
+  { id: "main", label: "메인 페이지" },
+  { id: "tenant-care", label: "세입자·주거 케어" },
+  { id: "smart-home", label: "스마트홈 IoT" },
+  { id: "airbnb-setup", label: "에어비앤비 세팅 케어" },
+];
+
+function FaqTab({
+  data,
+  update,
+}: {
+  data: SiteData;
+  update: (patch: Partial<SiteData>) => void;
+}) {
+  function updateFaq(id: string, patch: Partial<FaqData>) {
+    update({ faqs: data.faqs.map((f) => (f.id === id ? { ...f, ...patch } : f)) });
+  }
+  function moveFaq(category: FaqData["category"], id: string, dir: -1 | 1) {
+    const categoryFaqs = data.faqs.filter((f) => f.category === category).sort((a, b) => a.order - b.order);
+    const idx = categoryFaqs.findIndex((f) => f.id === id);
+    const moved = moveItem(categoryFaqs, idx, dir);
+    const others = data.faqs.filter((f) => f.category !== category);
+    update({ faqs: [...others, ...moved] });
+  }
+  function deleteFaq(category: FaqData["category"], id: string) {
+    if (!confirm("이 FAQ 항목을 삭제할까요?")) return;
+    const categoryFaqs = withOrder(data.faqs.filter((f) => f.category === category && f.id !== id));
+    const others = data.faqs.filter((f) => f.category !== category);
+    update({ faqs: [...others, ...categoryFaqs] });
+  }
+  function addFaq(category: FaqData["category"]) {
+    const categoryFaqs = data.faqs.filter((f) => f.category === category);
+    const newFaq: FaqData = {
+      id: nextId("faq"),
+      category,
+      question: "새 질문",
+      answer: "",
+      order: categoryFaqs.length,
+    };
+    update({ faqs: [...data.faqs, newFaq] });
+  }
+
+  return (
+    <div className="flex flex-col gap-10">
+      {FAQ_CATEGORIES.map(({ id: category, label }) => {
+        const categoryFaqs = data.faqs.filter((f) => f.category === category).sort((a, b) => a.order - b.order);
+        return (
+          <section key={category}>
+            <div className="flex items-center justify-between">
+              <h2 className="text-lg font-bold text-brand-navy">{label} FAQ</h2>
+              <button
+                type="button"
+                onClick={() => addFaq(category)}
+                className="min-h-9 rounded-lg border border-brand-navy px-3 text-sm font-semibold text-brand-navy hover:bg-brand-cream"
+              >
+                + 질문 추가
+              </button>
+            </div>
+            <div className="mt-4 flex flex-col gap-3">
+              {categoryFaqs.map((f, i) => (
+                <div key={f.id} className="rounded-2xl border border-slate-200 p-4">
+                  <div className="flex items-start gap-3">
+                    <div className="flex flex-1 flex-col gap-2">
+                      <input
+                        value={f.question}
+                        onChange={(e) => updateFaq(f.id, { question: e.target.value })}
+                        placeholder="질문"
+                        className="min-h-9 rounded-lg border border-slate-300 px-2 text-sm font-semibold"
+                      />
+                      <textarea
+                        value={f.answer}
+                        onChange={(e) => updateFaq(f.id, { answer: e.target.value })}
+                        placeholder="답변"
+                        rows={2}
+                        className="rounded-lg border border-slate-300 px-2 py-1 text-sm"
+                      />
+                    </div>
+                    <div className="flex shrink-0 flex-col gap-1">
+                      <button
+                        type="button"
+                        onClick={() => moveFaq(category, f.id, -1)}
+                        disabled={i === 0}
+                        className="min-h-9 rounded-lg border border-slate-300 px-2 text-sm disabled:opacity-30"
+                      >
+                        ↑
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => moveFaq(category, f.id, 1)}
+                        disabled={i === categoryFaqs.length - 1}
+                        className="min-h-9 rounded-lg border border-slate-300 px-2 text-sm disabled:opacity-30"
+                      >
+                        ↓
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => deleteFaq(category, f.id)}
+                        className="min-h-9 rounded-lg border border-red-300 px-2 text-sm text-red-600 hover:bg-red-50"
+                      >
+                        삭제
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              ))}
+              {categoryFaqs.length === 0 && <p className="text-sm text-slate-500">등록된 질문이 없습니다.</p>}
+            </div>
+          </section>
+        );
+      })}
     </div>
   );
 }

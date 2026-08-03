@@ -6,7 +6,6 @@ import {
   SMART_HOME_COMMON_NOTES,
   SMART_HOME_CUSTOMER_PROTECTION,
   SMART_HOME_EXCLUDED_DEVICES,
-  SMART_HOME_FAQ,
   DEPOSIT_POLICY_TEXT,
   SERVICE_AS_NOTICE,
 } from "@/lib/constants";
@@ -33,6 +32,7 @@ export const revalidate = 60;
 export default async function SmartHomePage() {
   const site = await getSiteData();
   const smartHomePackages = site.smartHomePackages;
+  const faqs = site.faqs.filter((f) => f.category === "smart-home").sort((a, b) => a.order - b.order);
 
   return (
     <div className="mx-auto max-w-3xl px-4 py-10">
@@ -43,7 +43,7 @@ export default async function SmartHomePage() {
       <h1 className="mt-3 text-[26px] font-bold text-brand-navy sm:text-[32px]">
         {SMART_HOME.subtitle}
       </h1>
-      <p className="mt-4 text-base leading-relaxed text-slate-600">{SMART_HOME.description}</p>
+      <p className="mt-4 text-base leading-relaxed text-slate-600">{site.copy.smartHomeDescription}</p>
 
       <div className="mt-6 rounded-2xl border border-slate-200 bg-brand-cream p-5">
         <div className="flex flex-col gap-3 sm:flex-row">
@@ -143,12 +143,12 @@ export default async function SmartHomePage() {
       {/* FAQ */}
       <h2 className="mt-10 text-[26px] font-bold text-brand-navy sm:text-[32px]">자주 묻는 질문</h2>
       <div className="mt-4 flex flex-col gap-3">
-        {SMART_HOME_FAQ.map((item) => (
-          <details key={item.q} className="rounded-2xl border border-slate-200 p-4">
+        {faqs.map((item) => (
+          <details key={item.id} className="rounded-2xl border border-slate-200 p-4">
             <summary className="cursor-pointer text-sm font-semibold text-brand-navy">
-              {item.q}
+              {item.question}
             </summary>
-            <p className="mt-2 text-sm leading-relaxed text-slate-600">{item.a}</p>
+            <p className="mt-2 text-sm leading-relaxed text-slate-600">{item.answer}</p>
           </details>
         ))}
       </div>

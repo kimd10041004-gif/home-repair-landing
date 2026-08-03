@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { BRAND, TENANT_CARE, TENANT_CARE_EXCLUSIONS, TENANT_CARE_FAQ, TENANT_CARE_MATERIAL_OPTIONS } from "@/lib/constants";
+import { BRAND, TENANT_CARE, TENANT_CARE_EXCLUSIONS, TENANT_CARE_MATERIAL_OPTIONS } from "@/lib/constants";
 import { getSiteData } from "@/lib/siteData";
 import TenantCareForm from "@/components/TenantCareForm";
 
@@ -24,6 +24,7 @@ export const revalidate = 60;
 export default async function TenantCarePage() {
   const site = await getSiteData();
   const tenantCarePackages = site.tenantCarePackages;
+  const faqs = site.faqs.filter((f) => f.category === "tenant-care").sort((a, b) => a.order - b.order);
 
   return (
     <div className="mx-auto max-w-3xl px-4 py-10">
@@ -38,10 +39,10 @@ export default async function TenantCarePage() {
         {TENANT_CARE.subtitle}
       </p>
       <p className="mt-4 text-base leading-relaxed text-slate-600">
-        {TENANT_CARE.intro}
+        {site.copy.tenantCareIntro}
       </p>
       <p className="mt-3 text-base leading-relaxed text-slate-700">
-        {TENANT_CARE.description}
+        {site.copy.tenantCareDescription}
       </p>
       <p className="mt-2 text-sm leading-relaxed text-slate-500">
         {TENANT_CARE.descriptionSub}
@@ -230,12 +231,12 @@ export default async function TenantCarePage() {
       {/* 8. FAQ */}
       <h2 className="mt-10 text-[26px] font-bold text-brand-navy sm:text-[32px]">자주 묻는 질문</h2>
       <div className="mt-4 flex flex-col gap-3">
-        {TENANT_CARE_FAQ.map((item) => (
-          <details key={item.q} className="rounded-2xl border border-slate-200 p-4">
+        {faqs.map((item) => (
+          <details key={item.id} className="rounded-2xl border border-slate-200 p-4">
             <summary className="cursor-pointer text-sm font-semibold text-brand-navy">
-              {item.q}
+              {item.question}
             </summary>
-            <p className="mt-2 text-sm leading-relaxed text-slate-600">{item.a}</p>
+            <p className="mt-2 text-sm leading-relaxed text-slate-600">{item.answer}</p>
           </details>
         ))}
       </div>

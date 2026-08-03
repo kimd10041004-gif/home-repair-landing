@@ -1,9 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import {
-  AIRBNB_SETUP_PACKAGES,
   CONSULT_PROCESS_STEPS,
-  MAIN_FAQ,
   REPAIR_OTHER_CTA,
   SMART_HOME,
   TENANT_CARE,
@@ -39,8 +37,11 @@ export default async function HomePage() {
   const repairCategories = [...site.repairCategories].sort((a, b) => a.order - b.order);
   const carePriceFrom = site.tenantCarePackages[0]?.priceWon ?? 0;
   const smartHomePriceFrom = site.smartHomePackages[0]?.priceWon ?? 0;
-  const airbnbSetupPriceFrom = AIRBNB_SETUP_PACKAGES[0].priceWon;
+  const airbnbSetupPriceFrom = site.airbnbSetupPackages[0]?.priceWon ?? 0;
   const travelFeeWon = site.policy.travelFeeWon;
+  const mainFaqs = site.faqs.filter((f) => f.category === "main").sort((a, b) => a.order - b.order);
+  const heroTitleLines = site.copy.heroTitle.split("\n");
+  const heroSubtitleLines = site.copy.heroSubtitle.split("\n");
 
   return (
     <div>
@@ -52,14 +53,20 @@ export default async function HomePage() {
               서울·경기 전 지역 예약형 집수리
             </p>
             <h1 className="mt-3 text-[32px] font-bold leading-snug text-brand-navy sm:text-[44px]">
-              고장 난 곳은 반듯하게,
-              <br />
-              생활은 더 편리하게.
+              {heroTitleLines.map((line, i) => (
+                <span key={i}>
+                  {line}
+                  {i < heroTitleLines.length - 1 && <br />}
+                </span>
+              ))}
             </h1>
             <p className="mt-4 text-base leading-relaxed text-slate-600">
-              생활 집수리부터 주거 케어, 스마트홈 IoT까지
-              <br />
-              필요한 서비스를 구분해 안내합니다.
+              {heroSubtitleLines.map((line, i) => (
+                <span key={i}>
+                  {line}
+                  {i < heroSubtitleLines.length - 1 && <br />}
+                </span>
+              ))}
             </p>
 
             <div className="mt-6 flex flex-col items-center justify-center gap-3 sm:flex-row lg:justify-start">
@@ -309,12 +316,12 @@ export default async function HomePage() {
         <div className="mx-auto max-w-[680px] px-4 py-12">
           <h2 className="text-[26px] font-bold text-brand-navy sm:text-[32px]">자주 묻는 질문</h2>
           <div className="mt-5 flex flex-col gap-3">
-            {MAIN_FAQ.map((item) => (
-              <details key={item.q} className="rounded-2xl border border-slate-200 p-4">
+            {mainFaqs.map((item) => (
+              <details key={item.id} className="rounded-2xl border border-slate-200 p-4">
                 <summary className="cursor-pointer text-base font-semibold text-brand-navy">
-                  {item.q}
+                  {item.question}
                 </summary>
-                <p className="mt-2 text-base leading-relaxed text-slate-600">{item.a}</p>
+                <p className="mt-2 text-base leading-relaxed text-slate-600">{item.answer}</p>
               </details>
             ))}
           </div>

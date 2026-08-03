@@ -49,6 +49,16 @@ export type SmartHomePackageData = {
   extraNote: string;
 };
 
+export type AirbnbSetupPackageData = {
+  id: "styling" | "renewal" | "full";
+  name: string;
+  priceWon: number;
+  priceFrom: boolean;
+  targetNote: string;
+  visitNote: string;
+  includes: string[];
+};
+
 export type WorkCaseData = {
   id: string;
   category: "repair" | "tenant-care" | "smart-home";
@@ -72,6 +82,27 @@ export type AboutPhotoData = {
   order: number;
 };
 
+export type FaqData = {
+  id: string;
+  category: "main" | "tenant-care" | "smart-home" | "airbnb-setup";
+  question: string;
+  answer: string;
+  order: number;
+};
+
+// 편집 가능한 마케팅 카피 문구만 모아둔 타입. 계약금·A/S·취소·서비스지역 등
+// "고정 정책 문구"는 여기 포함하지 않고 계속 constants.ts에 하드코딩한다.
+export type SiteCopy = {
+  heroTitle: string;
+  heroSubtitle: string;
+  servicesIntro: string;
+  tenantCareIntro: string;
+  tenantCareDescription: string;
+  smartHomeDescription: string;
+  airbnbSetupIntro: string;
+  airbnbSetupDescription: string;
+};
+
 export type SitePolicy = {
   travelFeeWon: number;
   purchaseAgencyFeeWon: number;
@@ -81,11 +112,14 @@ export type SiteData = {
   version: number;
   updatedAt: string;
   policy: SitePolicy;
+  copy: SiteCopy;
   repairCategories: RepairCategoryData[];
   tenantCarePackages: TenantCarePackageData[];
   smartHomePackages: SmartHomePackageData[];
+  airbnbSetupPackages: AirbnbSetupPackageData[];
   workCases: WorkCaseData[];
   aboutPhotos: AboutPhotoData[];
+  faqs: FaqData[];
 };
 
 // ── 기본값: 현재 constants.ts에 하드코딩되어 있던 값 그대로 이관 ─────────────
@@ -97,6 +131,22 @@ export const DEFAULT_SITE_DATA: SiteData = {
   policy: {
     travelFeeWon: 20000,
     purchaseAgencyFeeWon: 30000,
+  },
+  copy: {
+    heroTitle: "고장 난 곳은 반듯하게,\n생활은 더 편리하게.",
+    heroSubtitle: "생활 집수리부터 주거 케어, 스마트홈 IoT까지\n필요한 서비스를 구분해 안내합니다.",
+    servicesIntro:
+      "고장 나고 불편한 곳을 필요한 만큼 개별로 신청하는 서비스입니다. 세입자·주거 케어, 스마트홈 IoT 케어와는 별개의 서비스입니다.",
+    tenantCareIntro:
+      "입주·퇴거·공실 정비, 부모님 댁 정비처럼 여러 설치와 교체를 한 번의 계획으로 묶어 진행하고 싶으신가요?",
+    tenantCareDescription:
+      "반듯집수리 세입자·주거 케어는 여러 집수리를 한 번의 계획으로 묶어 진행하는 패키지 서비스입니다. 건물의 손상과 구조 변경을 최소화하고, 원상복구를 고려하여 필요한 시설을 교체·설치합니다.",
+    smartHomeDescription:
+      "조명·플러그·센서·커튼·홈캠·출입·생활가전을 앱과 자동화로 연결하는 서비스입니다. 표시 가격은 제품가격이 아니라 설치·연결·설정 공임입니다.",
+    airbnbSetupIntro:
+      "숙소로 운영할 집을 화장실부터 가구·배치, 도배·장판 같은 마감 공사까지 한 번의 계획으로 준비하고 싶으신가요?",
+    airbnbSetupDescription:
+      "반듯집수리 에어비앤비 세팅 케어는 화장실 리모델링, 가구·소품 배치, 도배·장판·조명 등 마감 공사를 한 번의 계획으로 묶어 진행하는 패키지 서비스입니다. 게스트를 맞이하기 좋은 상태로 공간을 준비해 드립니다.",
   },
   repairCategories: [
     {
@@ -228,6 +278,51 @@ export const DEFAULT_SITE_DATA: SiteData = {
       extraNote: "현장 실측과 호환성 확인 후 범위 확정",
     },
   ],
+  airbnbSetupPackages: [
+    {
+      id: "styling",
+      name: "스타일링",
+      priceWon: 1500000,
+      priceFrom: false,
+      targetNote: "화장실·마감 공사 없이 가구·소품 배치만 필요한 경우",
+      visitNote: "본 시공 1회",
+      includes: [
+        "가구·소품 배치 및 동선 구성",
+        "숙소 등록용 사진 스타일링(조명·소품 연출)",
+        "본 시공 1회",
+        "가구비·자재비·출장비 별도",
+      ],
+    },
+    {
+      id: "renewal",
+      name: "리뉴얼",
+      priceWon: 3000000,
+      priceFrom: false,
+      targetNote: "화장실 부분 개선과 가구·배치를 함께 진행하고 싶은 경우",
+      visitNote: "필요 시 현장 실측 1회 + 본 시공 1회",
+      includes: [
+        "화장실 부분 개선(수전·도기·타일 일부 등)",
+        "가구·소품 배치 및 스타일링",
+        "도배·장판·조명 등 마감 공사 일부",
+        "가구비·자재비·출장비 별도",
+      ],
+    },
+    {
+      id: "full",
+      name: "에어비앤비 풀패키지",
+      priceWon: 5000000,
+      priceFrom: true,
+      targetNote: "화장실부터 가구·마감 공사까지 한 번에 준비하는 경우",
+      visitNote: "현장 실측 1회 + 본 시공(공사 규모에 따라 여러 날 진행)",
+      includes: [
+        "화장실 전체 리모델링",
+        "가구·소품 전체 배치 및 스타일링",
+        "도배·장판·조명·콘센트 등 마감 공사",
+        "숙소 등록용 사진 스타일링",
+        "가구비·자재비·출장비 별도",
+      ],
+    },
+  ],
   workCases: [
     {
       id: "r1",
@@ -273,6 +368,173 @@ export const DEFAULT_SITE_DATA: SiteData = {
     { id: "a1", src: "/brand/switch-outlet-2.png", alt: "스위치·콘센트 클로즈업 작업 현장", order: 0 },
     { id: "a2", src: "/brand/outlet-switch-3.png", alt: "천장 조명 교체 작업 현장", isExample: true, order: 1 },
   ],
+  faqs: [
+    // main
+    {
+      id: "faq-main-1",
+      category: "main",
+      question: "출장비는 얼마인가요?",
+      answer:
+        "출장비는 방문 1회당 20,000원이며, 서울·경기 전 지역 동일하게 적용됩니다. 같은 방문의 여러 작업에는 출장비가 한 번만 적용됩니다.",
+      order: 0,
+    },
+    {
+      id: "faq-main-2",
+      category: "main",
+      question: "사진만으로 금액이 확정되나요?",
+      answer: "사진으로 안내하는 금액은 사전예상액입니다. 최종 금액은 현장 상태와 작업 범위를 확인한 뒤 확정됩니다.",
+      order: 1,
+    },
+    {
+      id: "faq-main-3",
+      category: "main",
+      question: "자재를 직접 준비해도 되나요?",
+      answer: "네, 가능합니다. 다만 제품명·모델명·규격을 사전에 확인해 설치 가능 여부를 안내해드립니다.",
+      order: 2,
+    },
+    {
+      id: "faq-main-4",
+      category: "main",
+      question: "계약금은 얼마인가요?",
+      answer:
+        "계약금은 세입자·주거 케어와 스마트홈 IoT 케어에만 적용되며, 제품·자재비를 제외한 계약대상 서비스 금액의 30%를 결제하면 일정이 확정됩니다. 생활 집수리(개별 작업)는 계약금이 없으며, 문의 주시면 사진을 확인한 후 바로 견적을 안내해 드립니다.",
+      order: 3,
+    },
+    {
+      id: "faq-main-5",
+      category: "main",
+      question: "집수리와 스마트홈을 함께 신청할 수 있나요?",
+      answer: "두 서비스는 가격과 신청 흐름이 완전히 분리되어 있습니다. 각 서비스별로 별도 상담을 진행해주세요.",
+      order: 4,
+    },
+    {
+      id: "faq-main-6",
+      category: "main",
+      question: "A/S 범위는 어떻게 되나요?",
+      answer:
+        "반듯집수리의 설치·시공상 하자는 작업 완료일로부터 6개월간 무상 A/S가 적용됩니다. 제품 자체 결함은 시공 문제와 구분하여 안내합니다.",
+      order: 5,
+    },
+    // tenant-care
+    {
+      id: "faq-tenant-care-1",
+      category: "tenant-care",
+      question: "정말 원상복구가 완벽하게 되나요?",
+      answer:
+        "건물의 손상과 변경을 최소화하고 퇴거 시 재설치를 고려한 시공을 지향하지만, 건물 노후 상태와 마감재, 사용 기간에 따라 미세한 흔적이나 변색이 남을 수 있어 완벽한 원상복구를 보장드리지는 않습니다.",
+      order: 0,
+    },
+    {
+      id: "faq-tenant-care-2",
+      category: "tenant-care",
+      question: "임대인에게 미리 알려야 하나요?",
+      answer:
+        "네, 시설 교체·설치 전에 임대차계약서와 건물 관리규정을 확인하시고 필요한 경우 임대인 또는 관리주체의 사전 동의를 받아 주셔야 합니다.",
+      order: 1,
+    },
+    {
+      id: "faq-tenant-care-3",
+      category: "tenant-care",
+      question: "떼어낸 기존 부품은 어떻게 되나요?",
+      answer:
+        "품목별로 분류·포장하여 작업 완료 후 고객님께 인도해드리며, 인도 이후 보관·분실·파손에 대한 관리 책임은 고객님께 있습니다.",
+      order: 2,
+    },
+    {
+      id: "faq-tenant-care-4",
+      category: "tenant-care",
+      question: "퇴거할 때 다시 설치해주나요?",
+      answer:
+        "보관 중인 기존 부품을 활용한 재설치를 별도로 신청하실 수 있습니다. 다만 이는 패키지에 포함된 무료 서비스가 아닌 별도의 유상 서비스입니다.",
+      order: 3,
+    },
+    {
+      id: "faq-tenant-care-5",
+      category: "tenant-care",
+      question: "계약금은 얼마인가요?",
+      answer: "제품·자재비를 제외한 계약대상 서비스 금액의 30%를 계약금으로 결제하며, 계약금은 총 작업대금에 포함되어 잔금에서 전액 차감됩니다.",
+      order: 4,
+    },
+    // smart-home
+    {
+      id: "faq-smart-home-1",
+      category: "smart-home",
+      question: "스마트홈 장비는 앱 하나로 모두 사용할 수 있나요?",
+      answer: "모든 장비가 하나의 앱으로 통합되는 것은 아닙니다. 모델별 호환성을 사전에 확인한 뒤 안내해드립니다.",
+      order: 0,
+    },
+    {
+      id: "faq-smart-home-2",
+      category: "smart-home",
+      question: "인터넷이 끊기면 어떻게 되나요?",
+      answer: "인터넷·클라우드 장애 시 일부 원격 기능이 제한될 수 있습니다.",
+      order: 1,
+    },
+    {
+      id: "faq-smart-home-3",
+      category: "smart-home",
+      question: "창문 자동개폐는 모든 창문에 가능한가요?",
+      answer:
+        "창호 구조, 전원, 구동력, 수동 해제와 안전장치를 확인한 뒤 조건부로 제공되는 실측형 옵션이며, 모든 창문에 적용되는 것은 아닙니다.",
+      order: 2,
+    },
+    {
+      id: "faq-smart-home-4",
+      category: "smart-home",
+      question: "세입자도 설치할 수 있나요?",
+      answer:
+        "타공이 필요 없는 장비 중심의 세입자용 비타공 스마트홈 구성이 가능하며, 임대차계약과 관리규정 확인은 고객님께서 진행해 주셔야 합니다.",
+      order: 3,
+    },
+    // airbnb-setup
+    {
+      id: "faq-airbnb-setup-1",
+      category: "airbnb-setup",
+      question: "정말 500만원이면 에어비앤비를 시작할 수 있나요?",
+      answer:
+        "화장실 전체 리모델링, 가구·소품 전체 배치, 도배·장판·조명 등 마감 공사를 포함한 풀패키지 기준 대표가격이며, 현장 상태와 선택하신 자재·가구 등급에 따라 최종 금액은 달라질 수 있습니다. 가구·자재비와 숙박업 인허가 관련 비용은 포함되지 않습니다.",
+      order: 0,
+    },
+    {
+      id: "faq-airbnb-setup-2",
+      category: "airbnb-setup",
+      question: "숙박업 신고나 사업자등록도 대신 해주시나요?",
+      answer:
+        "아니요. 반듯집수리는 시공·세팅 서비스만 제공하며, 외국인관광 도시민박업 등 숙박업 신고, 사업자등록, 소방·건축 기준 충족 여부 확인은 고객님이 직접 진행하셔야 합니다.",
+      order: 1,
+    },
+    {
+      id: "faq-airbnb-setup-3",
+      category: "airbnb-setup",
+      question: "임차한 집인데 진행할 수 있나요?",
+      answer:
+        "가능합니다. 다만 시설 교체·공사 전에 임대차계약서와 건물 관리규정을 확인하시고, 필요한 경우 임대인 또는 관리주체의 사전 동의를 받아 주셔야 합니다.",
+      order: 2,
+    },
+    {
+      id: "faq-airbnb-setup-4",
+      category: "airbnb-setup",
+      question: "가구·소품은 어떤 걸로 채워주나요?",
+      answer:
+        "원하시는 컨셉과 예산에 맞춰 가구·소품 목록을 제안해 드리며, 직접 구매를 원하시면 구매대행도 가능합니다. 가구·소품 비용은 시공비와 별도입니다.",
+      order: 3,
+    },
+    {
+      id: "faq-airbnb-setup-5",
+      category: "airbnb-setup",
+      question: "숙소 등록용 사진도 찍어주시나요?",
+      answer:
+        "가구·소품 배치와 조명 연출 등 스타일링은 포함되지만, 전문 사진작가 촬영은 별도 옵션이며 필요 시 제휴 업체를 안내해 드립니다.",
+      order: 4,
+    },
+    {
+      id: "faq-airbnb-setup-6",
+      category: "airbnb-setup",
+      question: "계약금은 얼마인가요?",
+      answer: "제품·자재비를 제외한 계약대상 서비스 금액의 30%를 계약금으로 결제하며, 계약금은 총 작업대금에 포함되어 잔금에서 전액 차감됩니다.",
+      order: 5,
+    },
+  ],
 };
 
 // ── Blob 저장 키 ───────────────────────────────────────────────────────
@@ -310,11 +572,42 @@ function mergeSiteData(stored: Partial<SiteData> | null | undefined): SiteData {
           ? stored.policy.purchaseAgencyFeeWon
           : DEFAULT_SITE_DATA.policy.purchaseAgencyFeeWon,
     },
+    copy: {
+      heroTitle: typeof stored.copy?.heroTitle === "string" ? stored.copy.heroTitle : DEFAULT_SITE_DATA.copy.heroTitle,
+      heroSubtitle:
+        typeof stored.copy?.heroSubtitle === "string" ? stored.copy.heroSubtitle : DEFAULT_SITE_DATA.copy.heroSubtitle,
+      servicesIntro:
+        typeof stored.copy?.servicesIntro === "string"
+          ? stored.copy.servicesIntro
+          : DEFAULT_SITE_DATA.copy.servicesIntro,
+      tenantCareIntro:
+        typeof stored.copy?.tenantCareIntro === "string"
+          ? stored.copy.tenantCareIntro
+          : DEFAULT_SITE_DATA.copy.tenantCareIntro,
+      tenantCareDescription:
+        typeof stored.copy?.tenantCareDescription === "string"
+          ? stored.copy.tenantCareDescription
+          : DEFAULT_SITE_DATA.copy.tenantCareDescription,
+      smartHomeDescription:
+        typeof stored.copy?.smartHomeDescription === "string"
+          ? stored.copy.smartHomeDescription
+          : DEFAULT_SITE_DATA.copy.smartHomeDescription,
+      airbnbSetupIntro:
+        typeof stored.copy?.airbnbSetupIntro === "string"
+          ? stored.copy.airbnbSetupIntro
+          : DEFAULT_SITE_DATA.copy.airbnbSetupIntro,
+      airbnbSetupDescription:
+        typeof stored.copy?.airbnbSetupDescription === "string"
+          ? stored.copy.airbnbSetupDescription
+          : DEFAULT_SITE_DATA.copy.airbnbSetupDescription,
+    },
     repairCategories: mergeArray(DEFAULT_SITE_DATA.repairCategories, stored.repairCategories),
     tenantCarePackages: mergeArray(DEFAULT_SITE_DATA.tenantCarePackages, stored.tenantCarePackages),
     smartHomePackages: mergeArray(DEFAULT_SITE_DATA.smartHomePackages, stored.smartHomePackages),
+    airbnbSetupPackages: mergeArray(DEFAULT_SITE_DATA.airbnbSetupPackages, stored.airbnbSetupPackages),
     workCases: mergeArray(DEFAULT_SITE_DATA.workCases, stored.workCases),
     aboutPhotos: mergeArray(DEFAULT_SITE_DATA.aboutPhotos, stored.aboutPhotos),
+    faqs: mergeArray(DEFAULT_SITE_DATA.faqs, stored.faqs),
   };
 }
 
@@ -406,6 +699,7 @@ function bool(v: unknown, fallback = false): boolean {
 export function sanitizeIncomingSiteData(input: unknown): SiteData {
   const raw = (input && typeof input === "object" ? input : {}) as Record<string, unknown>;
   const rawPolicy = (raw.policy && typeof raw.policy === "object" ? raw.policy : {}) as Record<string, unknown>;
+  const rawCopy = (raw.copy && typeof raw.copy === "object" ? raw.copy : {}) as Record<string, unknown>;
 
   const repairCategories = Array.isArray(raw.repairCategories)
     ? raw.repairCategories
@@ -449,6 +743,22 @@ export function sanitizeIncomingSiteData(input: unknown): SiteData {
         }))
     : DEFAULT_SITE_DATA.smartHomePackages;
 
+  const airbnbSetupPackages = Array.isArray(raw.airbnbSetupPackages)
+    ? raw.airbnbSetupPackages
+        .filter((c): c is Record<string, unknown> => !!c && typeof c === "object")
+        .map((c) => ({
+          id: (["styling", "renewal", "full"].includes(str(c.id))
+            ? str(c.id)
+            : "styling") as AirbnbSetupPackageData["id"],
+          name: str(c.name),
+          priceWon: num(c.priceWon),
+          priceFrom: bool(c.priceFrom),
+          targetNote: str(c.targetNote),
+          visitNote: str(c.visitNote),
+          includes: Array.isArray(c.includes) ? c.includes.filter((x): x is string => typeof x === "string") : [],
+        }))
+    : DEFAULT_SITE_DATA.airbnbSetupPackages;
+
   const workCases = Array.isArray(raw.workCases)
     ? raw.workCases
         .filter((c): c is Record<string, unknown> => !!c && typeof c === "object")
@@ -481,6 +791,20 @@ export function sanitizeIncomingSiteData(input: unknown): SiteData {
         }))
     : DEFAULT_SITE_DATA.aboutPhotos;
 
+  const faqs = Array.isArray(raw.faqs)
+    ? raw.faqs
+        .filter((c): c is Record<string, unknown> => !!c && typeof c === "object")
+        .map((c, i) => ({
+          id: str(c.id, `faq-${i}`),
+          category: (["main", "tenant-care", "smart-home", "airbnb-setup"].includes(str(c.category))
+            ? str(c.category)
+            : "main") as FaqData["category"],
+          question: str(c.question),
+          answer: str(c.answer),
+          order: num(c.order, i),
+        }))
+    : DEFAULT_SITE_DATA.faqs;
+
   return {
     version: num(raw.version, DEFAULT_SITE_DATA.version),
     updatedAt: DEFAULT_SITE_DATA.updatedAt,
@@ -488,11 +812,23 @@ export function sanitizeIncomingSiteData(input: unknown): SiteData {
       travelFeeWon: num(rawPolicy.travelFeeWon, DEFAULT_SITE_DATA.policy.travelFeeWon),
       purchaseAgencyFeeWon: num(rawPolicy.purchaseAgencyFeeWon, DEFAULT_SITE_DATA.policy.purchaseAgencyFeeWon),
     },
+    copy: {
+      heroTitle: str(rawCopy.heroTitle, DEFAULT_SITE_DATA.copy.heroTitle),
+      heroSubtitle: str(rawCopy.heroSubtitle, DEFAULT_SITE_DATA.copy.heroSubtitle),
+      servicesIntro: str(rawCopy.servicesIntro, DEFAULT_SITE_DATA.copy.servicesIntro),
+      tenantCareIntro: str(rawCopy.tenantCareIntro, DEFAULT_SITE_DATA.copy.tenantCareIntro),
+      tenantCareDescription: str(rawCopy.tenantCareDescription, DEFAULT_SITE_DATA.copy.tenantCareDescription),
+      smartHomeDescription: str(rawCopy.smartHomeDescription, DEFAULT_SITE_DATA.copy.smartHomeDescription),
+      airbnbSetupIntro: str(rawCopy.airbnbSetupIntro, DEFAULT_SITE_DATA.copy.airbnbSetupIntro),
+      airbnbSetupDescription: str(rawCopy.airbnbSetupDescription, DEFAULT_SITE_DATA.copy.airbnbSetupDescription),
+    },
     repairCategories,
     tenantCarePackages,
     smartHomePackages,
+    airbnbSetupPackages,
     workCases,
     aboutPhotos,
+    faqs,
   };
 }
 

@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import AiExampleBadge from "@/components/AiExampleBadge";
-import { DEPOSIT_NOTICE_TEXT, GUIDE_EXTRA_FAQ, MAIN_FAQ } from "@/lib/constants";
+import { DEPOSIT_NOTICE_TEXT, GUIDE_EXTRA_FAQ } from "@/lib/constants";
+import { getSiteData } from "@/lib/siteData";
 
 export const metadata: Metadata = {
   title: "이용 안내",
@@ -9,7 +10,7 @@ export const metadata: Metadata = {
   alternates: { canonical: "/guide" },
 };
 
-const ALL_FAQ = [...MAIN_FAQ, ...GUIDE_EXTRA_FAQ];
+export const revalidate = 60;
 
 const STEPS = [
   {
@@ -41,7 +42,14 @@ const GUIDE_PHOTOS = [
   { src: "/brand/doorlock-4.png", alt: "도어락 설치 완료 사진 예시" },
 ];
 
-export default function GuidePage() {
+export default async function GuidePage() {
+  const site = await getSiteData();
+  const mainFaqs = site.faqs.filter((f) => f.category === "main").sort((a, b) => a.order - b.order);
+  const allFaqs = [
+    ...mainFaqs.map((f) => ({ id: f.id, question: f.question, answer: f.answer })),
+    ...GUIDE_EXTRA_FAQ.map((f, i) => ({ id: `guide-extra-${i}`, question: f.q, answer: f.a })),
+  ];
+
   return (
     <div className="mx-auto max-w-3xl px-4 py-10">
       <h1 className="text-[26px] font-bold text-brand-navy sm:text-[32px]">
@@ -125,12 +133,12 @@ export default function GuidePage() {
         전체 자주 묻는 질문
       </h2>
       <div className="mt-4 flex flex-col gap-3">
-        {ALL_FAQ.map((item) => (
-          <details key={item.q} className="rounded-2xl border border-slate-200 p-4">
+        {allFaqs.map((item) => (
+          <details key={item.id} className="rounded-2xl border border-slate-200 p-4">
             <summary className="cursor-pointer text-base font-semibold text-brand-navy">
-              {item.q}
+              {item.question}
             </summary>
-            <p className="mt-2 text-base leading-relaxed text-slate-600">{item.a}</p>
+            <p className="mt-2 text-base leading-relaxed text-slate-600">{item.answer}</p>
           </details>
         ))}
       </div>

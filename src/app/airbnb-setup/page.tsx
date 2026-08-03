@@ -2,11 +2,10 @@ import type { Metadata } from "next";
 import {
   AIRBNB_SETUP,
   AIRBNB_SETUP_EXCLUSIONS,
-  AIRBNB_SETUP_FAQ,
   AIRBNB_SETUP_MATERIAL_OPTIONS,
-  AIRBNB_SETUP_PACKAGES,
   BRAND,
 } from "@/lib/constants";
+import { getSiteData } from "@/lib/siteData";
 import AirbnbSetupForm from "@/components/AirbnbSetupForm";
 
 function won(n: number) {
@@ -19,10 +18,16 @@ export const metadata: Metadata = {
   alternates: { canonical: "/airbnb-setup" },
 };
 
+export const revalidate = 60;
+
 // 다른 서비스 상세페이지(세입자·주거 케어, 스마트홈)와 동일한 섹션 순서를 따른다.
 // "제목과 핵심 설명 → 패키지 비교 → 포함·제외 항목 → 가구·자재 준비 방식 →
 //  숙박업 신고·인허가 안내 → 계약금·취소·A/S 요약 → 상담 신청 → FAQ"
-export default function AirbnbSetupPage() {
+export default async function AirbnbSetupPage() {
+  const site = await getSiteData();
+  const airbnbSetupPackages = site.airbnbSetupPackages;
+  const faqs = site.faqs.filter((f) => f.category === "airbnb-setup").sort((a, b) => a.order - b.order);
+
   return (
     <div className="mx-auto max-w-3xl px-4 py-10">
       {/* 1. 제목과 핵심 설명 */}
@@ -35,9 +40,9 @@ export default function AirbnbSetupPage() {
       <p className="mt-1 text-base font-semibold text-brand-teal-dark">
         {AIRBNB_SETUP.subtitle}
       </p>
-      <p className="mt-4 text-base leading-relaxed text-slate-600">{AIRBNB_SETUP.intro}</p>
+      <p className="mt-4 text-base leading-relaxed text-slate-600">{site.copy.airbnbSetupIntro}</p>
       <p className="mt-3 text-base leading-relaxed text-slate-700">
-        {AIRBNB_SETUP.description}
+        {site.copy.airbnbSetupDescription}
       </p>
       <p className="mt-2 text-sm leading-relaxed text-slate-500">
         {AIRBNB_SETUP.descriptionSub}
@@ -76,7 +81,7 @@ export default function AirbnbSetupPage() {
             </tr>
           </thead>
           <tbody>
-            {AIRBNB_SETUP_PACKAGES.map((pkg) => (
+            {airbnbSetupPackages.map((pkg) => (
               <tr key={pkg.id} className="border-b border-slate-100 last:border-b-0">
                 <td className="px-4 py-3 font-semibold text-brand-navy">{pkg.name}</td>
                 <td className="px-4 py-3 font-bold text-brand-navy">
@@ -96,7 +101,7 @@ export default function AirbnbSetupPage() {
       {/* 3. 포함·제외 항목 */}
       <h2 className="mt-10 text-[26px] font-bold text-brand-navy sm:text-[32px]">포함·제외 항목</h2>
       <div className="mt-4 grid grid-cols-1 gap-4">
-        {AIRBNB_SETUP_PACKAGES.map((pkg) => (
+        {airbnbSetupPackages.map((pkg) => (
           <div key={pkg.id} className="rounded-2xl border border-slate-200 p-5">
             <h3 className="text-lg font-bold text-brand-navy">{pkg.name} 포함 기준</h3>
             <ul className="mt-2 flex flex-col gap-0.5 text-sm text-slate-600">
@@ -209,12 +214,12 @@ export default function AirbnbSetupPage() {
       {/* 8. FAQ */}
       <h2 className="mt-10 text-[26px] font-bold text-brand-navy sm:text-[32px]">자주 묻는 질문</h2>
       <div className="mt-4 flex flex-col gap-3">
-        {AIRBNB_SETUP_FAQ.map((item) => (
-          <details key={item.q} className="rounded-2xl border border-slate-200 p-4">
+        {faqs.map((item) => (
+          <details key={item.id} className="rounded-2xl border border-slate-200 p-4">
             <summary className="cursor-pointer text-sm font-semibold text-brand-navy">
-              {item.q}
+              {item.question}
             </summary>
-            <p className="mt-2 text-sm leading-relaxed text-slate-600">{item.a}</p>
+            <p className="mt-2 text-sm leading-relaxed text-slate-600">{item.answer}</p>
           </details>
         ))}
       </div>

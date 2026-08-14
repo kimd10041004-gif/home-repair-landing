@@ -21,7 +21,7 @@ const SITE_DESCRIPTION =
   "생활 집수리, 세입자·주거 케어, 스마트홈 IoT 설치까지 서비스별로 구분해 안내하는 예약형 집수리 서비스, 반듯집수리. 서울·경기 전 지역 방문 가능합니다.";
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://home-repair-landing.vercel.app"),
+  metadataBase: new URL(SITE.url),
   title: { default: `${SITE.name} | ${SITE.tagline}`, template: `%s | ${SITE.name}` },
   description: SITE_DESCRIPTION,
   alternates: { canonical: "/" },
@@ -29,6 +29,7 @@ export const metadata: Metadata = {
     type: "website",
     locale: "ko_KR",
     siteName: SITE.name,
+    url: SITE.url,
     title: `${SITE.name} | ${SITE.tagline}`,
     description: SITE_DESCRIPTION,
   },
@@ -84,4 +85,3 @@ export default function RootLayout({
     </html>
   );
 }
-

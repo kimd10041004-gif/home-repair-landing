@@ -1,6 +1,5 @@
 import type { MetadataRoute } from "next";
-
-const SITE_URL = "https://home-repair-landing.vercel.app";
+import { SITE } from "@/lib/constants";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const routes = [
@@ -18,7 +17,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   ];
 
   return routes.map((route) => ({
-    url: `${SITE_URL}${route}`,
+    url: `${SITE.url}${route}`,
     lastModified: new Date(),
   }));
 }

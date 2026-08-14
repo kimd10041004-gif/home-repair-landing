@@ -9,6 +9,7 @@
 export const SITE = {
   name: "반듯집수리",
   tagline: "예약형 집수리",
+  url: "https://bandeutjipsuri.kr",
   serviceArea: "서울·경기 전 지역 방문 가능합니다",
   phone: "010-2370-5091",
   kakaoUrl: "https://pf.kakao.com/_kHyfX/chat",

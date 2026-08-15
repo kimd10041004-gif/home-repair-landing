@@ -50,8 +50,14 @@ const nextConfig: NextConfig = {
     return [
       {
         source: "/:path*",
+        has: [{ type: "host", value: "bandeutjipsuri.co.kr" }],
+        destination: "https://home-repair-landing.vercel.app/:path*",
+        permanent: true,
+      },
+      {
+        source: "/:path*",
         has: [{ type: "host", value: "www.bandeutjipsuri.co.kr" }],
-        destination: "https://bandeutjipsuri.co.kr/:path*",
+        destination: "https://home-repair-landing.vercel.app/:path*",
         permanent: true,
       },
     ];

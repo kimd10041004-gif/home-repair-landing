@@ -46,22 +46,6 @@ const nextConfig: NextConfig = {
       },
     ];
   },
-  async redirects() {
-    return [
-      {
-        source: "/:path*",
-        has: [{ type: "host", value: "bandeutjipsuri.co.kr" }],
-        destination: "https://home-repair-landing.vercel.app/:path*",
-        permanent: true,
-      },
-      {
-        source: "/:path*",
-        has: [{ type: "host", value: "www.bandeutjipsuri.co.kr" }],
-        destination: "https://home-repair-landing.vercel.app/:path*",
-        permanent: true,
-      },
-    ];
-  },
 };
 
 export default nextConfig;

@@ -12,3 +12,4 @@ export default function robots(): MetadataRoute.Robots {
     sitemap: `${SITE_URL}/sitemap.xml`,
   };
 }
+// production deploy trigger

@@ -46,3 +46,18 @@ export async function proxy(req: NextRequest) {
 
   return NextResponse.next();
 }
+
+export const config = {
+  matcher: [
+    "/admin/:path*",
+    "/api/admin/:path*",
+    {
+      source: "/:path*",
+      has: [{ type: "header", key: "host", value: "bandeutjipsuri.co.kr" }],
+    },
+    {
+      source: "/:path*",
+      has: [{ type: "header", key: "host", value: "www.bandeutjipsuri.co.kr" }],
+    },
+  ],
+};

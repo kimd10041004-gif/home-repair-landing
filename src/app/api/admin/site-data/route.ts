@@ -1,10 +1,14 @@
 import { NextRequest, NextResponse } from "next/server";
 import { revalidatePath } from "next/cache";
+import { requireAdminSession } from "@/lib/adminAuth";
 import { getSiteDataForAdmin, saveSiteData, sanitizeIncomingSiteData } from "@/lib/siteData";
 
-// 인증은 middleware.ts가 이미 처리한다(이 라우트는 /api/admin/* 매처에 포함됨).
+// middleware 외에도 라우트 내부에서 세션을 다시 검증해 방어층을 하나 더 둔다.
 
-export async function GET() {
+export async function GET(req: NextRequest) {
+  const auth = await requireAdminSession(req);
+  if (auth.unauthorizedResponse) return auth.unauthorizedResponse;
+
   const data = await getSiteDataForAdmin();
   return NextResponse.json(data);
 }
@@ -12,6 +16,9 @@ export async function GET() {
 const PUBLIC_PATHS_TO_REVALIDATE = ["/", "/services", "/tenant-care", "/smart-home", "/reviews", "/about"];
 
 export async function PUT(req: NextRequest) {
+  const auth = await requireAdminSession(req);
+  if (auth.unauthorizedResponse) return auth.unauthorizedResponse;
+
   let body: unknown;
   try {
     body = await req.json();

@@ -4,8 +4,7 @@ import { SESSION_COOKIE_NAME, verifySessionToken } from "@/lib/edgeAuth";
 const BLOCKED_HOSTS = new Set(["bandeutjipsuri.co.kr", "www.bandeutjipsuri.co.kr"]);
 
 function getRequestHost(req: NextRequest) {
-  const forwardedHost = req.headers.get("x-forwarded-host");
-  const host = forwardedHost ?? req.headers.get("host") ?? req.nextUrl.host;
+  const host = req.headers.get("host") ?? req.nextUrl.host;
   return host.split(":")[0].toLowerCase();
 }
 

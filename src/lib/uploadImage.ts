@@ -148,7 +148,6 @@ export async function uploadImageToBlob(pathPrefix: string, buffer: Buffer, exte
   const filename = `${pathPrefix}/${randomName}.${extension}`;
   return put(filename, buffer, {
     access: "public",
-    addRandomSuffix: true,
     contentType,
     maximumSizeInBytes: MAX_IMAGE_SIZE_BYTES,
   });

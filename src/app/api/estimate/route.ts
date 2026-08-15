@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { checkRateLimit, getClientIp } from "@/lib/rate-limit";
+import { validateSubmittedPhotoUrls } from "@/lib/uploadImage";
 
 /**
  * 이 라우트는 견적 문의를 이 프로젝트의 DB에 저장하지 않습니다.
@@ -39,11 +40,9 @@ export async function POST(req: NextRequest) {
       consent,
     } = body ?? {};
 
-    if (!Array.isArray(photoUrls) || photoUrls.length < 3) {
-      return NextResponse.json(
-        { error: "사진은 최소 3장 이상 필요합니다." },
-        { status: 400 }
-      );
+    const validatedPhotoUrls = validateSubmittedPhotoUrls(photoUrls, { minCount: 3 });
+    if (!validatedPhotoUrls.ok) {
+      return NextResponse.json({ error: validatedPhotoUrls.error }, { status: validatedPhotoUrls.status });
     }
     if (!name || !contact || !address || !symptom || !preferredSchedule) {
       return NextResponse.json(
@@ -63,7 +62,7 @@ export async function POST(req: NextRequest) {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         name,
-        photoUrls,
+        photoUrls: validatedPhotoUrls.urls,
         contact,
         address,
         workspace: workspace ?? "",

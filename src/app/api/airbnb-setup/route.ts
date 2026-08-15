@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { checkRateLimit, getClientIp } from "@/lib/rate-limit";
+import { validateSubmittedPhotoUrls } from "@/lib/uploadImage";
 
 /**
  * 에어비앤비 세팅 케어 전용 상담 신청 접수 라우트.
@@ -50,11 +51,9 @@ export async function POST(req: NextRequest) {
         { status: 400 }
       );
     }
-    if (!Array.isArray(photoUrls) || photoUrls.length < 1) {
-      return NextResponse.json(
-        { error: "현장사진을 최소 1장 이상 첨부해주세요." },
-        { status: 400 }
-      );
+    const validatedPhotoUrls = validateSubmittedPhotoUrls(photoUrls);
+    if (!validatedPhotoUrls.ok) {
+      return NextResponse.json({ error: validatedPhotoUrls.error }, { status: validatedPhotoUrls.status });
     }
 
     const requiredConsentIds = [
@@ -91,7 +90,7 @@ export async function POST(req: NextRequest) {
         hasOwnMaterial: Boolean(hasOwnMaterial),
         preferredSchedule1,
         preferredSchedule2: preferredSchedule2 ?? "",
-        photoUrls,
+        photoUrls: validatedPhotoUrls.urls,
         extraNote: extraNote ?? "",
         consents: consentMap,
       }),

@@ -3,6 +3,13 @@
 import { useState, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 
+function getSafeAdminNext(rawNext: string | null): string {
+  if (rawNext === "/admin" || rawNext?.startsWith("/admin/") || rawNext?.startsWith("/admin?")) {
+    return rawNext;
+  }
+  return "/admin";
+}
+
 function LoginForm() {
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -26,7 +33,7 @@ function LoginForm() {
         setError(data.error ?? "로그인에 실패했습니다.");
         return;
       }
-      const next = searchParams.get("next") ?? "/admin";
+      const next = getSafeAdminNext(searchParams.get("next"));
       router.push(next);
       router.refresh();
     } catch {

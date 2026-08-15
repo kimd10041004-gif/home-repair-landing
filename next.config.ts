@@ -19,6 +19,7 @@ const CSP = [
 ].join("; ");
 
 const nextConfig: NextConfig = {
+  poweredByHeader: false,
   images: {
     // 관리자가 업로드한 사진(Vercel Blob 공개 URL)을 next/image로 최적화해 표시하기 위함.
     remotePatterns: [
@@ -42,6 +43,16 @@ const nextConfig: NextConfig = {
             value: "camera=(), microphone=(), geolocation=()",
           },
         ],
+      },
+    ];
+  },
+  async redirects() {
+    return [
+      {
+        source: "/:path*",
+        has: [{ type: "host", value: "www.bandeutjipsuri.co.kr" }],
+        destination: "https://bandeutjipsuri.co.kr/:path*",
+        permanent: true,
       },
     ];
   },

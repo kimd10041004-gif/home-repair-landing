@@ -1,0 +1,80 @@
+import type { Metadata } from "next";
+import Image from "next/image";
+import { SITE, getVisibleBusinessFields } from "@/lib/constants";
+import { getSiteData } from "@/lib/siteData";
+import AiExampleBadge from "@/components/AiExampleBadge";
+
+export const metadata: Metadata = {
+  title: "회사 소개",
+  description: "반듯집수리의 사업자 정보와 서비스 지역을 안내합니다.",
+  alternates: { canonical: "/about" },
+};
+
+export const revalidate = 60;
+
+export default async function AboutPage() {
+  const businessFields = getVisibleBusinessFields();
+  const site = await getSiteData();
+  const workPhotos = [...site.aboutPhotos].sort((a, b) => a.order - b.order);
+
+  return (
+    <div className="mx-auto max-w-3xl px-4 py-10">
+      <h1 className="text-[26px] font-bold text-brand-navy sm:text-[32px]">
+        회사 소개
+      </h1>
+
+      {/* 값이 입력된 사업자정보 항목만 표시하고, 미입력 항목은 표시하지 않는다. */}
+      {businessFields.length > 0 && (
+        <section className="mt-6">
+          <h2 className="text-[26px] font-bold text-brand-navy sm:text-[32px]">사업자 정보</h2>
+          <dl className="mt-2 grid grid-cols-1 gap-1 text-sm text-slate-600 sm:grid-cols-2">
+            {businessFields.map((field) => (
+              <div key={field.label}>
+                <dt className="inline font-medium text-slate-700">{field.label}: </dt>
+                <dd className="inline">{field.value}</dd>
+              </div>
+            ))}
+          </dl>
+        </section>
+      )}
+
+      <section className="mt-8">
+        <h2 className="text-[26px] font-bold text-brand-navy sm:text-[32px]">서비스 지역</h2>
+        <p className="mt-2 text-sm text-slate-600">{SITE.serviceArea}</p>
+        <div className="relative mx-auto mt-4 aspect-[16/9] w-full max-w-2xl overflow-hidden rounded-2xl border border-slate-100">
+          <Image
+            src="/brand/service-area-map.png"
+            alt="반듯집수리 출장 가능 지역 안내: 서울·경기 전 지역 방문 가능"
+            fill
+            sizes="(min-width: 768px) 672px, 100vw"
+            className="object-contain"
+          />
+        </div>
+      </section>
+
+      <section className="mt-10">
+        <h2 className="text-[26px] font-bold text-brand-navy sm:text-[32px]">우리가 하는 일</h2>
+        <p className="mt-2 text-sm text-slate-600">
+          반듯집수리가 진행하는 작업 방식을 보여주는 설명용 이미지입니다.
+        </p>
+        <div className="mt-4 grid grid-cols-2 gap-3">
+          {workPhotos.map((photo) => (
+            <div
+              key={photo.id}
+              className="relative aspect-square w-full overflow-hidden rounded-2xl"
+            >
+              <Image
+                src={photo.src}
+                alt={photo.alt}
+                fill
+                sizes="(min-width: 640px) 340px, 50vw"
+                className="object-cover"
+              />
+              {photo.isExample && <AiExampleBadge />}
+            </div>
+          ))}
+        </div>
+      </section>
+    </div>
+  );
+}

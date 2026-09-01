@@ -1,0 +1,60 @@
+@import "tailwindcss";
+
+/*
+ * 이 사이트는 밝고 화사한 톤을 유지하기 위해 다크모드를 사용하지 않는다.
+ * 사용자의 OS가 다크모드여도 배경이 어두워지지 않도록 항상 라이트 팔레트를 고정한다.
+ */
+:root {
+  --background: #ffffff;
+  --foreground: #263238;
+
+  /* 반듯집수리 2026-07-30 최종 개편 브랜드 팔레트 */
+  --brand-navy: #17324d;
+  --brand-navy-dark: #0f2337;
+  --brand-teal: #2f9c8f;
+  --brand-teal-light: #45b3a6;
+  /* 어두운 틸: 작은 틸 글자와 흰 글자가 올라가는 버튼 전용(최종 개편안 6번).
+   * 밝은 --brand-teal은 아이콘·선·넓은 강조 영역에만 사용해 대비 부족 문제를 피한다. */
+  --brand-teal-dark: #23766d;
+  --brand-cream: #f7f5ef;
+  --brand-charcoal: #263238;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+
+  --color-brand-navy: var(--brand-navy);
+  --color-brand-navy-dark: var(--brand-navy-dark);
+  --color-brand-teal: var(--brand-teal);
+  --color-brand-teal-light: var(--brand-teal-light);
+  --color-brand-teal-dark: var(--brand-teal-dark);
+  --color-brand-cream: var(--brand-cream);
+  --color-brand-charcoal: var(--brand-charcoal);
+
+  /* 최종 개편안 6번: 11~12px 글자 사용을 전면 금지하고 안내문 최소 14px을 지킨다.
+   * Tailwind 기본 text-xs(12px)를 이 사이트에서는 text-sm과 동일한 14px로 재정의해,
+   * 기존 text-xs 사용처를 일일이 찾아 바꾸지 않고도 전역적으로 규정을 만족시킨다. */
+  --text-xs: 0.875rem;
+  --text-xs--line-height: calc(1.25 / 0.875);
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+/* 움직임에 민감한 사용자를 위해 애니메이션·전환·스크롤 동작을 최소화한다. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}

@@ -14,6 +14,7 @@
 3. 테스트/타입 검사 수치는 항상 실제 명령 출력(`vitest run`, `node --test`, `tsc --noEmit`)을 인용한다. 손으로 세지 않는다.
 4. 감사 항목을 조용히 빠뜨리지 않는다 — 다루지 못한 항목은 이유와 함께 명시한다.
 5. `node_modules`/`dist`는 커밋하지 않는다. 각 라운드 폴더에서 `npm install` 후 실행.
+6. 새 라운드 폴더를 만들면 **루트 `vercel.json`의 라운드 경로(install/build/outputDirectory)를 반드시 새 라운드로 갱신**한다 — 갱신하지 않으면 이전 라운드가 계속 배포된다.
 
 ## 실행
 

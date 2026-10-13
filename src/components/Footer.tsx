@@ -14,6 +14,20 @@ export default function Footer() {
         <p className="mt-1">서비스 지역: {SITE.serviceArea}</p>
 
         <div className="mt-4 flex flex-wrap gap-x-4 gap-y-1">
+          <Link href="/privacy" className="hover:text-brand-navy">
+            개인정보처리방침
+          </Link>
+          <Link href="/about" className="hover:text-brand-navy">
+            회사소개
+          </Link>
+        </div>
+
+        <details className="mt-4">
+          <summary className="cursor-pointer">기존 집수리 서비스 자료</summary>
+          <p className="mt-2 leading-7">기존 집수리의 가격·패키지·정책입니다. 철거 가격이나 철거 계약 조건으로 적용되지 않습니다.</p>
+          <div className="mt-2 flex flex-wrap gap-x-4 gap-y-2">
+            <Link href="/services">기존 집수리 서비스</Link>
+            <Link href="/reviews">기존 집수리 작업 예시</Link>
           <Link href="/tenant-care/terms" className="hover:text-brand-navy">
             변경·취소·환불 안내
           </Link>
@@ -23,13 +37,8 @@ export default function Footer() {
           <Link href="/tenant-care#임차인확인" className="hover:text-brand-navy">
             세입자·주거 케어 필수 확인사항
           </Link>
-          <Link href="/privacy" className="hover:text-brand-navy">
-            개인정보처리방침
-          </Link>
-          <Link href="/about" className="hover:text-brand-navy">
-            회사소개
-          </Link>
-        </div>
+          </div>
+        </details>
 
         <p className="mt-2">
           © {new Date().getFullYear()} {SITE.name}. All rights reserved.

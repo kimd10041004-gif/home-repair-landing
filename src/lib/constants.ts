@@ -26,7 +26,7 @@ export type BusinessInfoField = {
 const RAW_BUSINESS_INFO = {
   상호: "반듯집수리",
   대표자: "권태우",
-  사업자등록번호: "",
+  사업자등록번호: "505-26-66695",
   통신판매업신고번호: "",
   대표연락처: SITE.phone,
   카카오톡채널: "'반듯집수리' 검색",

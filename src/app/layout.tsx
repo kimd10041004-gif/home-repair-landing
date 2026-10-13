@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import LegacyServiceNotice from "@/components/LegacyServiceNotice";
 import Nav from "@/components/Nav";
 import MobileBottomBar from "@/components/MobileBottomBar";
 import DesktopFloatingCta from "@/components/DesktopFloatingCta";
@@ -18,17 +19,19 @@ const geistMono = Geist_Mono({
 });
 
 const SITE_DESCRIPTION =
-  "생활 집수리, 세입자·주거 케어, 스마트홈 IoT 설치까지 서비스별로 구분해 안내하는 예약형 집수리 서비스, 반듯집수리. 서울·경기 전 지역 방문 가능합니다.";
+  "다다철거 · 다다 종합시공. 철거 범위와 보존 대상, 보양과 반출 조건을 확인하고 다음 공간을 준비합니다. 서울·경기 전 지역 상담 가능합니다.";
 
 export const metadata: Metadata = {
 metadataBase: new URL("https://bandeutjipsuri.co.kr"),
   title: { default: `${SITE.name} | ${SITE.tagline}`, template: `%s | ${SITE.name}` },
   description: SITE_DESCRIPTION,
   alternates: { canonical: "/" },
+  icons: { icon: "/dada/favicon.svg" },
   openGraph: {
     type: "website",
     locale: "ko_KR",
     siteName: SITE.name,
+    images: [{ url: "/dada/social.png", width: 1200, height: 630, alt: "다다철거 공간 설명용 그래픽" }],
     title: `${SITE.name} | ${SITE.tagline}`,
     description: SITE_DESCRIPTION,
   },
@@ -75,6 +78,7 @@ export default function RootLayout({
         <Nav />
         {/* 모바일 하단 고정바(안전영역 포함, 버튼 확대로 최대 약 112px)에 본문이 가려지지 않도록 여백 확보 */}
         <main id="main-content" className="flex-1 pb-28 md:pb-0">
+          <LegacyServiceNotice />
           {children}
         </main>
         <Footer />

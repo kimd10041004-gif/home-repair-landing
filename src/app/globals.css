@@ -58,3 +58,17 @@ body {
     scroll-behavior: auto !important;
   }
 }
+
+/* 다다철거 공통 브랜드. 기존 서비스와 관리 화면의 구조는 유지한다. */
+:root{--brand-navy:#242722;--brand-navy-dark:#151713;--brand-teal:#d65025;--brand-teal-dark:#a63617;--brand-cream:#eeebe3}
+.dada-header{background:#eeebe3;color:#242722;border-bottom:1px solid #242722;padding:0 4.3%}
+.dada-header-row{min-height:104px;display:flex;align-items:center;justify-content:space-between;gap:24px}
+.dada-brand{display:flex;align-items:center;gap:14px;font-size:25px;font-weight:900;line-height:1.1}
+.dada-brand small{display:block;font-size:14px;margin-top:8px;font-weight:600}
+.dada-mark{color:#bb411d;font-size:38px;letter-spacing:-9px;margin-right:8px}
+.dada-desktop{display:flex;align-items:center;gap:24px;font-size:14px;font-weight:600}
+.dada-desktop a{padding:15px 0}.dada-desktop a:last-child{border-bottom:1px solid currentColor}
+.dada-menu-button{display:none;min-height:44px;border:1px solid currentColor;padding:10px 14px}
+.dada-mobile-menu{display:flex;flex-direction:column;padding-bottom:20px}.dada-mobile-menu a{padding:14px 0;font-size:15px}
+.legacy-service-notice{padding:18px max(5%,calc((100% - 1024px)/2));background:#eeebe3;border-bottom:1px solid #c7c8bd;font-size:14px;line-height:1.8;color:#242722}
+@media(max-width:900px){.dada-desktop{display:none}.dada-menu-button{display:block}.dada-header-row{min-height:84px}.dada-brand{font-size:21px}}

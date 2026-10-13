@@ -7,10 +7,10 @@
 // ─────────────────────────────────────────────────────────────────────────
 
 export const SITE = {
-  name: "반듯집수리",
-  tagline: "예약형 집수리",
+  name: "다다철거",
+  tagline: "다다 종합시공",
   serviceArea: "서울·경기 전 지역 방문 가능합니다",
-  phone: "010-2370-5091",
+  phone: "010-5094-0961",
   kakaoUrl: "https://pf.kakao.com/_kHyfX/chat",
 } as const;
 

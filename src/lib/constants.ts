@@ -11,7 +11,7 @@ export const SITE = {
   tagline: "다다 종합시공",
   serviceArea: "서울·경기 전 지역 방문 가능합니다",
   phone: "010-5094-0961",
-  kakaoUrl: "https://pf.kakao.com/_kHyfX/chat",
+  kakaoUrl: "https://pf.kakao.com/_CIAmX/chat",
 } as const;
 
 // ── 사업자정보: 값이 없는 항목은 화면에 절대 표시하지 않는다 ────────────────
@@ -29,7 +29,7 @@ const RAW_BUSINESS_INFO = {
   사업자등록번호: "505-26-66695",
   통신판매업신고번호: "",
   대표연락처: SITE.phone,
-  카카오톡채널: "'반듯집수리' 검색",
+  카카오톡채널: "'다다철거' 검색 (채널명: 다다 철거)",
   이메일: "",
   정책시행일: "",
 } as const;
@@ -48,7 +48,8 @@ export const BRAND = {
   tagline: SITE.tagline,
   serviceArea: SITE.serviceArea,
   phone: SITE.phone,
-  kakaoUrl: SITE.kakaoUrl,
+  // 기존 집수리 서비스 자료의 상담 채널은 유지합니다.
+  kakaoUrl: "https://pf.kakao.com/_kHyfX/chat",
   businessName: RAW_BUSINESS_INFO.상호,
   businessOwner: RAW_BUSINESS_INFO.대표자,
 } as const;

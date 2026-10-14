@@ -22,17 +22,20 @@ const SITE_DESCRIPTION =
   "다다철거 · 다다 종합시공. 철거 범위와 보존 대상, 보양과 반출 조건을 확인하고 다음 공간을 준비합니다. 서울·경기 전 지역 상담 가능합니다.";
 
 export const metadata: Metadata = {
-metadataBase: new URL("https://bandeutjipsuri.co.kr"),
-  title: { default: `${SITE.name} | ${SITE.tagline}`, template: `%s | ${SITE.name}` },
+  metadataBase: new URL(SITE.url),
+  title: { default: `${SITE.name} | 서울·경기 실내 철거 상담`, template: `%s | ${SITE.name}` },
   description: SITE_DESCRIPTION,
   alternates: { canonical: "/" },
+  robots: { index: true, follow: true },
+  verification: { google: "FKry37Yl3lWRXaDtGbKRN5W0P1Fd_9j8ftAm9G-QwDg" },
   icons: { icon: "/dada/favicon.svg" },
   openGraph: {
     type: "website",
     locale: "ko_KR",
     siteName: SITE.name,
+    url: SITE.url,
     images: [{ url: "/dada/social.png", width: 1200, height: 630, alt: "다다철거 공간 설명용 그래픽" }],
-    title: `${SITE.name} | ${SITE.tagline}`,
+    title: `${SITE.name} | 서울·경기 실내 철거 상담`,
     description: SITE_DESCRIPTION,
   },
 };
@@ -51,10 +54,16 @@ export default function RootLayout({
   const organizationJsonLd = {
     "@context": "https://schema.org",
     "@type": "HomeAndConstructionBusiness",
+    "@id": `${SITE.url}/#business`,
     name: businessInfoMap["상호"] ?? SITE.name,
+    legalName: businessInfoMap["상호"] ?? SITE.name,
+    url: SITE.url,
+    description: SITE_DESCRIPTION,
+    image: `${SITE.url}/dada/social.png`,
+    sameAs: [SITE.blogUrl, SITE.instagramUrl],
     telephone: SITE.phone,
-    areaServed: SITE.serviceArea,
-    ...(businessInfoMap["대표자"] ? { founder: businessInfoMap["대표자"] } : {}),
+    areaServed: ["서울", "경기도"],
+    ...(businessInfoMap["대표자"] ? { founder: { "@type": "Person", name: businessInfoMap["대표자"] } } : {}),
   };
 
   return (

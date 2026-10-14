@@ -1,6 +1,6 @@
 import type { MetadataRoute } from "next";
 
-const SITE_URL = "https://bandeutjipsuri.co.kr";
+const SITE_URL = "https://www.bandeutjipsuri.co.kr";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const routes = [
@@ -15,10 +15,10 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/guide",
     "/estimate",
     "/about",
+    "/privacy",
   ];
 
   return routes.map((route) => ({
     url: `${SITE_URL}${route}`,
-    lastModified: new Date(),
   }));
 }

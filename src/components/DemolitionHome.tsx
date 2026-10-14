@@ -42,10 +42,10 @@ export default function DemolitionHome() {
   output.current?.focus();
   output.current?.select();
   try {
-   if (document.execCommand("copy")) { setStatus("상담 메모를 복사했어요."); return; }
+   if (document.execCommand("copy")) { setStatus("상담 메모를 복사했어요. 문자 앱에 붙여넣고 내용을 확인한 뒤 직접 전송해 주세요."); return; }
    if (!navigator.clipboard || !window.isSecureContext) throw new Error("Clipboard unavailable");
    await Promise.race([navigator.clipboard.writeText(brief),new Promise<never>((_,reject)=>setTimeout(()=>reject(new Error("Clipboard timed out")),2000))]);
-   setStatus("상담 메모를 복사했어요.");
+   setStatus("상담 메모를 복사했어요. 문자 앱에 붙여넣고 내용을 확인한 뒤 직접 전송해 주세요.");
   } catch {
    output.current?.focus(); output.current?.select();
    setStatus("내용을 선택했어요. 복사 메뉴 또는 Ctrl+C / ⌘C를 사용해 주세요.");
@@ -291,19 +291,31 @@ export default function DemolitionHome() {
 </div>
 <span aria-hidden="true">↗</span>
 </div>
-<p>아래 내용을 보관해 실제 상담 시 활용하세요. 상담이 접수된 것은 아닙니다.</p>
+<p>메모를 복사해 <strong>{SITE.phone}</strong>로 직접 문자 보내 주세요. 이 화면에서 상담이 접수되거나 문자가 전송되지는 않습니다.</p>
 <label className="sr-only" htmlFor="brief-output">작성된 상담 메모</label>
 <textarea id="brief-output" ref={output} value={brief} rows={16} readOnly>
 </textarea>
 <div className="result-actions">
-<button id="copy-brief" onClick={copy} type="button">내용 복사 <span aria-hidden="true">⧉</span>
+<button id="copy-brief" onClick={copy} type="button">1. 상담 메모 복사 <span aria-hidden="true">⧉</span>
 </button>
 <button id="download-brief" onClick={download} type="button">텍스트 파일 저장 <span aria-hidden="true">↓</span>
 </button>
 </div>
 <p className="status" id="copy-status" role="status" aria-live="polite">{status}</p>
+<div className="manual-sms" aria-labelledby="manual-sms-title">
+<h4 id="manual-sms-title">2. 문자에 붙여넣고 직접 전송</h4>
+<p>휴대폰에서는 아래 버튼으로 문자 앱을 연 뒤, 복사한 메모를 붙여넣어 주세요. 받는 번호와 내용을 확인하고 문자 앱의 전송 버튼을 직접 눌러야 합니다.</p>
+<a className="sms-link" href={`sms:${SITE.phone.replaceAll("-", "")}`}>문자 앱 열기 ↗</a>
+<p>PC이거나 문자 앱이 열리지 않나요? 휴대폰 문자 앱에서 받는 번호 <strong>{SITE.phone}</strong>를 입력하고 위 메모를 복사해 보내 주세요. 필요하면 텍스트 파일로 옮길 수 있습니다.</p>
+<p>복사가 안 되면 위 메모를 길게 눌러 전체 선택 후 복사하거나, PC에서 Ctrl+C / ⌘C를 사용해 주세요. 문자 앱을 열거나 내용을 복사하는 것만으로는 전송되지 않습니다. 통신 요금제에 따라 문자 요금이 발생할 수 있습니다.</p>
+</div>
 </section>
 </div>
+</section>
+<section className="dada-social section-pad" aria-labelledby="dada-social-title">
+<div className="eyebrow">DADA / MORE STORIES</div>
+<h2 id="dada-social-title">다다철거 소식</h2>
+<div className="contact-links"><a href="https://blog.naver.com/whgpals321" target="_blank" rel="noopener noreferrer"><span><strong>네이버 블로그 ↗</strong><br />실내 철거 이야기와 상담 준비 안내</span></a></div>
 </section>
 <section className="faq section-pad">
 <div>

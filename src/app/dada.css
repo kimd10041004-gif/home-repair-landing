@@ -130,3 +130,10 @@
  .dada-home .scope-diagram img { width:100%; max-height:300px; }
  .dada-home .scope-diagram figcaption { margin-top:16px; }
 }
+
+/* Direct SMS stays under the customer's control; no intake request is made. */
+.dada-home .manual-sms{margin-top:24px;padding-top:24px;border-top:1px solid var(--line,#d4d0c7)}
+.dada-home .manual-sms h4{font-size:18px;line-height:1.5;margin:0 0 12px}
+.dada-home .manual-sms p{font-size:14px;line-height:1.8;margin:12px 0;overflow-wrap:anywhere}
+.dada-home .sms-link{display:inline-flex;align-items:center;min-height:48px;padding:12px 18px;background:#ed5a23;color:#141414;font-size:16px;font-weight:700;text-decoration:none}
+.dada-home .sms-link:focus-visible{outline:3px solid currentColor;outline-offset:4px}

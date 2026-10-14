@@ -1,8 +1,11 @@
 "use client";
 import { useEffect, useRef, useState, type FormEvent } from "react";
 import Link from "next/link";
-import Image from "next/image";
+import Image, { getImageProps } from "next/image";
 import { SITE } from "@/lib/constants";
+const heroAlt = "안전모·보안경·장갑을 착용한 성인이 문틀의 보호 상태를 확인하는 연출 예시";
+const { props: { srcSet: desktopHero } } = getImageProps({src:"/dada/hero-wide.webp",width:1672,height:941,alt:heroAlt,sizes:"100vw"});
+const { props: { srcSet: mobileHero, ...heroProps } } = getImageProps({src:"/dada/hero-mobile.webp",width:752,height:1344,alt:heroAlt,sizes:"100vw",loading:"eager",fetchPriority:"high"});
 function buildBrief(data: FormData) {
   const scope = data.getAll('scope');
   const retain = data.getAll('retain');
@@ -11,6 +14,22 @@ function buildBrief(data: FormData) {
 }
 
 export default function DemolitionHome() {
+ const home=useRef<HTMLDivElement>(null);
+ useEffect(() => {
+  if (!home.current || !('IntersectionObserver' in window)) return;
+  const motion = window.matchMedia("(prefers-reduced-motion: reduce)");
+  if (motion.matches) return;
+  const observer = new IntersectionObserver(entries => {
+   entries.forEach(entry => {
+    if (entry.isIntersecting) {
+     entry.target.setAttribute("data-entered", "true");
+     observer.unobserve(entry.target);
+    }
+   });
+  }, { threshold: 0.12 });
+  home.current.querySelectorAll(".section-intro, .checklist-heading, .check-grid article, .consultation-intro, .brief-tool, .faq-list").forEach(element => observer.observe(element));
+  return () => observer.disconnect();
+ }, []);
  const [count,setCount]=useState(0);
  const [brief,setBrief]=useState("");
  const [status,setStatus]=useState("");
@@ -34,8 +53,15 @@ export default function DemolitionHome() {
  }
 
  function download() {const url=URL.createObjectURL(new Blob(["\uFEFF",brief],{type:"text/plain;charset=utf-8"}));const link=document.createElement("a");link.href=url;link.download="다다철거_상담준비메모.txt";document.body.appendChild(link);link.click();link.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);setStatus("텍스트 파일 저장을 요청했어요.");}
- return <div className="dada-home">
+ return <div className="dada-home" ref={home}>
 <section className="hero" aria-labelledby="hero-title">
+<picture className="hero-scene">
+<source media="(min-width: 701px)" srcSet={desktopHero} sizes="100vw" />
+<source srcSet={mobileHero} sizes="100vw" />
+{/* Native img is required for responsive art direction; Next generates its optimized props. */}
+<img {...heroProps} alt={heroAlt} />
+</picture>
+<span className="scene-caption">연출 예시</span>
 <div className="hero-copy">
 <div className="eyebrow">
 <span className="orange-dot">
@@ -51,29 +77,10 @@ export default function DemolitionHome() {
 </a>
 </div>
 </div>
-<div className="hero-visual">
-<div className="drawing-top">
-<span>SPACE / 001</span>
-<span>다음 공간을 위한 첫 작업</span>
-</div>
-<div className="drawing-wrap">
-<Image src="/dada/space.svg" width={760} height={720} priority alt="부분 철거를 설명하는 입체 공간 도면. 주황색은 철거 범위, 옅은 회색은 보존할 공간을 나타냅니다." />
-<span className="diagram-tag">공간 설명용 그래픽</span>
-</div>
-<div className="drawing-bottom">
-<p>
-<span className="line-swatch orange">
-</span> 비울 부분 <span className="line-swatch">
-</span> 남길 부분</p>
-<span>DESIGNED TO BEGIN AGAIN</span>
-</div>
 <a href="#checklist" className="hero-note">
-<span>무엇을 철거할지보다 먼저,<br />
-<strong>무엇을 남길지 확인합니다.</strong>
-</span>
+<span>무엇을 철거할지보다 먼저,<br /><strong>무엇을 남길지 확인합니다.</strong></span>
 <span aria-hidden="true">↓</span>
 </a>
-</div>
 </section>
 <div className="ticker" aria-hidden="true">
 <span>REMOVE WITH CARE.</span>
@@ -118,6 +125,10 @@ export default function DemolitionHome() {
 <span className="principle-icon" aria-hidden="true">↗</span>
 </article>
 </div>
+<figure className="scope-diagram">
+<Image src="/dada/space.svg" width={760} height={720} sizes="(max-width:700px) 88vw, 40vw" alt="주황색 철거 범위와 회색 보존 대상을 구분한 공간 설명용 그래픽" />
+<figcaption>공간 설명용 그래픽 · 비울 부분과 남길 부분을 함께 확인합니다.</figcaption>
+</figure>
 </section>
 <section id="checklist" className="checklist section-pad">
 <div className="checklist-heading">
@@ -318,7 +329,7 @@ export default function DemolitionHome() {
 <details>
 <summary>여기서 상담을 신청할 수 있나요?<span aria-hidden="true">+</span>
 </summary>
-<p>철거 상담은 사진 상담 안내 페이지의 기존 전화·카카오톡 채널로 진행할 수 있습니다. 아래 메모 도구는 준비용이며 자동으로 문의를 전송하지 않습니다.</p>
+<p>철거 상담은 사진 상담 안내 페이지의 전화·다다 철거 카카오톡 채널로 진행할 수 있습니다. 아래 메모 도구는 준비용이며 자동으로 문의를 전송하지 않습니다.</p>
 </details>
 </div>
 </section>

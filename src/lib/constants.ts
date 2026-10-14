@@ -8,6 +8,9 @@
 
 export const SITE = {
   name: "다다철거",
+  url: "https://www.bandeutjipsuri.co.kr",
+  blogUrl: "https://blog.naver.com/whgpals321",
+  instagramUrl: "https://www.instagram.com/dada_cheolgeo/",
   tagline: "다다 종합시공",
   serviceArea: "서울·경기 전 지역 방문 가능합니다",
   phone: "010-5094-0961",
@@ -24,7 +27,7 @@ export type BusinessInfoField = {
 };
 
 const RAW_BUSINESS_INFO = {
-  상호: "반듯집수리",
+  상호: "다다철거",
   대표자: "권태우",
   사업자등록번호: "505-26-66695",
   통신판매업신고번호: "",

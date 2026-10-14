@@ -72,3 +72,10 @@ body {
 .dada-mobile-menu{display:flex;flex-direction:column;padding-bottom:20px}.dada-mobile-menu a{padding:14px 0;font-size:15px}
 .legacy-service-notice{padding:18px max(5%,calc((100% - 1024px)/2));background:#eeebe3;border-bottom:1px solid #c7c8bd;font-size:14px;line-height:1.8;color:#242722}
 @media(max-width:900px){.dada-desktop{display:none}.dada-menu-button{display:block}.dada-header-row{min-height:84px}.dada-brand{font-size:21px}}
+
+/* Public navigation: hidden panels cannot remain after desktop resize. */
+@media(min-width:901px){.dada-mobile-menu{display:none}}
+.dada-header a,.dada-menu-button{transition:color .2s ease,background .2s ease,transform .2s ease}
+.dada-header a:focus-visible,.dada-menu-button:focus-visible{outline:3px solid #bb411d;outline-offset:5px}
+.dada-desktop a:hover{color:#bb411d}.dada-menu-button:active{transform:scale(.97)}
+@media(prefers-reduced-motion:reduce){.dada-header a,.dada-menu-button{transition:none}}

@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { SITE } from "@/lib/constants";
 
@@ -10,6 +10,22 @@ const links = [
 ];
 export default function Nav() {
  const [open,setOpen]=useState(false);
+ useEffect(() => {
+  const desktop = window.matchMedia("(min-width: 901px)");
+  const closeOnDesktop = () => { if (desktop.matches) setOpen(false); };
+  const closeOnEscape = (event: KeyboardEvent) => {
+   if (event.key === "Escape" && document.querySelector(".dada-menu-button")?.getAttribute("aria-expanded") === "true") {
+    setOpen(false);
+    document.querySelector<HTMLButtonElement>(".dada-menu-button")?.focus();
+   }
+  };
+  desktop.addEventListener("change", closeOnDesktop);
+  window.addEventListener("keydown", closeOnEscape);
+  return () => {
+   desktop.removeEventListener("change", closeOnDesktop);
+   window.removeEventListener("keydown", closeOnEscape);
+  };
+ }, []);
  return <header className="dada-header">
   <div className="dada-header-row">
    <Link href="/" className="dada-brand" onClick={()=>setOpen(false)}><span className="dada-mark" aria-hidden="true">ㄷㄷ</span><span>{SITE.name}<small>{SITE.tagline}</small></span></Link>

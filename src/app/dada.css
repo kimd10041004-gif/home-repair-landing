@@ -5,3 +5,128 @@
 @media(prefers-reduced-motion:reduce){.dada-home{scroll-behavior:auto}.dada-home *,.dada-home *::before,.dada-home *::after{transition:none!important;animation:none!important}}
 
 .dada-home .contact-links{display:flex;flex-wrap:wrap;gap:12px;margin-top:28px;font-size:14px}.dada-home .contact-links a{border:1px solid var(--ink);padding:14px}.dada-home .contact-links p{flex-basis:100%}.dada-home .brand small,.dada-home .eyebrow,.dada-home .diagram-tag,.dada-home .check-foot,.dada-home .local-note p,.dada-home .field-hint,.dada-home .choices label span{font-size:14px}.dada-home{width:100%;max-width:none;margin:0}.dada-home .primary-button{background:#bb411d;color:white}
+
+/* Spacious typography, architectural framing and a restrained motion system. */
+.dada-home { --muted:#596052; --ease:cubic-bezier(.22,1,.36,1); }
+.dada-home section[id],.dada-home #result-title { scroll-margin-top:32px; }
+.dada-home .hero { padding-top:60px; padding-bottom:64px; min-height:790px; gap:6%; align-items:stretch; }
+.dada-home .hero-copy { display:flex; flex-direction:column; justify-content:center; padding-bottom:32px; }
+.dada-home .hero h1 { margin-top:34px; font-size:clamp(60px,6.7vw,108px); }
+.dada-home .hero-visual { background:#e1e0d5; border:1px solid #c0c3b5; padding:24px; box-shadow:0 20px 50px #2427220b; position:relative; }
+.dada-home .drawing-wrap { min-height:380px; background-size:32px 32px; }
+.dada-home .drawing-wrap img { padding:12px; filter:drop-shadow(0 20px 14px #24272215); }
+.dada-home .diagram-tag { background:#eeebe3e8; left:0; bottom:12px; }
+.dada-home .drawing-bottom { flex-wrap:wrap; gap:8px; padding:12px 0; }
+.dada-home .hero-note { margin-top:12px; padding-top:20px; gap:20px; }
+.dada-home .ticker { padding-top:26px; padding-bottom:26px; border-bottom:4px solid var(--orange); }
+.dada-home .section-pad { padding-top:120px; padding-bottom:120px; }
+.dada-home .principles article { padding-top:34px; padding-bottom:34px; }
+.dada-home .check-grid article { transition:background .25s var(--ease); }
+.dada-home .check-grid h3 { line-height:1.5; }
+.dada-home .checklist { background:linear-gradient(180deg,#dddcd1,#e7e5db); }
+.dada-home .brief-tool { padding:30px; border:1px solid #c7c8bd; background:#f8f6f0; box-shadow:0 16px 40px #24272206; }
+.dada-home .choices label span { min-height:48px; display:flex; align-items:center; justify-content:center; }
+.dada-home .choices input:checked+span { box-shadow:inset 0 -3px 0 var(--orange); }
+.dada-home .space-choices { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); }
+.dada-home .contact-links a { min-height:48px; display:flex; align-items:center; }
+.dada-home .contact-links p { margin:4px 0 0; }
+.dada-home .primary-button,.dada-home .contact-links a,.dada-home .result-actions button { transition:background .22s var(--ease),color .22s var(--ease),transform .22s var(--ease),box-shadow .22s var(--ease); }
+.dada-home .primary-button { min-height:56px; }
+.dada-home .primary-button span,.dada-home .hero-note>span:last-child { transition:transform .3s var(--ease); }
+.dada-home .primary-button:active,.dada-home .contact-links a:active,.dada-home .result-actions button:active { transform:scale(.98); }
+.dada-home .contact-links a:hover { background:var(--ink); color:var(--white); }
+.dada-home .faq summary { min-height:68px; transition:color .2s ease; }
+.dada-home .faq summary:hover { color:#bb411d; }
+.dada-home .faq details[open] { background:#f8f6f060; }
+.dada-home .faq details[open] p { animation:dada-enter .35s var(--ease) both; }
+.dada-home .closing { padding-top:80px; padding-bottom:40px; }
+/* Meaningful text remains readable at every breakpoint. */
+.dada-home .hero-bottom p,.dada-home .primary-button,.dada-home .drawing-top,.dada-home .drawing-bottom,.dada-home .drawing-bottom p,.dada-home .drawing-bottom>span,.dada-home .hero-note,.dada-home .section-intro p,.dada-home .principles p,.dada-home .row-number,.dada-home .micro-label,.dada-home .checklist-heading>p,.dada-home .check-grid p,.dada-home .check-index,.dada-home .safety-note p,.dada-home .consultation-intro>p,.dada-home legend>span,.dada-home legend small,.dada-home .notes-field>label>span,.dada-home .brief-result>p,.dada-home .brief-result textarea,.dada-home .result-actions button,.dada-home .result-header .eyebrow,.dada-home .faq summary,.dada-home .faq details p,.dada-home .closing>p,.dada-home .closing>div { font-size:14px; }
+.dada-home .principles p,.dada-home .check-grid p,.dada-home .faq details p { line-height:1.9; }
+.dada-home .notes-field textarea { font-size:16px; }
+.dada-home legend { flex-wrap:wrap; }
+.dada-home legend small { margin-left:0; }
+.dada-home .drawing-top { gap:16px; letter-spacing:.3px; }
+.dada-home .micro-label { letter-spacing:.4px; }
+.dada-home .closing>div { flex-wrap:wrap; gap:16px; letter-spacing:.3px; }
+@media(hover:hover) and (pointer:fine) {
+ .dada-home .primary-button:hover { box-shadow:0 8px 20px #bb411d26; }
+ .dada-home .primary-button:hover span { transform:translate(3px,-3px); }
+ .dada-home .hero-note:hover>span:last-child { transform:translateY(5px); }
+ .dada-home .check-grid article:hover { background:#f8f6f038; }
+}
+@keyframes dada-enter { from { opacity:.45; transform:translateY(18px); } to { opacity:1; transform:translateY(0); } }
+@keyframes dada-diagram { from { opacity:.65; transform:translateY(14px) scale(.98); } to { opacity:1; transform:translateY(0) scale(1); } }
+@media(prefers-reduced-motion:no-preference) {
+ .dada-home .hero-copy { animation:dada-enter .8s var(--ease) both; }
+ .dada-home .hero-visual { animation:dada-diagram 1s var(--ease) both; }
+ .dada-home [data-entered="true"] { animation:dada-enter .7s var(--ease) both; }
+}
+@media(max-width:1000px) {
+ .dada-home .hero { gap:4%; min-height:720px; }
+ .dada-home .hero h1 { font-size:clamp(54px,7.4vw,74px); }
+ .dada-home .hero-visual { padding:18px; }
+ .dada-home .section-pad { padding-top:88px; padding-bottom:88px; }
+ .dada-home .drawing-bottom>span { display:none; }
+ .dada-home .brief-tool { padding:22px; }
+}
+@media(max-width:700px) {
+ .dada-home .hero { padding:36px 6% 44px; gap:30px; min-height:0; }
+ .dada-home .hero-copy { padding-bottom:0; }
+ .dada-home .hero h1 { font-size:clamp(44px,12.6vw,82px); }
+ .dada-home .hero-visual { padding:18px; }
+ .dada-home .drawing-wrap { min-height:280px; max-height:380px; }
+ .dada-home .drawing-top { flex-wrap:wrap; gap:8px; }
+ .dada-home .diagram-tag { position:static; align-self:flex-end; margin-bottom:12px; }
+ .dada-home .drawing-wrap { flex-direction:column; }
+ .dada-home .drawing-wrap img { min-height:0; flex:1; }
+ .dada-home .ticker { font-size:14px; gap:18px; }
+ .dada-home .section-pad { padding-top:68px; padding-bottom:68px; }
+ .dada-home .check-grid { grid-template-columns:1fr; }
+ .dada-home .check-grid article,.dada-home .check-grid article:nth-child(even),.dada-home .check-grid article:nth-child(odd) { padding:25px 0; border-right:0; border-bottom:1px solid #bdbfb2; }
+ .dada-home .check-grid article:last-child { border-bottom:0; }
+ .dada-home .check-grid h3 { font-size:22px; margin:16px 0 12px; }
+ .dada-home .check-grid p { margin-bottom:18px; }
+ .dada-home .brief-tool { padding:24px 18px; }
+ .dada-home .result-actions { flex-direction:column; }
+ .dada-home .hero-bottom .primary-button { font-size:14px; }
+ .dada-home .field-hint { flex-wrap:wrap; }
+ .dada-home .closing { padding-top:48px; }
+ .dada-home .closing>div span:last-child { max-width:230px; line-height:1.7; }
+}
+@media(prefers-reduced-motion:reduce) {
+ .dada-home * { animation:none!important; transition:none!important; }
+}
+
+/* Cinematic scene; mobile uses its own portrait without downloading the desktop image. */
+.dada-home .hero { position:relative; isolation:isolate; overflow:hidden; display:block; min-height:740px; padding:64px 6.2% 44px; background:#1c211e; color:#fff; }
+.dada-home .hero-scene { position:absolute; inset:0; z-index:-2; }
+.dada-home .hero-scene img { width:100%; height:100%; object-fit:cover; object-position:center; }
+.dada-home .hero::before { content:""; position:absolute; inset:0; z-index:-1; background:linear-gradient(90deg,#121a17e8 0%,#121a17b8 35%,#121a1730 64%,#121a1720 100%),linear-gradient(0deg,#121a17b0,transparent 35%); }
+.dada-home .hero-copy { width:55%; min-height:580px; padding:0; justify-content:center; }
+.dada-home .hero h1 { font-size:clamp(60px,6.4vw,100px); margin:30px 0; line-height:1.12; }
+.dada-home .hero h1>span { color:#ffad80; }
+.dada-home .hero-bottom p { font-size:16px; line-height:1.85; color:#f0eee7; }
+.dada-home .hero .primary-button { background:#bc411e; color:#fff; }
+.dada-home .hero .primary-button:hover { background:#9f3215; }
+.dada-home .scene-caption { position:absolute; top:24px; right:6.2%; padding:7px 12px; border:1px solid #ffffff80; background:#15201ccc; color:#fff; font-size:14px; }
+.dada-home .hero-note { position:absolute; bottom:36px; right:6.2%; width:34%; border-top:1px solid #ffffff80; margin:0; color:#fff; }
+.dada-home .hero a:focus-visible { outline-color:#ffbf98; }
+.dada-home .scope-diagram { grid-column:1/-1; display:flex; align-items:center; gap:6%; padding:24px; margin:40px 0 0; border-top:1px solid var(--line); }
+.dada-home .scope-diagram img { width:40%; height:auto; max-height:330px; object-fit:contain; }
+.dada-home .scope-diagram figcaption { font-size:14px; line-height:1.9; color:#596052; }
+@media(min-width:1550px) { .dada-home .hero { min-height:800px; } .dada-home .hero-copy { min-height:650px; } }
+@media(max-width:1000px) { .dada-home .hero { min-height:680px; padding:52px 5% 40px; } .dada-home .hero h1 { font-size:clamp(56px,7vw,74px); } .dada-home .hero-copy { width:62%; min-height:570px; } .dada-home .hero-note { width:30%; right:5%; font-size:14px; } }
+@media(max-width:700px) {
+ .dada-home .hero { min-height:0; padding:320px 6% 36px; }
+ .dada-home .hero-scene img { object-position:center 20%; }
+ .dada-home .hero::before { background:linear-gradient(0deg,#121a17 0%,#121a17f2 30%,#121a1790 56%,#121a1710 85%); }
+ .dada-home .hero-copy { width:100%; min-height:0; }
+ .dada-home .hero h1 { font-size:clamp(44px,12.6vw,82px); margin:24px 0; }
+ .dada-home .hero-bottom p { font-size:14px; }
+ .dada-home .hero-note { position:relative; width:100%; bottom:auto; right:auto; margin-top:28px; padding-top:20px; }
+ .dada-home .scene-caption { top:20px; right:6%; }
+ .dada-home .scope-diagram { display:block; padding:24px 0 0; margin-top:30px; }
+ .dada-home .scope-diagram img { width:100%; max-height:300px; }
+ .dada-home .scope-diagram figcaption { margin-top:16px; }
+}

@@ -5,7 +5,7 @@ import EstimateChat from "@/components/EstimateChat";
 export const metadata: Metadata = {
   title: "사진 상담",
   description:
-    "다다철거 상담은 기존 전화·카카오톡 채널로 진행하세요. 기존 집수리 사진 접수도 이용할 수 있습니다.",
+    "다다철거 상담은 전화·다다 철거 카카오톡 채널로 진행하세요. 기존 집수리 사진 접수도 이용할 수 있습니다.",
   alternates: { canonical: "/estimate" },
 };
 
@@ -20,7 +20,7 @@ export default function EstimatePage() {
         <a href={`tel:${SITE.phone}`} className="rounded-lg bg-brand-navy px-5 py-4 font-semibold text-white">전화 {SITE.phone}</a>
         <a href={SITE.kakaoUrl} target="_blank" rel="noopener noreferrer" className="rounded-lg border border-brand-navy px-5 py-4 font-semibold">카카오톡으로 사진 상담 ↗</a>
       </div>
-      <p className="mt-4 text-sm text-slate-600">기존 운영 상담 채널을 이용합니다. 카카오톡 채널의 등록명은 반듯집수리입니다.</p>
+      <p className="mt-4 text-sm text-slate-600">카카오톡 채널명은 다다 철거입니다. 카카오톡에서 다다철거로 검색할 수 있습니다.</p>
       <details className="mt-10 rounded-xl border border-slate-200 p-5">
         <summary className="cursor-pointer text-lg font-semibold">기존 집수리 사진 접수</summary>
         <p className="mt-4 text-sm leading-7 text-slate-600">생활 집수리·주거 케어·스마트홈 신청서입니다. 철거 견적이나 철거 접수로 처리되는 양식은 아닙니다.</p>

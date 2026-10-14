@@ -27,7 +27,7 @@ export const metadata: Metadata = {
   description: SITE_DESCRIPTION,
   alternates: { canonical: "/" },
   robots: { index: true, follow: true },
-  verification: { google: "FKry37Yl3lWRXaDtGbKRN5W0P1Fd_9j8ftAm9G-QwDg" },
+  verification: { google: "FKry37Yl3lWRXaDtGbKRN5W0P1Fd_9j8ftAm9G-QwDg", other: { "naver-site-verification": "889f300e8db1c5b8bd3109b0bc9769f83be900d2" } },
   icons: { icon: "/dada/favicon.svg" },
   openGraph: {
     type: "website",

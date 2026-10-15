@@ -315,7 +315,7 @@ export default function DemolitionHome() {
 <section className="dada-social section-pad" aria-labelledby="dada-social-title">
 <div className="eyebrow">DADA / MORE STORIES</div>
 <h2 id="dada-social-title">다다철거 소식</h2>
-<div className="contact-links"><a href={SITE.blogUrl} target="_blank" rel="noopener noreferrer"><span><strong>네이버 블로그 ↗</strong><br />실내 철거 이야기와 상담 준비 안내</span></a><a href={SITE.instagramUrl} target="_blank" rel="noopener noreferrer"><span><strong>인스타그램 ↗</strong><br />@dada_cheolgeo · 다다철거의 사진과 소식</span></a></div>
+<div className="contact-links"><a href={SITE.blogUrl} target="_blank" rel="noopener noreferrer"><span><strong>네이버 블로그 ↗</strong><br />실내 철거 이야기와 상담 준비 안내</span></a><a href={SITE.instagramUrl} target="_blank" rel="noopener noreferrer"><span><strong>인스타그램 ↗</strong><br />@dada_cheolgeo · 다다철거의 사진과 소식</span></a><a href={SITE.bloggerUrl} target="_blank" rel="noopener noreferrer"><span><strong>Blogger ↗</strong><br />철거 전 확인할 내용과 상담 준비 이야기</span></a><a href={SITE.youtubeUrl} target="_blank" rel="noopener noreferrer"><span><strong>YouTube ↗</strong><br />@dadacheolgeo · 다다철거 영상 안내</span></a></div>
 </section>
 <section className="faq section-pad">
 <div>

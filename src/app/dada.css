@@ -139,7 +139,7 @@
 .dada-home .sms-link:focus-visible{outline:3px solid currentColor;outline-offset:4px}
 
 /* Three camera paths reuse the existing responsive photo; no video or new media payload. */
-.dada-home .camera-tour{position:absolute;inset:0;z-index:0;overflow:hidden;pointer-events:none;background:#101915}
+.dada-home .camera-tour{position:absolute;inset:0;z-index:0;overflow:clip;pointer-events:none;background:#101915}
 .dada-home .camera-tour .hero-scene{inset:-2%;z-index:0;transform-origin:66% 45%}
 .dada-home .camera-shade{position:absolute;inset:0;z-index:1;background:linear-gradient(90deg,#101915ef 0%,#101915bc 34%,#10191522 72%),linear-gradient(0deg,#101915db,transparent 58%)}
 .dada-home .camera-motion{animation-duration:12s;animation-timing-function:cubic-bezier(.3,0,.35,1);animation-fill-mode:both;animation-play-state:paused}

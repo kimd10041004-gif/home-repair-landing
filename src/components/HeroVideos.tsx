@@ -95,6 +95,7 @@ export default function HeroVideos() {
       <video ref={video} muted playsInline preload="none" poster={asset(scene, "-poster.jpg")} tabIndex={-1} />
     </div>
     <span className="scene-caption">AI 연출 예시 · {labels[scene]}</span>
+    <div className="scene-index" aria-hidden="true"><span>0{scene + 1} / 03</span><div>{labels.map((label,index) => <span key={label} data-active={scene === index}>{label}</span>)}</div></div>
     <div className="hero-video-controls">
       <button type="button" onClick={() => toggle.current()} aria-label={playing ? "배경 영상 일시 정지" : "배경 영상 재생"}>{playing ? "영상 일시 정지" : "영상 재생"}</button>
       <span role="status">{status}</span>

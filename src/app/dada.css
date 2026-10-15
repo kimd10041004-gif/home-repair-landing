@@ -9,6 +9,10 @@
 .dada-home section[id],.dada-home #result-title{scroll-margin-top:32px}
 .dada-home .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
 body:has(.dada-home) .dada-header{background:#17211c;color:var(--color-white,#f8f6f0);border-color:#ffffff26;padding:0 6%}
+body:has(.dada-home)>footer{background:#17211c;border-color:#ffffff33}
+body:has(.dada-home)>footer>div{max-width:none;padding:40px 8%;font-size:14px;line-height:1.8;color:#c6cdbf}
+body:has(.dada-home)>footer a:hover{color:#ffb18a}
+body:has(.dada-home)>footer a:focus-visible,body:has(.dada-home)>footer summary:focus-visible{outline:3px solid #ffb18a;outline-offset:4px}
 body:has(.dada-home) .dada-header-row{min-height:92px}
 body:has(.dada-home) .dada-mark{color:#f48352}
 body:has(.dada-home) .dada-brand{font-size:23px;letter-spacing:-.04em}
@@ -266,6 +270,9 @@ to{opacity:1;transform:translateY(0)}
 .dada-home .closing>div span:last-child{max-width:260px;line-height:1.7}
 }
 /* Keep fixed contact controls outside the reading and form column. */
+@media(max-width:767px){body:has(.dada-home) #main-content{padding-bottom:0}
+body:has(.dada-home)>footer>div{padding:32px 6% 104px}
+}
 @media(min-width:768px) and (max-width:1279px){.dada-home .section-pad{padding-right:max(6%,112px)}
 }
 @media(min-width:1280px){.dada-home .section-pad{padding-right:max(8%,208px)}

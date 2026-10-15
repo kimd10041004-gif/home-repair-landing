@@ -37,15 +37,16 @@ export default function DemolitionHome() {
  function generate(event: FormEvent<HTMLFormElement>) {event.preventDefault();setBrief(buildBrief(new FormData(event.currentTarget)));setStatus("");}
 
  async function copy() {
+  const copied = "상담 메모를 복사했어요. 문자 앱에 붙여넣고 내용을 확인한 뒤 직접 전송해 주세요.";
   output.current?.focus();
   output.current?.select();
   try {
-   if (document.execCommand("copy")) { setStatus("상담 메모를 복사했어요. 문자 앱에 붙여넣고 내용을 확인한 뒤 직접 전송해 주세요."); return; }
    if (!navigator.clipboard || !window.isSecureContext) throw new Error("Clipboard unavailable");
    await Promise.race([navigator.clipboard.writeText(brief),new Promise<never>((_,reject)=>setTimeout(()=>reject(new Error("Clipboard timed out")),2000))]);
-   setStatus("상담 메모를 복사했어요. 문자 앱에 붙여넣고 내용을 확인한 뒤 직접 전송해 주세요.");
+   setStatus(copied);
   } catch {
    output.current?.focus(); output.current?.select();
+   try { if (document.execCommand("copy")) { setStatus(copied); return; } } catch { /* Keep manual selection available. */ }
    setStatus("내용을 선택했어요. 복사 메뉴 또는 Ctrl+C / ⌘C를 사용해 주세요.");
   }
  }

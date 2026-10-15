@@ -53,7 +53,7 @@ body:has(.dada-home) .dada-mobile-menu{background:#17211c;color:#f8f6f0}
 .dada-home .hero-note-label{font-family:var(--font-geist-mono),monospace;color:#d0d5cb;letter-spacing:.1em}
 .dada-home .hero-note>span:last-child{font-size:28px;margin-left:auto}
 .dada-home .scene-caption{position:absolute;top:30px;right:6%;font-size:14px;padding:8px 12px;background:#14201cec;border:1px solid #ffffff66}
-.dada-home .hero-video-controls{position:absolute;top:80px;right:6%;display:flex;flex-direction:column;align-items:flex-end;gap:8px;max-width:270px}
+.dada-home .hero-video-controls{position:absolute;z-index:1;top:80px;right:6%;display:flex;flex-direction:column;align-items:flex-end;gap:8px;max-width:270px}
 .dada-home .hero-video-controls button{min-height:44px;padding:10px 14px;border:1px solid #ffffff88;background:#14201cee;color:#fff;font-size:14px}
 .dada-home .hero-video-controls>span{font-size:14px;line-height:1.6;background:#14201cee;color:#fff;padding:0 6px}
 .dada-home .scene-index{position:absolute;right:6%;bottom:160px;font-family:var(--font-geist-mono),monospace;font-size:14px;color:#fff}

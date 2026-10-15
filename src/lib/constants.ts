@@ -11,6 +11,8 @@ export const SITE = {
   url: "https://www.bandeutjipsuri.co.kr",
   blogUrl: "https://blog.naver.com/whgpals321",
   instagramUrl: "https://www.instagram.com/dada_cheolgeo/",
+  bloggerUrl: "https://dada-cheolgeo.blogspot.com/",
+  youtubeUrl: "https://www.youtube.com/channel/UCy0JkyC6icU-4Uhfufwqr2w",
   tagline: "다다 종합시공",
   serviceArea: "서울·경기 전 지역 방문 가능합니다",
   phone: "010-5094-0961",

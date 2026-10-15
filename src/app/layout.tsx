@@ -28,7 +28,14 @@ export const metadata: Metadata = {
   alternates: { canonical: "/" },
   robots: { index: true, follow: true },
   verification: { google: "FKry37Yl3lWRXaDtGbKRN5W0P1Fd_9j8ftAm9G-QwDg", other: { "naver-site-verification": "889f300e8db1c5b8bd3109b0bc9769f83be900d2" } },
-  icons: { icon: "/dada/favicon.svg" },
+  icons: {
+    icon: [
+      { url: "/dada/favicon.svg?v=dada-20261015", type: "image/svg+xml", sizes: "any" },
+      { url: "/icon.png?v=dada-20261015", type: "image/png", sizes: "512x512" },
+    ],
+    shortcut: "/favicon.ico?v=dada-20261015",
+    apple: { url: "/apple-icon.png?v=dada-20261015", type: "image/png", sizes: "180x180" },
+  },
   openGraph: {
     type: "website",
     locale: "ko_KR",

@@ -143,7 +143,7 @@
 .dada-home .hero-video-scene video[data-ready="true"] { opacity:1; }
 .dada-home .hero-video-controls { position:absolute; top:76px; right:6.2%; display:flex; flex-direction:column; align-items:flex-end; gap:8px; max-width:280px; }
 .dada-home .hero-video-controls button { min-height:44px; padding:10px 16px; border:1px solid #ffffffa0; background:#15201cee; color:#fff; font-size:14px; }
-.dada-home .hero-video-controls span { font-size:13px; line-height:1.6; background:#15201cee; color:#fff; padding:0 6px; }
+.dada-home .hero-video-controls span { font-size:14px; line-height:1.6; background:#15201cee; color:#fff; padding:0 6px; }
 @media(max-width:700px) {
  .dada-home .hero-video-scene img,.dada-home .hero-video-scene video { object-position:50% 20%; }
  .dada-home .hero-video-scene[data-scene="2"] img,.dada-home .hero-video-scene[data-scene="2"] video { object-position:85% 20%; }

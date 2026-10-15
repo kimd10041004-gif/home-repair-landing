@@ -137,3 +137,19 @@
 .dada-home .manual-sms p{font-size:14px;line-height:1.8;margin:12px 0;overflow-wrap:anywhere}
 .dada-home .sms-link{display:inline-flex;align-items:center;min-height:48px;padding:12px 18px;background:#ed5a23;color:#141414;font-size:16px;font-weight:700;text-decoration:none}
 .dada-home .sms-link:focus-visible{outline:3px solid currentColor;outline-offset:4px}
+
+/* Three existing AI camera clips; one video element loads only the active scene. */
+.dada-home .hero-video-scene video { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; opacity:0; }
+.dada-home .hero-video-scene video[data-ready="true"] { opacity:1; }
+.dada-home .hero-video-controls { position:absolute; top:76px; right:6.2%; display:flex; flex-direction:column; align-items:flex-end; gap:8px; max-width:280px; }
+.dada-home .hero-video-controls button { min-height:44px; padding:10px 16px; border:1px solid #ffffffa0; background:#15201cee; color:#fff; font-size:14px; }
+.dada-home .hero-video-controls span { font-size:13px; line-height:1.6; background:#15201cee; color:#fff; padding:0 6px; }
+@media(max-width:700px) {
+ .dada-home .hero-video-scene img,.dada-home .hero-video-scene video { object-position:50% 20%; }
+ .dada-home .hero-video-scene[data-scene="2"] img,.dada-home .hero-video-scene[data-scene="2"] video { object-position:85% 20%; }
+ .dada-home .hero-video-controls { top:68px; right:6%; max-width:80%; }
+ .dada-home .hero-bottom p { font-size:16px; }
+}
+@media(prefers-reduced-motion:reduce) {
+ .dada-home .hero-video-scene video,.dada-home .hero-video-controls button { display:none; }
+}

@@ -1,11 +1,9 @@
 "use client";
 import { useEffect, useRef, useState, type FormEvent } from "react";
 import Link from "next/link";
-import Image, { getImageProps } from "next/image";
+import Image from "next/image";
+import HeroVideos from "./HeroVideos";
 import { SITE } from "@/lib/constants";
-const heroAlt = "안전모·보안경·장갑을 착용한 성인이 문틀의 보호 상태를 확인하는 연출 예시";
-const { props: { srcSet: desktopHero } } = getImageProps({src:"/dada/hero-wide.webp",width:1672,height:941,alt:heroAlt,sizes:"100vw"});
-const { props: { srcSet: mobileHero, ...heroProps } } = getImageProps({src:"/dada/hero-mobile.webp",width:752,height:1344,alt:heroAlt,sizes:"100vw",loading:"eager",fetchPriority:"high"});
 function buildBrief(data: FormData) {
   const scope = data.getAll('scope');
   const retain = data.getAll('retain');
@@ -55,13 +53,7 @@ export default function DemolitionHome() {
  function download() {const url=URL.createObjectURL(new Blob(["\uFEFF",brief],{type:"text/plain;charset=utf-8"}));const link=document.createElement("a");link.href=url;link.download="다다철거_상담준비메모.txt";document.body.appendChild(link);link.click();link.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);setStatus("텍스트 파일 저장을 요청했어요.");}
  return <div className="dada-home" ref={home}>
 <section className="hero" aria-labelledby="hero-title">
-<picture className="hero-scene">
-<source media="(min-width: 701px)" srcSet={desktopHero} sizes="100vw" />
-<source srcSet={mobileHero} sizes="100vw" />
-{/* Native img is required for responsive art direction; Next generates its optimized props. */}
-<img {...heroProps} alt={heroAlt} />
-</picture>
-<span className="scene-caption">연출 예시</span>
+<HeroVideos />
 <div className="hero-copy">
 <div className="eyebrow">
 <span className="orange-dot">

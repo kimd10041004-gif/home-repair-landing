@@ -137,3 +137,69 @@
 .dada-home .manual-sms p{font-size:14px;line-height:1.8;margin:12px 0;overflow-wrap:anywhere}
 .dada-home .sms-link{display:inline-flex;align-items:center;min-height:48px;padding:12px 18px;background:#ed5a23;color:#141414;font-size:16px;font-weight:700;text-decoration:none}
 .dada-home .sms-link:focus-visible{outline:3px solid currentColor;outline-offset:4px}
+
+/* Three camera paths reuse the existing responsive photo; no video or new media payload. */
+.dada-home .camera-tour{position:absolute;inset:0;z-index:0;overflow:clip;pointer-events:none;background:#101915}
+.dada-home .camera-tour .hero-scene{inset:-2%;z-index:0;transform-origin:66% 45%}
+.dada-home .camera-shade{position:absolute;inset:0;z-index:1;background:linear-gradient(90deg,#101915ef 0%,#101915bc 34%,#10191522 72%),linear-gradient(0deg,#101915db,transparent 58%)}
+.dada-home .camera-motion{animation-duration:12s;animation-timing-function:cubic-bezier(.3,0,.35,1);animation-fill-mode:both;animation-play-state:paused}
+.dada-home .camera-motion-0{animation-name:camera-entry}
+.dada-home .camera-motion-1{animation-name:camera-passage}
+.dada-home .camera-motion-2{animation-name:camera-survey}
+.dada-home .camera-tour[data-running="true"] .camera-motion{animation-play-state:running}
+@keyframes camera-entry{0%,100%{transform:scale(1.02) translate(0,0)}50%{transform:scale(1.16) translate(-1.5%,1%)}}
+@keyframes camera-passage{0%,100%{transform:scale(1.02) translate(0,0)}40%{transform:scale(1.1) translate(-2%,0)}75%{transform:scale(1.12) translate(1.5%,-.7%)}}
+@keyframes camera-survey{0%,100%{transform:scale(1.02) translate(0,0) rotate(0)}35%{transform:scale(1.12) translate(1%,-1%) rotate(.5deg)}70%{transform:scale(1.09) translate(-1%,1%) rotate(-.35deg)}}
+.dada-home .hero{min-height:850px;padding-bottom:115px}
+.dada-home .hero-copy{position:relative;z-index:1;min-height:620px;pointer-events:none}
+.dada-home .hero-copy a{pointer-events:auto}
+.dada-home .hero::before{display:none}
+.dada-home .hero h1{font-weight:500;letter-spacing:-.075em;line-height:1.16}
+.dada-home .hero h1>span{color:#f8be95}
+.dada-home .hero .primary-button{border:1px solid #f3b38c;background:#e57342;color:#171e1a;padding:20px 28px}
+.dada-home .hero .primary-button:hover{background:#f7b189}
+.dada-home .hero-note{z-index:1;left:6.2%;right:auto;bottom:32px;width:45%;font-size:13px}
+.dada-home .camera-controls{position:absolute;z-index:2;right:calc(6.2% + 90px);bottom:34px;width:30%;max-width:470px;padding:20px 22px;border:1px solid #f4eee340;background:#17201be6;color:#fff;pointer-events:auto;box-shadow:0 12px 40px #0002}
+.dada-home .camera-control-heading,.dada-home .camera-control-foot{display:flex;justify-content:space-between;align-items:center;gap:10px;font-size:10px;letter-spacing:.08em;color:#e5e2d7}
+.dada-home .camera-control-heading>span:first-child{color:#f7b88e}
+.dada-home .camera-scenes{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:18px 0}
+.dada-home .camera-scenes button{display:flex;flex-direction:column;gap:9px;text-align:left;min-height:62px;border-top:2px solid #ffffff35;padding:12px 0 0;color:#e7e8e1;font-size:12px;line-height:1.5;cursor:pointer}
+.dada-home .camera-scenes button>span{font-size:10px;letter-spacing:.1em;color:#b8bdb1}
+.dada-home .camera-scenes button[aria-pressed="true"]{border-color:#f4ae7b;color:#fff}
+.dada-home .camera-control-foot{border-top:1px solid #ffffff25;padding-top:12px;font-size:10px;letter-spacing:0}
+.dada-home .camera-control-foot button{min-height:44px;border:1px solid #ffffff55;padding:8px 10px;cursor:pointer;color:#fff;font-size:11px;white-space:nowrap}
+.dada-home .camera-controls button:focus-visible{outline:2px solid #ffc79f;outline-offset:4px}
+.dada-home .camera-controls button:disabled{opacity:.65;cursor:default}
+.dada-home .section-pad{padding-top:112px;padding-bottom:112px}
+.dada-home .approach{background:#f7f5ef}
+.dada-home .principles article{border-color:#c5c6b7;padding-top:32px;padding-bottom:32px}
+.dada-home .checklist{background:#e8e8dd}
+.dada-home .check-grid{gap:16px;border:0}
+.dada-home .check-grid article{background:#f7f6f0;border:1px solid #c4c6b8;padding:30px 24px;box-shadow:0 8px 25px #25332305}
+.dada-home .check-grid article:first-child{padding-left:24px}
+.dada-home .check-grid h3{font-weight:600;letter-spacing:-.04em}
+.dada-home .check-index{color:#8f3e21}
+.dada-home .consultation{background:#f8f6f0}
+.dada-home .brief-tool{background:#fffdf8;padding:32px;border:1px solid #d3d3c6;box-shadow:0 20px 60px #18282008}
+.dada-home .faq{background:#f0f0e6}
+.dada-home .closing{background:#1b2820;color:#f8f5ec}
+@media(min-width:1550px){.dada-home .hero{min-height:900px}.dada-home .hero-copy{min-height:665px}}
+@media(max-width:1279px) and (min-width:701px){.dada-home .camera-controls{width:40%;right:calc(4% + 70px);padding:16px}.dada-home .hero-copy{width:62%}.dada-home .hero-note{left:5%;width:32%}.dada-home .camera-control-foot{flex-wrap:wrap}}
+@media(max-width:700px){
+ .dada-home .hero{padding:300px 6% 340px;min-height:0}
+ .dada-home .hero-copy{min-height:0}
+ .dada-home .hero h1{font-size:clamp(42px,11.8vw,72px);margin:23px 0}
+ .dada-home .hero-scene img{object-position:center 8%}
+ .dada-home .camera-shade{background:linear-gradient(0deg,#101915 0%,#101915f5 42%,#10191590 67%,#10191505 100%)}
+ .dada-home .camera-tour .hero-scene{transform-origin:64% 18%}
+ .dada-home .hero-note{position:absolute;bottom:215px;left:6%;width:88%;margin:0;padding-top:15px;font-size:12px}
+ .dada-home .camera-controls{left:6%;right:6%;bottom:26px;width:auto;max-width:none;padding:16px 18px}
+ .dada-home .camera-scenes{margin:12px 0;gap:8px}
+ .dada-home .camera-scenes button{min-height:52px;font-size:11px;gap:6px}
+ .dada-home .camera-control-foot{font-size:9px}
+ .dada-home .section-pad{padding-top:68px;padding-bottom:68px}
+ .dada-home .check-grid{gap:10px}
+ .dada-home .check-grid article,.dada-home .check-grid article:first-child,.dada-home .check-grid article:nth-child(odd),.dada-home .check-grid article:nth-child(even){padding:22px 15px;border:1px solid #c4c6b8}
+ .dada-home .brief-tool{padding:24px 18px}
+}
+@media(prefers-reduced-motion:reduce){.dada-home .camera-motion{animation:none!important;transform:none!important}}

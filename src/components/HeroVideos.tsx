@@ -30,6 +30,7 @@ export default function HeroVideos() {
       } catch {
         if (!disposed && token === attempt) {
           film.dataset.ready = "false";
+          setPlaying(false);
           setStatus("정지 이미지 · 재생 버튼으로 다시 시도할 수 있습니다.");
         }
       }
@@ -54,7 +55,8 @@ export default function HeroVideos() {
       else void play();
     };
     const ended = () => { index = (index + 1) % scenes.length; load(); };
-    const started = () => { film.dataset.ready = "true"; setPlaying(true); setStatus(""); };
+    const requested = () => setPlaying(true);
+    const started = () => { film.dataset.ready = "true"; setStatus(""); };
     const paused = () => setPlaying(false);
     const failed = () => { pause(); film.dataset.ready = "false"; setStatus("영상을 불러오지 못해 정지 이미지를 표시합니다."); };
     toggle.current = () => {
@@ -63,6 +65,7 @@ export default function HeroVideos() {
       else { stopped = false; if (film.error) load(); else void play(); }
     };
     film.addEventListener("ended", ended);
+    film.addEventListener("play", requested);
     film.addEventListener("playing", started);
     film.addEventListener("pause", paused);
     film.addEventListener("error", failed);
@@ -72,6 +75,7 @@ export default function HeroVideos() {
     return () => {
       disposed = true;
       film.removeEventListener("ended", ended);
+      film.removeEventListener("play", requested);
       film.removeEventListener("playing", started);
       film.removeEventListener("pause", paused);
       film.removeEventListener("error", failed);

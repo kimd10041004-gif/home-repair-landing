@@ -67,7 +67,8 @@ export default function RootLayout({
     url: SITE.url,
     description: SITE_DESCRIPTION,
     image: `${SITE.url}/dada/social.png`,
-    sameAs: [SITE.blogUrl, SITE.instagramUrl],
+    logo: `${SITE.url}/icon.png`,
+    sameAs: [SITE.blogUrl, SITE.instagramUrl, SITE.bloggerUrl, SITE.youtubeUrl],
     telephone: SITE.phone,
     areaServed: ["서울", "경기도"],
     ...(businessInfoMap["대표자"] ? { founder: { "@type": "Person", name: businessInfoMap["대표자"] } } : {}),
@@ -81,7 +82,7 @@ export default function RootLayout({
       <body className="flex min-h-full flex-col bg-white text-slate-900">
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }}
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd).replace(/</g, "\\u003c") }}
         />
         {/* 본문 바로가기 링크: 평소에는 화면 밖에 숨어있다가 키보드 포커스를 받으면
             화면 좌상단에 나타난다(최종 개편안 8번). */}

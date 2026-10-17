@@ -59,7 +59,7 @@ export default function DemolitionHome() {
 <div className="eyebrow">
 <span className="orange-dot">
 </span> DEMOLITION, WITH INTENTION</div>
-<div className="hero-edition">DADA / INTERIOR DEMOLITION<span>서울 · 경기</span></div>
+<div className="hero-edition">{SITE.name} / 실내 철거 상담<span>서울 · 경기</span></div>
 <h1 id="hero-title">잘 비워야,<br /><span>다음이 보입니다.</span>
 </h1>
 <div className="hero-bottom">
@@ -83,7 +83,7 @@ export default function DemolitionHome() {
 <span>다음 공간을 위한 첫 작업.</span>
 </div>
 <section className="space-story section-pad" aria-labelledby="space-story-title">
-<div className="space-story-heading"><div className="eyebrow">DADA / A DIFFERENT PERSPECTIVE</div><h2 id="space-story-title">비우는 일의 깊이.<br /><span>다음을 보는 시선.</span></h2><p>입구에서 안쪽 공간까지.<br />철거할 곳과 지켜야 할 곳을<br />하나의 흐름으로 살펴봅니다.</p></div>
+<div className="space-story-heading"><div className="eyebrow">DADA / A DIFFERENT PERSPECTIVE</div><h2 id="space-story-title">비우는 일의 깊이.<br /><span>다음을 보는 시선.</span></h2><p>서울·경기 주거·상가·사무실.<br />철거할 곳과 지켜야 할 곳을<br />상담에서 함께 살펴봅니다.</p></div>
 <div className="space-frames">
 <figure className="space-frame"><div className="space-frame-image"><Image src="/dada/video/01-entry-poster.jpg" width={1280} height={720} sizes="(max-width:700px) 88vw, 37vw" alt="입구의 동선과 남길 마감을 생각하기 위한 AI 공간 연출 이미지" /><span aria-hidden="true">01</span></div><figcaption><span>ENTRY / 첫 경계</span><strong>들어가는 길부터 생각합니다.</strong><p>출입구와 이동 경로, 공용부의 조건.</p></figcaption></figure>
 <figure className="space-frame"><div className="space-frame-image"><Image src="/dada/video/02-corridor-poster.jpg" width={1280} height={720} sizes="(max-width:700px) 88vw, 37vw" alt="이동과 반출 경로를 생각하기 위한 AI 복도 연출 이미지" /><span aria-hidden="true">02</span></div><figcaption><span>PASSAGE / 연결되는 공간</span><strong>작업의 바깥까지 살핍니다.</strong><p>반출 동선과 보양할 부분의 연결.</p></figcaption></figure>

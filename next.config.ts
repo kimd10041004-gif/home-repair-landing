@@ -28,6 +28,9 @@ const nextConfig: NextConfig = {
       },
     ],
   },
+  async rewrites() {
+    return [{ source: "/demolition-support", destination: "/demolition-support/index.html" }];
+  },
   async headers() {
     return [
       {

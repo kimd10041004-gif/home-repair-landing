@@ -82,6 +82,7 @@ export default function DemolitionHome() {
 <span className="asterisk">✳</span>
 <span>다음 공간을 위한 첫 작업.</span>
 </div>
+<aside className="support-callout"><span>상가 철거 · 폐업 준비</span><a href="/demolition-support">점포철거 지원금, 내 조건으로 계산하기 ↗</a><p>폐업일별 한도·전용면적·부가세를 구분한 참고 계산입니다. 실제 지급액은 공단 심사로 결정됩니다.</p></aside>
 <section className="space-story section-pad" aria-labelledby="space-story-title">
 <div className="space-story-heading"><div className="eyebrow">DADA / A DIFFERENT PERSPECTIVE</div><h2 id="space-story-title">비우는 일의 깊이.<br /><span>다음을 보는 시선.</span></h2><p>서울·경기 주거·상가·사무실.<br />철거할 곳과 지켜야 할 곳을<br />상담에서 함께 살펴봅니다.</p></div>
 <div className="space-frames">

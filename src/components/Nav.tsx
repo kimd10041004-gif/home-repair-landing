@@ -29,9 +29,9 @@ export default function Nav() {
  return <header className="dada-header">
   <div className="dada-header-row">
    <Link href="/" className="dada-brand" onClick={()=>setOpen(false)}><span className="dada-mark" aria-hidden="true">ㄷㄷ</span><span>{SITE.name}<small>{SITE.tagline}</small></span></Link>
-   <nav className="dada-desktop" aria-label="주요 메뉴">{links.map(item=><Link key={item.href} href={item.href}>{item.label}</Link>)}<Link href="/estimate">사진 상담 ↗</Link></nav>
+   <nav className="dada-desktop" aria-label="주요 메뉴">{links.map(item=><Link key={item.href} href={item.href}>{item.label}</Link>)}<a href="/demolition-support">지원금 계산</a><Link href="/estimate">사진 상담 ↗</Link></nav>
    <button className="dada-menu-button" type="button" aria-label={open?"메뉴 닫기":"메뉴 열기"} aria-expanded={open} aria-controls="dada-mobile-menu" onClick={()=>setOpen(!open)}>{open?"닫기":"메뉴"}</button>
   </div>
-  {open && <nav id="dada-mobile-menu" className="dada-mobile-menu" aria-label="모바일 메뉴">{[...links,{href:"/estimate",label:"사진 상담"}].map(item=><Link key={item.href} href={item.href} onClick={()=>setOpen(false)}>{item.label}</Link>)}</nav>}
+  {open && <nav id="dada-mobile-menu" className="dada-mobile-menu" aria-label="모바일 메뉴">{[...links,{href:"/estimate",label:"사진 상담"}].map(item=><Link key={item.href} href={item.href} onClick={()=>setOpen(false)}>{item.label}</Link>)}<a href="/demolition-support" onClick={()=>setOpen(false)}>지원금 계산</a></nav>}
  </header>;
 }

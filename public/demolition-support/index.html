@@ -1,0 +1,922 @@
+<!doctype html><html lang="ko"><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:80px;scroll-behavior:smooth}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style>
+<title>점포철거 지원금 계산기 | 다다철거</title>
+<meta name="description" content="다다철거 점포철거비 참고 계산기. 폐업일별 한도, 전용면적과 부가세를 확인하고 상담 준비용 계산서를 만드세요. 실제 지원액·견적을 보장하지 않습니다.">
+<link rel="canonical" href="https://www.bandeutjipsuri.co.kr/demolition-support">
+<meta property="og:title" content="점포철거 지원금 계산기 | 다다철거">
+<meta property="og:description" content="큰 숫자보다 정확한 계산. 폐업일과 전용면적을 기준으로 지원 상한과 부가세를 확인하세요.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://www.bandeutjipsuri.co.kr/demolition-support">
+<link rel="icon" href="/dada/favicon.svg">
+
+
+
+
+<style>
+/* Layout: one phone-width column read like an official notice, with a receipt-style calculator as the centerpiece and a fixed call bar at the bottom. Single light "paper" look by choice. */
+:root {
+  --paper: #f2f4f6;
+  --sheet: #ffffff;
+  --ink: #111a26;
+  --ink-2: #4a5566;
+  --rule: #d6dbe2;
+  --stamp: #d42a1f;
+  --stamp-soft: #fbe9e7;
+  --seal: #1546c9;
+  --seal-soft: #e7eefc;
+  --tape: #ffd84d;
+  --font-display: "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+  --font-body: "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+  --font-num: ui-monospace, "SFMono-Regular", Menlo, monospace;
+  --col: 560px;
+  color-scheme: light;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.6;
+  word-break: keep-all;
+  overflow-wrap: anywhere;
+  -webkit-font-smoothing: antialiased;
+}
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--ink); }
+a { color: inherit; }
+:focus-visible { outline: 3px solid var(--seal); outline-offset: 2px; }
+
+.wrap {
+  max-width: var(--col);
+  margin: 0 auto;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+
+/* Top bar */
+.top { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; background: var(--ink); color: var(--sheet); }
+.top .wrap { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding-block: 10px; }
+.brand { font-family: var(--font-display); font-size: 22px; letter-spacing: 0.02em; }
+.top-call { font-family: var(--font-num); font-size: 14px; text-decoration: none; opacity: 0.9; white-space: nowrap; }
+
+/* Sections */
+section { padding-block: 44px; }
+section + section { border-top: 1px solid var(--rule); }
+.eyebrow { font-size: 13px; font-weight: 700; letter-spacing: 0.08em; color: var(--seal); margin: 0 0 10px; }
+h1, h2 { font-family: var(--font-display); font-weight: 800; margin: 0; text-wrap: balance; line-height: 1.22; }
+h2 { font-size: clamp(26px, 7vw, 32px); }
+.lede { color: var(--ink-2); margin: 14px 0 0; }
+.fine { font-size: 12.5px; color: var(--ink-2); line-height: 1.55; margin: 12px 0 0; }
+
+/* Hero */
+.hero h1 { font-size: clamp(34px, 10vw, 46px); line-height: 1.32; }
+.claim { display: inline-block; position: relative; color: var(--ink-2); }
+.claim s { text-decoration-thickness: 3px; text-decoration-color: var(--stamp); }
+.stamp {
+  display: inline-block;
+  font-family: var(--font-display);
+  color: var(--stamp);
+  border: 3px solid var(--stamp);
+  border-radius: 6px;
+  padding: 2px 8px 0;
+  letter-spacing: 0.04em;
+  transform: rotate(-7deg);
+  background: color-mix(in srgb, var(--sheet) 70%, transparent);
+  line-height: 1.3;
+}
+.claim .stamp { position: absolute; right: -8px; bottom: -34px; font-size: 14px; }
+.hero .punch { display: block; margin-top: 50px; color: var(--ink); }
+.cta-row { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 26px; }
+.btn {
+  appearance: none; border: 0; cursor: pointer; text-decoration: none;
+  font: 700 16px/1 var(--font-body);
+  padding: 16px 20px; border-radius: 10px;
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  flex: 1 1 200px;
+}
+.btn-primary { background: var(--seal); color: var(--sheet); }
+.btn-ghost { background: var(--sheet); color: var(--ink); border: 1.5px solid var(--ink); }
+.btn .num { font-family: var(--font-num); font-weight: 600; }
+
+/* Receipt calculator */
+.receipt {
+  background: var(--sheet);
+  border-radius: 4px;
+  padding: 22px 18px 26px;
+  margin-top: 22px;
+  position: relative;
+  box-shadow: 0 1px 0 var(--rule), 0 10px 30px -18px rgba(17, 26, 38, 0.35);
+  -webkit-mask: radial-gradient(circle 7px at 50% 100%, transparent 6.5px, #000 7px) 0 0 / 18px 100% repeat-x;
+          mask: radial-gradient(circle 7px at 50% 100%, transparent 6.5px, #000 7px) 0 0 / 18px 100% repeat-x;
+}
+.receipt-head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 4px 10px; border-bottom: 2px solid var(--ink); padding-bottom: 10px; }
+.receipt-head b { font-family: var(--font-display); font-weight: 400; font-size: 20px; white-space: nowrap; }
+.receipt-head span { font-family: var(--font-num); font-size: 12px; color: var(--ink-2); }
+.presets { display: flex; flex-wrap: wrap; gap: 8px; margin: 16px 0 6px; }
+.chip {
+  appearance: none; cursor: pointer;
+  font: 500 13.5px/1 var(--font-body);
+  padding: 9px 12px; border-radius: 999px;
+  background: var(--paper); color: var(--ink); border: 1px solid var(--rule);
+}
+.chip[aria-pressed="true"] { background: var(--ink); color: var(--sheet); border-color: var(--ink); }
+.field { display: grid; gap: 6px; margin-top: 16px; }
+.field label { font-weight: 700; font-size: 14px; display: flex; justify-content: space-between; gap: 8px; }
+.field label small { font-weight: 400; color: var(--ink-2); }
+.field-row { display: flex; align-items: center; gap: 12px; }
+.field input[type="range"] { flex: 1; min-width: 0; accent-color: var(--seal); height: 28px; }
+.numbox { display: flex; align-items: baseline; gap: 4px; border-bottom: 2px solid var(--ink); padding: 2px 2px 2px 6px; }
+.numbox input {
+  width: 4.2ch; border: 0; background: transparent; text-align: right;
+  font: 600 22px/1.2 var(--font-num); color: var(--ink); padding: 0;
+}
+.numbox input:focus { outline: none; }
+.numbox:focus-within { border-color: var(--seal); }
+.numbox span { font-size: 14px; color: var(--ink-2); }
+.lines { list-style: none; margin: 20px 0 0; padding: 14px 0 0; border-top: 1px dashed var(--ink-2); display: grid; gap: 9px; }
+.lines li { display: flex; justify-content: space-between; gap: 12px; font-size: 14.5px; }
+.lines li span:first-child { color: var(--ink-2); min-width: 0; }
+.lines .v { font-family: var(--font-num); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.lines .minus .v { color: var(--seal); }
+.lines .warn .v { color: var(--stamp); }
+.total {
+  display: flex; justify-content: space-between; align-items: baseline; gap: 12px;
+  margin-top: 14px; padding-top: 14px; border-top: 2px solid var(--ink);
+}
+.total span:first-child { font-weight: 700; }
+.total .v { font-family: var(--font-num); font-weight: 600; font-size: clamp(26px, 8vw, 32px); font-variant-numeric: tabular-nums; }
+.verdict { display: flex; align-items: center; gap: 12px; margin-top: 16px; }
+.verdict .stamp { font-size: 17px; flex: none; }
+.verdict p { margin: 0; font-size: 14px; color: var(--ink-2); }
+.flag {
+  margin-top: 14px; padding: 12px 14px; border-radius: 8px;
+  background: var(--stamp-soft); color: var(--ink); font-size: 14px;
+}
+.flag b { color: var(--stamp); }
+
+/* Area ladder */
+.ladder { list-style: none; margin: 22px 0 0; padding: 0; display: grid; gap: 8px; }
+.ladder li { display: grid; grid-template-columns: 52px 1fr 64px; align-items: center; gap: 10px; font-size: 14px; }
+.ladder .pyeong { font-family: var(--font-num); color: var(--ink-2); }
+.ladder .bar { height: 14px; background: var(--rule); border-radius: 3px; overflow: hidden; }
+.ladder .bar i { display: block; height: 100%; background: var(--ink); }
+.ladder .amt { font-family: var(--font-num); text-align: right; font-variant-numeric: tabular-nums; }
+.ladder li.ad .bar i { background: var(--stamp); }
+.ladder li.ad .pyeong, .ladder li.ad .amt { color: var(--stamp); font-weight: 600; }
+.ladder-note { display: flex; gap: 8px; align-items: center; margin-top: 10px; font-size: 13px; color: var(--stamp); font-weight: 700; }
+.ladder-note::before { content: ""; width: 12px; height: 12px; background: var(--stamp); border-radius: 2px; flex: none; }
+
+.points { display: grid; gap: 14px; margin-top: 26px; }
+.point { background: var(--sheet); border-radius: 8px; padding: 18px; }
+.point h3 { margin: 0 0 6px; font-size: 17px; line-height: 1.4; }
+.point p { margin: 0; color: var(--ink-2); font-size: 15px; }
+.point .tag { font-family: var(--font-num); font-size: 12px; color: var(--stamp); letter-spacing: 0.04em; display: block; margin-bottom: 6px; }
+
+/* Lie vs truth */
+.facts { display: grid; gap: 12px; margin-top: 24px; }
+.fact { background: var(--sheet); border-radius: 8px; overflow: hidden; }
+.fact .say { padding: 14px 16px; display: flex; justify-content: space-between; gap: 12px; align-items: center; border-bottom: 1px dashed var(--rule); }
+.fact .say q { color: var(--ink-2); quotes: "“" "”"; text-decoration: line-through; text-decoration-color: var(--stamp); text-decoration-thickness: 2px; min-width: 0; }
+.fact .say .stamp { font-size: 12px; flex: none; transform: rotate(-5deg); }
+.fact .truth { padding: 14px 16px; font-size: 15px; }
+.fact .truth b { color: var(--seal); }
+
+/* News */
+.news { background: var(--sheet); border-radius: 8px; padding: 20px 18px; margin-top: 22px; }
+.rise { display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; font-family: var(--font-num); font-variant-numeric: tabular-nums; }
+.rise .from { font-size: 22px; color: var(--ink-2); }
+.rise .arrow { color: var(--ink-2); }
+.rise .to { font-size: 34px; font-weight: 600; }
+.rise .pct { font-size: 15px; color: var(--stamp); font-weight: 600; }
+.news .label { font-size: 13.5px; color: var(--ink-2); margin: 0 0 8px; }
+.quote { margin: 18px 0 0; padding: 14px 0 0; border-top: 1px dashed var(--rule); font-size: 15.5px; }
+
+/* Questions */
+.qs { list-style: none; margin: 24px 0 0; padding: 0; display: grid; gap: 12px; }
+.qs li { background: var(--sheet); border-radius: 8px; padding: 16px 18px; display: grid; grid-template-columns: 28px 1fr; gap: 4px 12px; }
+.qs .box { width: 22px; height: 22px; border: 2px solid var(--ink); border-radius: 4px; margin-top: 3px; }
+.qs b { font-size: 16.5px; }
+.qs p { grid-column: 2; margin: 0; font-size: 14.5px; color: var(--ink-2); }
+.qs p em { font-style: normal; color: var(--stamp); font-weight: 700; }
+
+/* Process */
+.flow { list-style: none; margin: 22px 0 0; padding: 0; counter-reset: step; display: grid; gap: 0; }
+.flow li { counter-increment: step; display: grid; grid-template-columns: 34px 1fr; gap: 12px; padding-bottom: 16px; position: relative; }
+.flow li::before {
+  content: counter(step); width: 30px; height: 30px; border-radius: 50%;
+  background: var(--seal); color: var(--sheet); font: 600 14px/30px var(--font-num); text-align: center;
+}
+.flow li:not(:last-child)::after { content: ""; position: absolute; left: 14px; top: 32px; bottom: 2px; width: 2px; background: var(--seal-soft); }
+.flow li div { padding-top: 3px; }
+.flow li b { display: block; }
+.flow li span { font-size: 14px; color: var(--ink-2); }
+.flow li.here::before { background: var(--ink); }
+
+/* Promises */
+.promises { display: grid; gap: 1px; background: var(--rule); border-radius: 8px; overflow: hidden; margin-top: 24px; }
+.promise { background: var(--sheet); padding: 16px 18px; }
+.promise b { display: block; font-size: 16.5px; margin-bottom: 4px; }
+.promise p { margin: 0; font-size: 14.5px; color: var(--ink-2); }
+.services { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
+.services span { font-size: 13px; padding: 4px 9px; border-radius: 4px; background: var(--seal-soft); color: var(--seal); font-weight: 500; }
+
+/* Final */
+.final { background: var(--ink); color: var(--sheet); }
+.final h2 { color: var(--sheet); }
+.final .lede { color: color-mix(in srgb, var(--sheet) 72%, var(--ink)); }
+.final .btn-ghost { background: transparent; color: var(--sheet); border-color: var(--sheet); }
+.final .btn-primary { background: var(--sheet); color: var(--ink); }
+.meta { display: flex; flex-wrap: wrap; gap: 6px 16px; margin-top: 22px; font-size: 14px; color: color-mix(in srgb, var(--sheet) 72%, var(--ink)); }
+.meta b { color: var(--sheet); font-family: var(--font-num); font-weight: 600; }
+.sign { font-family: var(--font-display); font-size: 20px; margin-top: 26px; }
+.copy-note { font-size: 13px; min-height: 1.4em; margin-top: 8px; color: color-mix(in srgb, var(--sheet) 72%, var(--ink)); }
+
+footer { padding-block: 28px 140px; font-size: 12px; color: var(--ink-2); line-height: 1.7; }
+footer ol { padding-left: 18px; margin: 8px 0 0; }
+footer a { color: var(--ink-2); }
+
+/* Fixed call bar */
+.callbar {
+  position: fixed; left: 0; right: 0; bottom: 0; z-index: 6;
+  background: color-mix(in srgb, var(--sheet) 94%, transparent);
+  backdrop-filter: blur(8px);
+  border-top: 1px solid var(--rule);
+  padding-bottom: calc(10px + env(safe-area-inset-bottom, 0px));
+  padding-top: 10px;
+}
+.callbar .wrap { display: flex; gap: 8px; }
+.callbar .btn { padding: 14px 12px; font-size: 15px; flex: 1 1 0; }
+
+/* Hero urgency + trust */
+.alert {
+  display: grid; grid-template-columns: auto 1fr; gap: 4px 10px; align-items: baseline;
+  margin: 22px 0 0; padding: 12px 14px; border-radius: 8px;
+  background: var(--sheet); border-left: 4px solid var(--stamp); font-size: 14px; color: var(--ink-2);
+}
+.alert b { color: var(--stamp); white-space: nowrap; }
+.trust { list-style: none; display: flex; flex-wrap: wrap; gap: 6px 14px; margin: 16px 0 0; padding: 0; font-size: 13.5px; color: var(--ink-2); }
+.trust li { display: flex; align-items: center; gap: 6px; }
+.trust li::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: var(--seal); }
+
+/* Send receipt */
+.send { margin-top: 18px; display: grid; gap: 8px; }
+.send .btn { width: 100%; }
+.send-note { font-size: 13px; color: var(--ink-2); min-height: 1.4em; margin: 0; }
+.send-note b { color: var(--ink); font-family: var(--font-num); }
+
+/* YouTube link */
+.yt { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-top: 18px; padding: 14px 16px; border-radius: 8px; background: var(--sheet); text-decoration: none; }
+.yt b { display: block; }
+.yt span { font-size: 13.5px; color: var(--ink-2); }
+.yt i { font-style: normal; font-family: var(--font-num); color: var(--seal); white-space: nowrap; }
+
+/* FAQ */
+.faq { margin-top: 22px; display: grid; gap: 8px; }
+.faq details { background: var(--sheet); border-radius: 8px; }
+.faq summary { cursor: pointer; list-style: none; padding: 15px 44px 15px 16px; font-weight: 700; position: relative; }
+.faq summary::-webkit-details-marker { display: none; }
+.faq summary::after { content: "+"; position: absolute; right: 16px; top: 12px; font: 600 20px/1 var(--font-num); color: var(--seal); }
+.faq details[open] summary::after { content: "−"; }
+.faq details p { margin: 0; padding: 0 16px 16px; color: var(--ink-2); font-size: 15px; }
+
+/* Dark hero over a real site photo */
+.hero { position: relative; overflow: hidden; background: var(--ink); color: var(--sheet); padding-block: 40px 44px; }
+.hero-bg { position: absolute; inset: -4%; background: url(/demolition-support/img/hero-bg.jpg) center / cover; opacity: 0.3; filter: grayscale(0.35) contrast(1.1); }
+.hero::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(17,26,38,0.55) 0%, rgba(17,26,38,0.2) 40%, var(--ink) 100%); }
+.hero .wrap { position: relative; z-index: 1; }
+.hero .eyebrow { color: var(--tape); }
+.hero .claim { color: color-mix(in srgb, var(--sheet) 70%, var(--ink)); }
+.hero .claim s { text-decoration: none; background: linear-gradient(var(--stamp), var(--stamp)) 0 56% / 100% 4px no-repeat; }
+.hero .punch { color: var(--sheet); }
+.hero .punch em { font-style: normal; color: var(--tape); }
+.hero .lede { color: color-mix(in srgb, var(--sheet) 78%, var(--ink)); }
+.hero .btn-ghost { background: transparent; color: var(--sheet); border-color: var(--sheet); }
+.hero .alert { background: rgba(255,255,255,0.08); color: color-mix(in srgb, var(--sheet) 82%, var(--ink)); }
+.hero .alert b { color: #ff8a80; }
+.hero .trust { color: color-mix(in srgb, var(--sheet) 75%, var(--ink)); }
+.hero .trust li::before { background: var(--tape); }
+.photo-tag { position: absolute; right: max(16px, env(safe-area-inset-right, 0px)); bottom: 12px; z-index: 1; font-size: 11px; color: color-mix(in srgb, var(--sheet) 55%, var(--ink)); }
+
+/* Caution-tape ticker */
+.tape {
+  overflow: hidden; background: var(--tape); color: var(--ink);
+  border-block: 6px solid transparent;
+  border-image: repeating-linear-gradient(-45deg, var(--ink) 0 10px, var(--tape) 10px 20px) 6;
+}
+.tape-track { display: flex; width: max-content; }
+.tape-track span { font-family: var(--font-display); font-size: 17px; white-space: nowrap; padding: 9px 0; }
+.tape-track span::after { content: "✕"; color: var(--stamp); margin: 0 18px; }
+.tape-track span.ok::after { content: "✓"; color: var(--seal); }
+
+/* Before/after compare */
+.compare-tabs { display: flex; gap: 8px; margin-top: 22px; }
+.compare {
+  --pos: 50%;
+  position: relative; margin-top: 12px; aspect-ratio: 1; border-radius: 8px; overflow: hidden;
+  background: var(--rule); cursor: ew-resize; touch-action: pan-y; user-select: none; -webkit-user-select: none;
+}
+.compare img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; pointer-events: none; }
+.compare .before { clip-path: inset(0 calc(100% - var(--pos)) 0 0); }
+.compare .handle { position: absolute; top: 0; bottom: 0; left: var(--pos); width: 3px; margin-left: -1.5px; background: var(--sheet); box-shadow: 0 0 0 1px rgba(17,26,38,0.25); }
+.compare .handle::after {
+  content: "◀ ▶"; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+  width: 52px; height: 52px; border-radius: 50%; background: var(--sheet); color: var(--ink);
+  display: grid; place-items: center; font-size: 12px; letter-spacing: -1px;
+  box-shadow: 0 4px 16px rgba(17,26,38,0.35);
+}
+.compare .lbl { position: absolute; top: 10px; font-size: 12px; font-weight: 700; padding: 4px 9px; border-radius: 4px; color: var(--sheet); }
+.compare .lbl.l { left: 10px; background: var(--ink); }
+.compare .lbl.r { right: 10px; background: var(--seal); }
+.compare input { position: absolute; width: 1px; height: 1px; opacity: 0; pointer-events: none; }
+.compare:focus-within { outline: 3px solid var(--seal); outline-offset: 2px; }
+.compare-cap { font-size: 13.5px; color: var(--ink-2); margin: 8px 0 0; }
+
+/* Work steps */
+.steps { list-style: none; margin: 22px 0 0; padding: 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+.steps li { margin: 0; }
+.steps img { display: block; width: 100%; height: auto; aspect-ratio: 1; object-fit: cover; border-radius: 6px; background: var(--rule); }
+.steps b { display: flex; align-items: center; gap: 6px; margin-top: 8px; font-size: 14.5px; }
+.steps b i { font: 600 11px/1 var(--font-num); font-style: normal; color: var(--sheet); background: var(--ink); padding: 3px 5px; border-radius: 3px; }
+.steps span { display: block; font-size: 12.5px; color: var(--ink-2); line-height: 1.45; margin-top: 2px; }
+
+@media (prefers-reduced-motion: no-preference) {
+  /* Hero entrance */
+  .hero-bg { animation: drift 20s ease-in-out infinite alternate; }
+  @keyframes drift { from { transform: scale(1) translate(0, 0); } to { transform: scale(1.08) translate(-2%, -1%); } }
+  .hero .claim s { animation: strike 0.45s ease-out both; }
+  .hero .claim:nth-of-type(1) s { animation-delay: 0.25s; }
+  .hero .claim:nth-of-type(2) s { animation-delay: 0.6s; }
+  @keyframes strike { from { background-size: 0% 4px; } to { background-size: 100% 4px; } }
+  .hero .claim .stamp { animation: thump 0.5s 1s cubic-bezier(.2,1.6,.4,1) both; }
+  @keyframes thump { from { opacity: 0; transform: rotate(-7deg) scale(2.2); } 60% { opacity: 1; } to { transform: rotate(-7deg) scale(1); } }
+  .hero .punch { animation: rise 0.6s 1.3s ease-out both; }
+  .hero .lede, .hero .cta-row, .hero .alert, .hero .trust { animation: rise 0.6s 1.5s ease-out both; }
+  @keyframes rise { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: none; } }
+  .hero .punch em { background: linear-gradient(transparent 82%, rgba(212, 42, 31, 0.85) 82%, rgba(212, 42, 31, 0.85) 92%, transparent 92%) 0 0 / 0% 100% no-repeat; animation: mark 0.6s 1.9s ease-out forwards; }
+  @keyframes mark { to { background-size: 100% 100%; } }
+
+  /* Ticker */
+  .tape-track { animation: roll 26s linear infinite; }
+  @keyframes roll { to { transform: translateX(-50%); } }
+
+  /* Scroll reveal (only once JS has marked the element) */
+  .rv { opacity: 0; transform: translateY(22px); transition: opacity 0.6s ease, transform 0.6s cubic-bezier(.2,.8,.2,1); transition-delay: var(--d, 0s); }
+  .rv.in { opacity: 1; transform: none; }
+  .fact.rv .stamp { opacity: 0; }
+  .fact.rv.in .stamp { animation: thumpSm 0.45s calc(var(--d, 0s) + 0.35s) cubic-bezier(.2,1.6,.4,1) both; }
+  @keyframes thumpSm { from { opacity: 0; transform: rotate(-5deg) scale(2); } to { opacity: 1; transform: rotate(-5deg) scale(1); } }
+  .verdict .stamp.hit { animation: thumpSm 0.4s cubic-bezier(.2,1.6,.4,1); }
+
+  /* Ladder bars grow in */
+  .ladder.rv { opacity: 1; transform: none; }
+  .ladder.rv .bar i { width: 0 !important; }
+  .ladder.rv.in .bar i { width: var(--w) !important; transition: width 0.9s cubic-bezier(.2,.8,.2,1); }
+  .ladder.rv.in li:nth-child(2) .bar i { transition-delay: 0.08s; }
+  .ladder.rv.in li:nth-child(3) .bar i { transition-delay: 0.16s; }
+  .ladder.rv.in li:nth-child(4) .bar i { transition-delay: 0.24s; }
+  .ladder.rv.in li:nth-child(5) .bar i { transition-delay: 0.32s; }
+  .ladder.rv.in li:nth-child(6) .bar i { transition-delay: 0.4s; }
+
+  /* Callbar phone button breathes */
+  .callbar .btn-primary { animation: ring 2.4s 3s ease-out infinite; }
+  @keyframes ring { 0% { box-shadow: 0 0 0 0 rgba(21, 70, 201, 0.45); } 70%, 100% { box-shadow: 0 0 0 12px rgba(21, 70, 201, 0); } }
+  .btn { transition: transform 0.12s ease; }
+  .btn:active, .chip:active { transform: scale(0.97); }
+}
+
+.brand { text-decoration:none; font-weight:800; }
+.brand small { font:600 11px/1.2 var(--font-body); opacity:.7; }
+.field select { width:100%; min-height:48px; padding:10px; border:1px solid var(--rule); border-radius:8px; background:#fff; color:var(--ink); font:inherit; font-size:14px; }
+.example-note { flex-basis:100%; margin:0 0 4px; }
+.input-error { color:#b91c1c; font-size:14px; font-weight:700; }
+.btn:disabled { opacity:.5; cursor:not-allowed; }
+.skip-link { position:fixed; left:8px; top:-80px; z-index:100; padding:12px; background:white; }
+.skip-link:focus { top:8px; }
+.receipt-head { flex-wrap:wrap; }
+.total { flex-wrap:wrap; gap:10px; }
+.total > span:first-child { font-size:14px; }
+@media(prefers-reduced-motion:reduce) { html { scroll-behavior:auto; } }
+</style>
+
+</head><body>
+<a class="skip-link" href="#calc">계산기로 바로가기</a>
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="/" aria-label="다다철거 홈">다다철거 <small>홈 ↗</small></a>
+    <a class="top-call" href="tel:01050940961">24시간 010-5094-0961</a>
+  </div>
+</header>
+
+<main>
+  <section class="hero">
+    <div class="hero-bg" aria-hidden="true"></div>
+    <div class="wrap">
+      <p class="eyebrow">상가 철거 · 폐업 지원금 팩트체크</p>
+      <h1>
+        철거비 <span class="claim"><s>'무료'</s></span>?<br>
+        지원금 <span class="claim"><s>'1,000만원'</s><span class="stamp" aria-label="국비 기준 확인">국비 기준 확인</span></span>?
+        <span class="punch">큰 숫자보다<br><em>정확한 계산부터.</em></span>
+      </h1>
+      <p class="lede">폐업일, 전용면적, 철거비를 넣어보세요. 공고 기준의 지원 상한과 부가세 포함 부담액을 참고용으로 계산합니다. 실제 견적이나 지급액을 확정하는 계산서는 아닙니다.</p>
+      <div class="cta-row">
+        <a class="btn btn-primary" href="#calc">내 가게 계산하기</a>
+        <a class="btn btn-ghost" href="tel:01050940961">전화 <span class="num">010-5094-0961</span></a>
+      </div>
+      <p class="alert"><b>신규 접수 마감</b><span>2026년 국비 점포철거비 신규 접수는 10월 21일 18시 마감됐습니다. 기존 신청자는 정산 기한과 보완 요청을 확인하세요. 신규·추가 모집 여부는 공식 공고에서 다시 확인해야 합니다.</span></p>
+      <ul class="trust">
+        <li>서울·경기·인천</li>
+        <li>24시간 상담</li>
+        <li>철거부터 원상복구까지</li>
+        <li>폐기물은 허가 업체로</li>
+      </ul>
+    </div>
+    <span class="photo-tag">배경: 첨부된 주거 공간 작업 사진</span>
+  </section>
+
+  <div class="tape" aria-hidden="true">
+    <div class="tape-track" id="tape">
+      <span>철거 지원금 1,000만원</span><span>900만원 지원</span><span>무조건 철거비 0원</span><span>차액 돌려드려요</span><span class="ok">상한 600만원</span><span class="ok">평당 20만원</span><span class="ok">부가세는 사장님 몫</span><span>현금이면 깎아드려요</span><span class="ok">계좌이체·카드 증빙</span>
+    </div>
+  </div>
+
+  <section id="calc">
+    <div class="wrap">
+      <p class="eyebrow">지원금 계산서</p>
+      <h2>"무료"라고 들으셨나요?<br>평수 넣고 다시 계산해 보세요.</h2>
+
+      <div class="receipt" role="group" aria-label="점포철거 지원금 계산기">
+        <div class="receipt-head">
+          <b>점포철거비 계산서</b>
+          <span>3.3㎡당 20만원 · 폐업일별 한도</span>
+        </div>
+
+        <div class="presets" role="group" aria-label="가상 예시 불러오기">
+          <p class="fine example-note">가상 예시 · 실제 업종별 견적이 아닙니다</p>
+          <button class="chip" type="button" data-a="15" data-c="450">15평 카페</button>
+          <button class="chip" type="button" data-a="20" data-c="600" aria-pressed="true">20평 식당</button>
+          <button class="chip" type="button" data-a="30" data-c="600">30평 가상 예시</button>
+        </div>
+
+        <div class="field">
+          <label for="closure">폐업일 기준 <small>2026년 공고 기준</small></label>
+          <select id="closure">
+            <option value="600">2025.7.11 이후 폐업·폐업 예정 (상한 600만원)</option>
+            <option value="400">2023.1.1 ~ 2025.7.10 폐업 (상한 400만원)</option>
+            <option value="unknown">그 외·모름 (지원 대상 먼저 확인)</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="area">가게 평수 <small>전용면적 기준</small></label>
+          <div class="field-row">
+            <input id="area-range" type="range" min="1" max="200" step="1" value="20" aria-label="가게 평수 슬라이더">
+            <div class="numbox"><input id="area" type="number" inputmode="decimal" min="1" max="200" step="0.01" value="20" aria-describedby="input-note"><span>평</span></div>
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="cost">철거 견적 <small>부가세 빼고</small></label>
+          <div class="field-row">
+            <input id="cost-range" type="range" min="0" max="5000" step="10" value="600" aria-label="철거 견적 슬라이더">
+            <div class="numbox"><input id="cost" type="number" inputmode="decimal" min="0" max="5000" step="0.01" value="600" aria-describedby="input-note"><span>만원</span></div>
+          </div>
+        </div>
+
+        <p class="fine" id="input-note">전용면적 1~200평, 공급가 0~5,000만원을 입력하세요. 임대차계약서·건축물대장의 전용면적 중 작은 값을 기준으로 확인하세요. 소수 면적·인정 비용·지원 자격은 공단 심사에서 결정됩니다.</p>
+        <p class="input-error" id="input-error" role="status" hidden></p>
+        <ul class="lines" aria-live="polite">
+          <li><span>철거 견적 (공급가)</span><span class="v" id="o-cost"></span></li>
+          <li><span>부가세 10% <small>(지원 안 됨)</small></span><span class="v" id="o-vat"></span></li>
+          <li><span>공사대금 합계 <small>(먼저 지급)</small></span><span class="v" id="o-gross"></span></li>
+          <li class="minus"><span id="o-sup-label">지원금</span><span class="v" id="o-sup"></span></li>
+        </ul>
+        <div class="total">
+          <span>정산 후 참고 부담액</span>
+          <span class="v" id="o-pay"></span>
+        </div>
+        <div class="verdict">
+          <span class="stamp" id="o-stamp">무료 아님</span>
+          <p id="o-why"></p>
+        </div>
+        <div class="flag" id="o-flag" hidden></div>
+        <div class="send">
+          <button class="btn btn-primary" type="button" id="send">참고 계산 결과 복사</button>
+          <p class="send-note" id="send-note" aria-live="polite">결과를 복사한 뒤 문자나 카톡에서 직접 보내 주세요. 이 버튼은 상담을 접수하거나 정보를 전송하지 않습니다.</p>
+        </div>
+      </div>
+      <div id="receipt-fallback" hidden><label for="receipt-text">복사용 참고 계산 결과</label><textarea id="receipt-text" readonly rows="11" style="width:100%;font:14px/1.6 var(--font-body);padding:12px"></textarea></div>
+      <p class="fine">지원금 = ① 평수 × 20만원 ② 상한 600만원 ③ 실제 철거비(부가세 제외) 중 가장 작은 금액. 2026년 공고(8.3 수정) 기준 2025년 7월 11일 이후 폐업자이며, 2023년 1월 1일~2025년 7월 10일 폐업자는 상한 400만원입니다. 다음 공고에서 달라질 수 있습니다. 실제 지원 여부는 소상공인시장진흥공단 심사로 정해집니다.</p>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <p class="eyebrow">"30평 기준 무료" 광고의 계산법</p>
+      <h2>왜 하필 30평일까요?</h2>
+      <p class="lede">600만원 상한 대상자는 30평 × 20만원 = 600만원입니다. 400만원 상한 대상자는 20평부터 상한에 닿습니다. 실제 지급은 인정 비용과 자격 심사를 함께 적용합니다.</p>
+      <ul class="ladder" id="ladder" aria-label="평수별 최대 지원금"></ul>
+      <p class="ladder-note">600만원 한도에 해당하는 폐업일을 가정한 면적별 참고 상한</p>
+
+      <div class="points">
+        <div class="point">
+          <span class="tag">CHECK 1</span>
+          <h3>우리 가게는 몇 평인가요?</h3>
+          <p>20평 예시의 면적 상한은 400만원입니다. 지원 자격·폐업일·인정 비용에 따라 실제 지급액은 달라집니다.</p>
+        </div>
+        <div class="point">
+          <span class="tag">CHECK 2</span>
+          <h3>"VAT 별도" 작은 글씨를 보셨나요?</h3>
+          <p>견적이 600만원이면 부가세는 60만원입니다. 지원금은 부가세를 내주지 않습니다.</p>
+        </div>
+        <div class="point">
+          <span class="tag">CHECK 3</span>
+          <h3>견적 합계가 한도와 원 단위까지 똑같나요?</h3>
+          <p>그렇다면 실제 공사 내역서를 달라고 하세요. 항목별 금액이 나와야 정상입니다.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <p class="eyebrow">거짓 vs 진실</p>
+      <h2>업체들이 하는 말,<br>공고문에 대 보면</h2>
+      <div class="facts">
+        <article class="fact">
+          <div class="say"><q>철거 지원금 1,000만원, 900만원</q><span class="stamp">국비 기준 확인</span></div>
+          <div class="truth">이 계산기는 <b>국비 점포철거비 항목</b>만 다룹니다. 폐업일에 따라 상한은 400만원 또는 600만원이며, 다른 사업·지자체 지원과 구분해야 합니다.</div>
+        </article>
+        <article class="fact">
+          <div class="say"><q>철거 무료로 해드려요</q><span class="stamp">조건 확인</span></div>
+          <div class="truth"><b>면적 한도, 폐업일별 상한, 부가세 제외</b>를 함께 확인하세요. 지원 여부와 실제 본인 부담을 구분해야 합니다.</div>
+        </article>
+        <article class="fact">
+          <div class="say"><q>정부와 협력하는 업체예요</q><span class="stamp">역할 확인</span></div>
+          <div class="truth">민간 철거업체가 지원 자격이나 지급액을 확정할 수는 없습니다. 해당 사업의 심사·지급 절차는 <b>공단 공식 안내</b>에서 확인하세요.</div>
+        </article>
+        <article class="fact">
+          <div class="say"><q>저희 업체 추가 지원금도 드려요</q><span class="stamp">지원금 아님</span></div>
+          <div class="truth">업체 할인과 정부 지원은 별개입니다. <b>할인 후 실제 계약금액·지급액과 증빙이 일치</b>하는지 확인하세요.</div>
+        </article>
+        <article class="fact">
+          <div class="say"><q>견적은 한도에 맞춰 쓰고, 차액은 돌려드려요</q><span class="stamp">주의</span></div>
+          <div class="truth">실제 비용보다 부풀린 증빙이나 차액 환급을 전제로 한 신청은 <b>환수·제재 대상이 될 수 있습니다.</b> 실제 공사 내역과 결제 증빙을 일치시켜야 합니다.</div>
+        </article>
+        <article class="fact">
+          <div class="say"><q>현금으로 하시면 싸게 해드려요</q><span class="stamp">증빙 확인</span></div>
+          <div class="truth">공단은 철거업체에 <b>계좌이체나 카드로 부가세까지 낸 증빙</b>을 봅니다. 현금 지급만으로는 필요한 증빙을 충족하지 못할 수 있으니 결제 전에 공고의 증빙 요건을 확인하세요.</div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <p class="eyebrow">계약 전 체크리스트</p>
+      <h2>업체에게<br>이 3가지만 물어보세요</h2>
+      <ul class="qs">
+        <li><span class="box" aria-hidden="true"></span><b>"우리 가게 평수로 계산하면 정확히 얼마예요?"</b><p>평수도 안 묻고 "무료"부터 말하면 <em>거기서 끝내세요.</em></p></li>
+        <li><span class="box" aria-hidden="true"></span><b>"부가세는 누가 내요?"</b><p>대답을 흐리면 <em>거기서 끝내세요.</em></p></li>
+        <li><span class="box" aria-hidden="true"></span><b>"견적서, 실제 공사비 그대로 쓰시죠?"</b><p>"한도에 맞춰 드릴게요"가 나오면 <em>거기서 끝내세요.</em></p></li>
+      </ul>
+      <p class="lede">다다철거는 이 3가지에 첫 통화에서 답합니다.</p>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <p class="eyebrow">공단 절차</p>
+      <h2>신청부터 정산까지,<br>공식 절차를 확인하세요</h2>
+      <ol class="flow">
+        <li><div><b>신청서류 제출</b><span>소상공인24에서 사장님이 직접 신청</span></div></li>
+        <li><div><b>적격심사</b><span>공단이 지원 대상인지 먼저 확인</span></div></li>
+        <li class="here"><div><b>점포 철거·원상복구</b><span>다다철거가 하는 일은 여기입니다</span></div></li>
+        <li><div><b>정산서류 제출·검토</b><span>공사내역서, 전자세금계산서, 이체 증빙, 전후 사진</span></div></li>
+        <li><div><b>지원금 지급·사후 확인</b><span>정산 검토와 필요한 확인 절차를 거쳐 진행</span></div></li>
+      </ol>
+      <p class="fine">이미 철거하셨다면 신청서류와 정산서류를 한 번에 내는 방법도 있습니다. 다만 철거비를 먼저 쓴 뒤에 대상인지 알게 됩니다. 다다철거는 철거 날짜를 잡기 전에 사장님이 어느 경우인지 함께 확인합니다.</p>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <p class="eyebrow">다다철거는 이렇게 합니다</p>
+      <h2>큰 숫자 대신,<br>사장님 가게 숫자부터</h2>
+      <div class="promises">
+        <div class="promise"><b>공식 그대로 계산합니다</b><p>전용면적, 폐업일별 상한, 부가세 제외를 구분해 안내합니다. 최종 지원 여부·금액은 공단 심사로 결정됩니다.</p></div>
+        <div class="promise"><b>견적서는 실제 공사비 그대로</b><p>부풀린 견적도, 차액 환급 제안도 하지 않습니다.</p></div>
+        <div class="promise"><b>지원 제외 조건부터 확인합니다</b><p>자가·무상임차, 주거용 건물, 직접 철거, 같은 장소 재창업 등 제외 조건과 예외를 최신 공고에서 먼저 확인합니다.</p></div>
+        <div class="promise"><b>철거부터 원상복구까지 한 번에</b><p>철거와 필요한 원상복구 범위를 함께 상담합니다. 설비·방수 등 부대 작업 전체가 지원 대상인 것은 아니므로 인정 비용을 따로 확인하세요.</p>
+          <div class="services"><span>철거</span><span>폐기물 처리</span><span>설비·방수</span><span>원상복구</span><span>자재 양중</span><span>보양</span></div>
+        </div>
+        <div class="promise"><b>폐기물은 허가받은 업체로</b><p>철거 폐기물은 폐기물 수집·운반 허가를 받은 업체에 맡겨 적법하게 처리합니다. 사장님 이름으로 문제가 남지 않게 합니다.</p></div>
+        <div class="promise"><b>우리 차, 우리 사람, 우리 장비</b><p>차량·인력·장비를 직접 갖추고 있습니다.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <p class="eyebrow">후기 대신 현장</p>
+      <h2>사진으로 살펴보는<br>주거 공간 작업 전후</h2>
+      <p class="lede">첨부 자료의 주거 공간 사진입니다. 상가 시공 사례나 지원금 지급 사례가 아닙니다. 가운데를 좌우로 밀어 보세요.</p>
+      <div class="compare-tabs" role="group" aria-label="현장 고르기">
+        <button class="chip" type="button" aria-pressed="true" data-b="/demolition-support/img/living-before.jpg" data-a="/demolition-support/img/living-after.jpg" data-cap="거실 · 작업 전후 공간과 마감 상태 비교" data-alt-b="철거 전 거실: 마루 바닥, 벽지, 조명, 붙박이 가구가 있는 모습" data-alt-a="작업 후 거실: 일부 벽 마감이 제거되고 바닥재가 남아 있는 공간">거실 전체</button>
+        <button class="chip" type="button" aria-pressed="false" data-b="/demolition-support/img/entry-before.jpg" data-a="/demolition-support/img/entry-after.jpg" data-cap="현관 · 작업 전후 출입 공간 비교" data-alt-b="철거 전 현관: 중문, 신발장, 타일 바닥이 있는 모습" data-alt-a="철거 후 현관: 중문과 타일을 걷어내 바닥과 벽이 드러난 모습">현관</button>
+      </div>
+      <div class="compare" id="compare">
+        <img class="after" id="cmp-a" src="/demolition-support/img/living-after.jpg" alt="작업 후 거실: 일부 벽 마감이 제거되고 바닥재가 남아 있는 공간" loading="lazy" width="800" height="800">
+        <img class="before" id="cmp-b" src="/demolition-support/img/living-before.jpg" alt="철거 전 거실: 마루 바닥, 벽지, 조명, 붙박이 가구가 있는 모습" loading="lazy" width="800" height="800">
+        <span class="handle" aria-hidden="true"></span>
+        <span class="lbl l" aria-hidden="true">철거 전</span><span class="lbl r" aria-hidden="true">철거 후</span>
+        <input type="range" id="cmp-range" min="0" max="100" value="50" aria-label="철거 전후 비교 위치">
+      </div>
+      <p class="compare-cap" id="cmp-cap">거실 · 작업 전후 공간과 마감 상태 비교</p>
+
+      <ol class="steps" aria-label="작업 순서">
+        <li><img src="/demolition-support/img/step-protect.jpg" alt="바닥 전체에 보양재를 깔고 테이프로 고정한 모습" loading="lazy" width="480" height="480"><b><i>01</i>보양</b><span>바닥·벽부터 덮고 시작</span></li>
+        <li><img src="/demolition-support/img/step-demo.jpg" alt="욕실 타일과 위생도기를 모두 걷어낸 모습" loading="lazy" width="480" height="480"><b><i>02</i>철거</b><span>마감재·설비 전부 걷어내기</span></li>
+        <li><img src="/demolition-support/img/step-waterproof.jpg" alt="철거한 욕실 바닥과 벽에 1차 방수를 한 모습" loading="lazy" width="480" height="480"><b><i>03</i>방수</b><span>필요한 곳은 1차 방수까지</span></li>
+      </ol>
+      <p class="fine">첨부된 주거 공간 작업 사진입니다. 상가마다 구조·설비·보존 범위가 달라 작업 방식과 비용은 현장 확인 후 정합니다.</p>
+      <a class="yt" href="https://www.youtube.com/channel/UCy0JkyC6icU-4Uhfufwqr2w" target="_blank" rel="noopener">
+        <span><b>현장 영상 더 보기</b>철거 전후를 유튜브에 그대로 올립니다</span>
+        <i>다다철거 유튜브 ↗</i>
+      </a>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <p class="eyebrow">자주 묻는 질문</p>
+      <h2>계약 전에<br>다들 이걸 물어보세요</h2>
+      <div class="faq">
+        <details>
+          <summary>"무료"라는 업체보다 다다철거가 더 비싼 거 아니에요?</summary>
+          <p>같은 지원사업의 계산 기준은 같지만 실제 공사 범위와 금액은 현장마다 다릅니다. 전용면적, 폐업일별 상한, 부가세, 지원 자격을 확인하고 실제 공사비와 일치하는 견적·증빙으로 비교하세요.</p>
+        </details>
+        <details>
+          <summary>우리 가게도 지원받을 수 있나요?</summary>
+          <p>폐업했거나 폐업 예정인 소상공인이 대상입니다. 자가 건물·무상임차·직접 철거·같은 장소 재창업 등은 원칙적으로 제외됩니다. 주거용도 원칙적으로 제외되지만 민박업 및 실제 상업시설 전용 사용이 확인되는 경우 등 예외가 있습니다. 예외와 세부 요건은 공고에서 확인해야 하며, 최종 적격 여부는 공단이 심사합니다.</p>
+        </details>
+        <details>
+          <summary>업체부터 정해야 하나요, 신청부터 해야 하나요?</summary>
+          <p>철거 전에 신청하면 적격심사 결과를 보고 철거할 수 있어 안전합니다. 이미 철거하셨어도 신청서류와 정산서류를 한꺼번에 내는 방법이 있습니다. 2026년 신규 접수는 10월 21일 18시 마감됐으니, 철거 날짜를 잡기 전에 사장님 상황을 함께 확인해 드립니다.</p>
+        </details>
+        <details>
+          <summary>공단은 어떤 서류를 보나요?</summary>
+          <p>공고문 기준으로 공사내역서, 전자세금계산서(또는 카드전표), 철거업체 계좌로 부가세까지 낸 이체 증빙, 철거 전후 사진입니다. 모두 실제 공사 내용과 맞아야 합니다.</p>
+        </details>
+        <details>
+          <summary>공사 중에 추가 비용이 붙지는 않나요?</summary>
+          <p>견적서에 없는 비용은 사장님 동의 없이 청구하지 않습니다. 현장에서 추가 작업이 필요해 보이면 작업 전에 먼저 말씀드리고 금액을 확인받습니다.</p>
+        </details>
+        <details>
+          <summary>폐기물은 어떻게 처리하나요?</summary>
+          <p>철거 폐기물은 폐기물 수집·운반 허가를 받은 업체에 맡겨 적법하게 처리합니다.</p>
+        </details>
+        <details>
+          <summary>어느 지역까지 오시나요?</summary>
+          <p>서울, 경기, 인천 전 지역입니다. 상담은 24시간 받습니다.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <section class="final">
+    <div class="wrap">
+      <h2>"무료"라는 말보다,<br>정확한 계산서 한 장</h2>
+      <p class="lede">전용면적과 공사 범위부터 함께 확인해요. 지원 가능성은 공단의 최신 안내로, 실제 철거비는 현장 견적으로 구분해 상담합니다.</p>
+      <div class="cta-row">
+        <a class="btn btn-primary" href="tel:01050940961">전화 <span class="num">010-5094-0961</span></a>
+        <button class="btn btn-ghost" type="button" id="copy">번호 복사</button>
+      </div>
+      <p class="copy-note" id="copy-note" aria-live="polite"></p>
+      <div class="meta"><span>서울 · 경기 · 인천</span><span>24시간 상담</span><b>010-5094-0961</b></div>
+      <p class="sign">다다철거 — 공고문대로 계산하고, 견적서대로 철거합니다.</p>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <p class="wrap fine">기준 확인: 2026년 11월 9일 · 민간 철거업체의 참고 안내</p>
+  <div class="wrap">
+    <p>지원 한도·조건은 신청 연도의 희망리턴패키지 공고를 기준으로 합니다. 신청과 문의는 소상공인24(sbiz24.kr), 소상공인시장진흥공단 콜센터 1533-0100에서 할 수 있습니다. 다다철거는 정부 기관이 아닌 민간 철거업체입니다.</p>
+    <ol>
+      <li><a href="https://www.mss.go.kr/site/smba/ex/bbs/View.do?cbIdx=86&amp;bcIdx=1060542&amp;parentSeq=1060542" target="_blank" rel="noopener">중소벤처기업부 보도자료, 2025.7.30</a></li>
+      <li><a href="https://www.sbiz.or.kr/nhrp/cnsl/storRemvlCnslInfo.do" target="_blank" rel="noopener">희망리턴패키지 점포철거비 지원 안내</a></li>
+      <li><a href="https://www.sbiz.or.kr/file/dwldAtchFile.do?atchmnflNo=ADN00000000003710648&amp;fileSn=8&amp;pageGb=EDC" target="_blank" rel="noopener">2026.8.3 원스톱폐업지원 2차 수정공고 (PDF)</a></li>
+      <li><a href="https://www.sbiz.or.kr/file/dwldAtchFile.do?atchmnflNo=ADN00000000003710648&amp;fileSn=9&amp;pageGb=EDC" target="_blank" rel="noopener">점포철거비 서류제출 가이드 (PDF)</a></li>
+      <li><a href="https://www.sbiz24.kr/?menu_id=040100" target="_blank" rel="noopener">소상공인24 최신 공고·접수 상태 확인</a></li>
+      
+    </ol>
+  </div>
+</footer>
+
+<nav class="callbar" aria-label="빠른 연락">
+  <div class="wrap">
+    <a class="btn btn-ghost" href="#calc">지원금 계산</a>
+    <a class="btn btn-primary" href="tel:01050940961">24시간 전화 상담</a>
+  </div>
+</nav>
+
+<script>
+(function () {
+  var PER_PYEONG = 20, CAP = 600; // 만원
+  var $ = function (id) { return document.getElementById(id); };
+  var area = $("area"), areaR = $("area-range"), cost = $("cost"), costR = $("cost-range");
+  var chips = document.querySelectorAll(".presets .chip");
+  var calm = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var last = { sup: 0, pay: 0, gross: 0, valid: false };
+  var closure = $("closure");
+
+  function man(v) {
+    var r = Math.round(v * 10000) / 10000;
+    return r.toLocaleString("ko-KR", { maximumFractionDigits: 4 }) + "만원";
+  }
+  function num(el, fallback) {
+    var v = parseFloat(el.value);
+    return isFinite(v) && v >= 0 ? v : fallback;
+  }
+
+  function render() {
+    var a = Number(area.value), c = Number(cost.value);
+    var cap = Number(closure.value);
+    var error = "";
+    if (area.value.trim() === "" || !Number.isFinite(a) || a < 1 || a > 200) error = "전용면적을 1~200평 범위의 숫자로 입력해 주세요.";
+    else if (cost.value.trim() === "" || !Number.isFinite(c) || c < 0 || c > 5000) error = "공급가를 0~5,000만원 범위의 숫자로 입력해 주세요.";
+    else if (closure.value === "unknown") error = "폐업일에 따른 지원 대상 여부를 공식 공고에서 먼저 확인해 주세요.";
+    $("input-error").textContent = error;
+    $("input-error").hidden = !error;
+    $("send").disabled = !!error;
+    last.valid = !error;
+    if (error) {
+      ["o-cost", "o-vat", "o-gross", "o-sup", "o-pay"].forEach(function(id) { cancelAnimationFrame($(id)._raf); $(id).textContent = "—"; });
+      $("o-sup-label").textContent = "참고 지원 상한";
+      $("o-stamp").textContent = "확인 필요";
+      $("o-why").textContent = "입력 조건을 확인하면 참고 계산이 표시됩니다. 지원 대상 판정은 하지 않습니다.";
+      $("o-flag").hidden = true;
+      return;
+    }
+    var byArea = a * PER_PYEONG;
+    var sup = Math.min(byArea, cap, c);
+    var vat = Math.round(c * 1000) / 10000;
+    var gross = c + vat;
+    var pay = Math.max(0, gross - sup);
+    $("o-cost").textContent = man(c);
+    $("o-vat").textContent = "+" + man(vat);
+    $("o-gross").textContent = man(gross);
+    $("o-sup").textContent = "−" + man(sup);
+    $("o-sup-label").textContent = "참고 지원 상한 (" + cap + "만원 기준)";
+    last.sup = sup; last.pay = pay; last.gross = gross;
+    tween($("o-pay"), pay);
+    $("o-stamp").textContent = "지급 비보장";
+    $("o-why").textContent = "입력 면적 × 20만원, " + cap + "만원, 입력 공급가 중 최솟값입니다. 부가세 " + man(vat) + "은 지원되지 않습니다. 공사대금은 먼저 지급하고 심사 후 정산받는 구조입니다.";
+    $("o-flag").hidden = false;
+    $("o-flag").textContent = "실제 지급액은 자격·인정 면적·비용·증빙 심사에 따라 줄거나 없을 수 있습니다. 소수 면적의 인정 방식은 공단에 확인하세요.";
+  }
+
+  // Count numbers toward their new value instead of jumping.
+  function tween(el, to, fmt) {
+    fmt = fmt || man;
+    var from = typeof el._v === "number" ? el._v : to;
+    el._v = to;
+    cancelAnimationFrame(el._raf);
+    if (calm || from === to) { el.textContent = fmt(to); return; }
+    var t0 = performance.now(), dur = 380;
+    (function step(t) {
+      var k = Math.min(1, (t - t0) / dur), e = 1 - Math.pow(1 - k, 3);
+      el.textContent = fmt(from + (to - from) * e);
+      if (k < 1) el._raf = requestAnimationFrame(step);
+    })(t0);
+  }
+
+  function sync(from, to) { to.value = from.value; }
+  function clearChips() { chips.forEach(function (b) { b.setAttribute("aria-pressed", "false"); }); }
+
+  areaR.addEventListener("input", function () { sync(areaR, area); clearChips(); render(); });
+  costR.addEventListener("input", function () { sync(costR, cost); clearChips(); render(); });
+  area.addEventListener("input", function () { areaR.value = Math.min(200, Math.max(1,num(area, 0))); clearChips(); render(); });
+  cost.addEventListener("input", function () { costR.value = Math.min(5000, num(cost, 0)); clearChips(); render(); });
+  closure.addEventListener("change", function () { clearChips(); render(); });
+  chips.forEach(function (b) {
+    b.addEventListener("click", function () {
+      closure.value = "600";
+      area.value = areaR.value = b.dataset.a;
+      cost.value = costR.value = b.dataset.c;
+      clearChips(); b.setAttribute("aria-pressed", "true");
+      render();
+    });
+  });
+
+  // Area ladder
+  var ladder = $("ladder");
+  [10, 15, 20, 25, 30, 40].forEach(function (p) {
+    var v = Math.min(p * PER_PYEONG, CAP);
+    var li = document.createElement("li");
+    if (p === 30) li.className = "ad";
+    li.innerHTML = '<span class="pyeong">' + p + '평</span><span class="bar"><i style="--w:' + (v / CAP * 100) + '%;width:' + (v / CAP * 100) + '%"></i></span><span class="amt">' + v + '만</span>';
+    ladder.appendChild(li);
+  });
+
+  // Send receipt summary
+  $("send").addEventListener("click", function () {
+    var note = $("send-note");
+    if (!last.valid) return;
+    var text = "[다다철거 참고 지원금 계산]\n가상 예시 또는 사용자 입력값 · 실제 견적/지급확정 아님\n폐업일: " + closure.options[closure.selectedIndex].text +
+      "\n전용면적: " + num(area, 0) + "평\n입력 공급가: " + $("o-cost").textContent +
+      "\n공사대금 합계(선지출, 부가세 포함): " + man(last.gross) +
+      "\n참고 지원 상한: " + man(last.sup) + "\n정산 후 참고 부담액: " + man(last.pay) +
+      "\n2026년 공고 참고 계산. 신규 접수는 2026.10.21 18시 마감. 자격/인정 면적/비용 및 지급액은 공단 심사로 결정됩니다.\n상담은 아직 접수되지 않았습니다.";
+    $("receipt-text").value = text;
+    $("receipt-fallback").hidden = false;
+    var done = function () { note.innerHTML = "복사했습니다. <b>010-5094-0961</b>로 문자나 카톡에 붙여넣어 보내주세요."; };
+    var fail = function () { note.innerHTML = "자동 복사가 안 됩니다. 아래 계산 결과를 선택해 직접 복사해 주세요. 전송된 내용은 없습니다."; };
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(done, fail);
+    } else { fail(); }
+  });
+
+  // Copy number
+  $("copy").addEventListener("click", function () {
+    var note = $("copy-note"), text = "010-5094-0961";
+    var done = function () { note.textContent = "번호를 복사했습니다: " + text; };
+    var fail = function () { note.textContent = "복사가 안 되면 이 번호를 눌러 저장하세요: " + text; };
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(done, fail);
+    } else { fail(); }
+  });
+
+  // Ticker: repeat the strip so the loop has no gap.
+  var tape = $("tape");
+  tape.innerHTML += tape.innerHTML;
+
+  // Before/after compare slider
+  var cmp = $("compare"), cmpR = $("cmp-range");
+  function setPos(v) { v = Math.max(0, Math.min(100, v)); cmp.style.setProperty("--pos", v + "%"); cmpR.value = Math.round(v); }
+  function fromPointer(e) { var r = cmp.getBoundingClientRect(); setPos((e.clientX - r.left) / r.width * 100); }
+  var dragging = false;
+  cmp.addEventListener("pointerdown", function (e) { dragging = true; cmp.setPointerCapture(e.pointerId); fromPointer(e); cmpR.focus({ preventScroll: true }); });
+  cmp.addEventListener("pointermove", function (e) { if (dragging) fromPointer(e); });
+  cmp.addEventListener("pointerup", function () { dragging = false; });
+  cmp.addEventListener("pointercancel", function () { dragging = false; });
+  cmpR.addEventListener("input", function () { setPos(+cmpR.value); });
+  document.querySelectorAll(".compare-tabs .chip").forEach(function (b, i, all) {
+    b.addEventListener("click", function () {
+      all.forEach(function (x) { x.setAttribute("aria-pressed", "false"); });
+      b.setAttribute("aria-pressed", "true");
+      $("cmp-b").src = b.dataset.b; $("cmp-b").alt = b.dataset.altB;
+      $("cmp-a").src = b.dataset.a; $("cmp-a").alt = b.dataset.altA;
+      $("cmp-cap").textContent = b.dataset.cap;
+      sweep();
+    });
+  });
+  // A short swipe so people see the photo is draggable.
+  function sweep() {
+    if (calm) { setPos(50); return; }
+    var keys = [[0, 50], [500, 82], [1100, 18], [1600, 50]], t0 = performance.now();
+    (function step(t) {
+      var dt = t - t0, i = 1;
+      while (i < keys.length - 1 && dt > keys[i][0]) i++;
+      var a = keys[i - 1], b = keys[i], k = Math.min(1, Math.max(0, (dt - a[0]) / (b[0] - a[0])));
+      k = k < 0.5 ? 2 * k * k : 1 - Math.pow(-2 * k + 2, 2) / 2;
+      setPos(a[1] + (b[1] - a[1]) * k);
+      if (dt < keys[keys.length - 1][0] && !dragging) requestAnimationFrame(step);
+    })(t0);
+  }
+
+  // Scroll reveal, ladder growth, news count-up
+  if ("IntersectionObserver" in window && !calm) {
+    var groups = [
+      "section h2", ".receipt", ".point", ".fact", ".news", ".qs li", ".flow li", ".promise",
+      ".compare", ".steps li", ".faq details", ".yt"
+    ];
+    document.querySelectorAll(groups.join(",")).forEach(function (el) {
+      if (el.closest(".hero")) return;
+      var sibs = el.parentElement ? Array.prototype.indexOf.call(el.parentElement.children, el) : 0;
+      el.style.setProperty("--d", Math.min(sibs, 5) * 0.07 + "s");
+      el.classList.add("rv");
+    });
+    ladder.classList.add("rv");
+    var once = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) {
+        if (!en.isIntersecting) return;
+        var el = en.target;
+        el.classList.add("in");
+        once.unobserve(el);
+        if (el === cmp) setTimeout(sweep, 300);
+        if (el.classList.contains("news")) {
+          var from = el.querySelector(".from"), to = el.querySelector(".to"), pct = el.querySelector(".pct");
+          var won = function (v) { return Math.round(v) + "만원"; };
+          from._v = 0; tween(from, 312, won);
+          to._v = 312; setTimeout(function () { tween(to, 438, won); }, 250);
+          pct._v = 0; setTimeout(function () { tween(pct, 40, function (v) { return "+" + Math.round(v) + "%"; }); }, 250);
+        }
+      });
+    }, { rootMargin: "0px 0px -12% 0px" });
+    document.querySelectorAll(".rv").forEach(function (el) { once.observe(el); });
+  }
+
+  render();
+})();
+</script>
+
+</body></html>

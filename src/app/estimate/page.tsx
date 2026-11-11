@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { SITE } from "@/lib/constants";
+import { SITE, DEMOLITION } from "@/lib/constants";
 import EstimateChat from "@/components/EstimateChat";
 
 export const metadata: Metadata = {
@@ -16,6 +16,7 @@ export default function EstimatePage() {
         사진 상담
       </h1>
       <p className="mt-3 text-base leading-8 text-slate-600">철거할 부분과 남길 부분의 사진, 면적·층수·반출 조건을 준비해 주세요. 철거 범위와 비용은 현장 조건을 확인한 뒤 협의합니다.</p>
+      <p className="mt-3 text-base leading-8 text-slate-600">{DEMOLITION.scope}. {SITE.serviceArea}. {DEMOLITION.travelFeeNotice}</p>
       <div className="mt-6 flex flex-wrap gap-3">
         <a href={`tel:${SITE.phone}`} className="rounded-lg bg-brand-navy px-5 py-4 font-semibold text-white">전화 {SITE.phone}</a>
         <a href={SITE.kakaoUrl} target="_blank" rel="noopener noreferrer" className="rounded-lg border border-brand-navy px-5 py-4 font-semibold">카카오톡으로 사진 상담 ↗</a>

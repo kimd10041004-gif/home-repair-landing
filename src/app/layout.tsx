@@ -6,7 +6,7 @@ import Nav from "@/components/Nav";
 import MobileBottomBar from "@/components/MobileBottomBar";
 import DesktopFloatingCta from "@/components/DesktopFloatingCta";
 import Footer from "@/components/Footer";
-import { SITE, getVisibleBusinessFields } from "@/lib/constants";
+import { SITE, DEMOLITION, getVisibleBusinessFields } from "@/lib/constants";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -19,7 +19,7 @@ const geistMono = Geist_Mono({
 });
 
 const SITE_DESCRIPTION =
-  "다다철거 · 다다 종합시공. 철거 범위와 보존 대상, 보양과 반출 조건을 확인하고 다음 공간을 준비합니다. 서울·경기 전 지역 상담 가능합니다.";
+  `다다철거 | 서울·경기 ${DEMOLITION.scope}. 상담 ${SITE.phone}. ${DEMOLITION.travelFeeNotice}`;
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE.url),
@@ -71,6 +71,14 @@ export default function RootLayout({
     sameAs: [SITE.blogUrl, SITE.instagramUrl, SITE.bloggerUrl, SITE.youtubeUrl],
     telephone: SITE.phone,
     areaServed: ["서울", "경기도"],
+    hasOfferCatalog: {
+      "@type": "OfferCatalog",
+      name: "철거·원상복구 작업",
+      itemListElement: DEMOLITION.services.map(name => ({
+        "@type": "Offer",
+        itemOffered: { "@type": "Service", name, provider: { "@id": `${SITE.url}/#business` } },
+      })),
+    },
     ...(businessInfoMap["대표자"] ? { founder: { "@type": "Person", name: businessInfoMap["대표자"] } } : {}),
   };
 

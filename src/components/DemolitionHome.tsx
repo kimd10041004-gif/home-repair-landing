@@ -3,7 +3,7 @@ import { useEffect, useRef, useState, type FormEvent } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import HeroVideos from "./HeroVideos";
-import { SITE } from "@/lib/constants";
+import { SITE, DEMOLITION } from "@/lib/constants";
 function buildBrief(data: FormData) {
   const scope = data.getAll('scope');
   const retain = data.getAll('retain');
@@ -179,7 +179,9 @@ export default function DemolitionHome() {
 <Link href="/estimate">사진 상담 안내 ↗</Link>
 <a href={`tel:${SITE.phone}`}>전화 {SITE.phone}</a>
 <a href={SITE.kakaoUrl} target="_blank" rel="noopener noreferrer">카카오톡 상담 ↗</a>
+<p>{DEMOLITION.scope}</p>
 <p>{SITE.serviceArea}</p>
+<p>{DEMOLITION.travelFeeNotice}</p>
 </div>
 <div className="local-note">
 <span className="local-icon" aria-hidden="true">⌘</span>
@@ -324,6 +326,14 @@ export default function DemolitionHome() {
 <h2>먼저 궁금한 것들.</h2>
 </div>
 <div className="faq-list">
+<details>
+<summary>어떤 철거 작업을 하나요?<span aria-hidden="true">+</span></summary>
+<p>{DEMOLITION.scope}가 가능합니다. 구체적인 작업 범위와 비용·일정은 현장 조건을 확인한 뒤 상담합니다.</p>
+</details>
+<details>
+<summary>서울·경기 외 지역 출장비는 얼마인가요?<span aria-hidden="true">+</span></summary>
+<p>{DEMOLITION.travelFeeNotice} 현장 위치와 희망 일정을 알려주시면 작업 가능 여부를 상담할 수 있습니다.</p>
+</details>
 <details>
 <summary>사진만으로 견적을 받을 수 있나요?<span aria-hidden="true">+</span>
 </summary>

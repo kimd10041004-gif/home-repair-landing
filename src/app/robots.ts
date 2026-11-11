@@ -4,10 +4,11 @@ const SITE_URL = "https://www.bandeutjipsuri.co.kr";
 
 export default function robots(): MetadataRoute.Robots {
   return {
-    rules: [
-      { userAgent: "*", allow: "/", disallow: ["/api/", "/admin"] },
-      { userAgent: "OAI-SearchBot", allow: "/", disallow: ["/api/", "/admin"] },
-    ],
+    rules: {
+      userAgent: "*",
+      allow: "/",
+      disallow: ["/api/", "/admin"],
+    },
     sitemap: `${SITE_URL}/sitemap.xml`,
   };
 }

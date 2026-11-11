@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
-import { SITE, DEMOLITION, getVisibleBusinessFields } from "@/lib/constants";
+import { SITE, getVisibleBusinessFields } from "@/lib/constants";
 
 export const metadata: Metadata = {
  title: "회사 소개",
@@ -20,9 +20,7 @@ export default function AboutPage() {
   </section>
   <section className="mt-8">
    <h2 className="text-2xl font-bold text-brand-navy">서비스 지역과 상담</h2>
-   <p className="mt-3 leading-7 text-slate-600">{DEMOLITION.scope}</p>
    <p className="mt-3 leading-7 text-slate-600">{SITE.serviceArea}</p>
-   <p className="mt-2 leading-7 text-slate-600">{DEMOLITION.travelFeeNotice}</p>
    <p className="mt-2 text-sm leading-7 text-slate-600">사진과 함께 공간 용도·면적·층수, 철거 및 보존 대상, 희망 일정과 반출 동선을 준비해 주세요.</p>
    <Link href="/estimate" className="mt-4 inline-flex rounded-lg bg-brand-navy px-5 py-4 font-semibold text-white">철거 사진 상담 안내 ↗</Link>
   </section>

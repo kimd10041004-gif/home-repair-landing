@@ -21,6 +21,5 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   return routes.map((route) => ({
     url: `${SITE_URL}${route}`,
-    ...(["", "/about", "/estimate"].includes(route) ? { lastModified: "2026-11-12" } : {}),
   }));
 }

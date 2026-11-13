@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Geist, Geist_Mono, Noto_Serif_KR } from "next/font/google";
 import "./globals.css";
 import LegacyServiceNotice from "@/components/LegacyServiceNotice";
 import Nav from "@/components/Nav";
@@ -7,6 +7,14 @@ import MobileBottomBar from "@/components/MobileBottomBar";
 import DesktopFloatingCta from "@/components/DesktopFloatingCta";
 import Footer from "@/components/Footer";
 import { SITE, getVisibleBusinessFields } from "@/lib/constants";
+
+const editorialSerif = Noto_Serif_KR({
+  variable: "--font-editorial-serif",
+  weight: ["400", "500"],
+  subsets: ["latin"],
+  display: "swap",
+  preload: false,
+});
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -77,7 +85,7 @@ export default function RootLayout({
   return (
     <html
       lang="ko"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+      className={`${geistSans.variable} ${geistMono.variable} ${editorialSerif.variable} h-full antialiased`}
     >
       <body className="flex min-h-full flex-col bg-white text-slate-900">
         <script

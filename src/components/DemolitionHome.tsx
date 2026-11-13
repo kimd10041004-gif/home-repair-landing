@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import HeroVideos from "./HeroVideos";
 import ConsultationBrief from "./ConsultationBrief";
+import YouTubeGallery from "./YouTubeGallery";
 import { SITE } from "@/lib/constants";
 
 const services = [
@@ -44,6 +45,8 @@ export default function DemolitionHome() {
       <div className="section-footnote"><p>이미지는 AI 공간 연출이며 실제 시공 사례가 아닙니다.</p><p>작업 범위·비용·일정은 현장 확인 후 협의합니다.</p></div>
       <aside className="support-callout"><div><span>상가 철거 · 폐업 준비</span><h3>점포철거 지원금도 확인해 보세요.</h3><p>실제 지급액은 공단 심사로 결정되는 참고 계산입니다.</p></div><a href="/demolition-support">내 조건으로 계산하기 <span aria-hidden="true">↗</span></a></aside>
     </section>
+
+    <YouTubeGallery />
 
     <section id="approach" className="approach section-pad" aria-labelledby="approach-title">
       <div className="approach-visual"><Image src="/dada/editorial/material-study.webp" width={1122} height={1402} sizes="(max-width:700px) 88vw, 42vw" alt="마감과 구조의 경계를 표현한 AI 공간 연출 이미지" /><span>AI 공간 연출 이미지</span><div aria-hidden="true">The art<br />of making room.</div></div>

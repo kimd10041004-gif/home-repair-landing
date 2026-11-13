@@ -13,7 +13,7 @@ import { IconChat, IconPhone } from "@/components/icons";
 export default function MobileBottomBar() {
   return (
     <div
-      className="fixed inset-x-0 bottom-0 z-30 flex gap-2 border-t border-black/10 bg-white px-3 pt-2 shadow-[0_-2px_10px_rgba(0,0,0,0.06)] md:hidden"
+      className="dada-mobile-contact fixed inset-x-0 bottom-0 z-30 flex gap-2 border-t border-black/10 bg-white px-3 pt-2 shadow-[0_-2px_10px_rgba(0,0,0,0.06)] md:hidden"
       style={{ paddingBottom: "calc(env(safe-area-inset-bottom, 0px) + 0.5rem)" }}
     >
       <a
@@ -30,7 +30,7 @@ export default function MobileBottomBar() {
         className="flex min-h-14 flex-1 items-center justify-center gap-2 rounded-lg bg-yellow-400 px-3 text-center text-base font-semibold text-slate-900"
       >
         <IconChat className="h-6 w-6 shrink-0" />
-        카카오 상담
+        사진 상담
       </a>
     </div>
   );

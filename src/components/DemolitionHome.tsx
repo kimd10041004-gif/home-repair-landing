@@ -58,38 +58,41 @@ export default function DemolitionHome() {
 <div className="hero-copy">
 <div className="eyebrow">
 <span className="orange-dot">
-</span> DEMOLITION, WITH INTENTION</div>
-<div className="hero-edition">{SITE.name} / 실내 철거 상담<span>서울 · 경기</span></div>
+</span> 공간의 다음을 준비하는 철거</div>
+<div className="hero-edition">상가 · 주택 · 부분 철거 · 원상복구<span>서울 · 경기</span></div>
 <h1 id="hero-title">잘 비워야,<br /><span>다음이 보입니다.</span>
 </h1>
 <div className="hero-bottom">
-<p>철거는 끝내는 일이자,<br />새로운 공간을 시작하는 일.<br />
-<strong>남길 것까지 생각하는 다다철거.</strong>
-</p>
-<a className="primary-button" href="#consultation">상담 내용 정리하기 <span aria-hidden="true">↗</span>
-</a>
+<p>비울 곳과 남길 곳, 그 경계까지 세심하게.<br /><strong>현장 사진으로 다다철거와 먼저 이야기하세요.</strong></p>
+<div className="hero-actions"><a className="primary-button" href={SITE.kakaoUrl} target="_blank" rel="noopener noreferrer">사진으로 상담하기 <span aria-hidden="true">↗</span></a><a className="hero-phone" href={`tel:${SITE.phone}`}><span>전화 상담</span><strong>{SITE.phone}</strong></a></div>
+<p className="hero-help">카카오톡에 현장 사진 · 지역 · 희망 일정을 보내주세요.</p>
 </div>
 </div>
-<a href="#checklist" className="hero-note">
-<span className="hero-note-label">SCROLL TO EXPLORE</span><span>무엇을 철거할지보다 먼저,<br /><strong>무엇을 남길지 확인합니다.</strong></span>
+<a href="#services" className="hero-note">
+<span className="hero-note-label">DADA / OUR SERVICES</span><span>어떤 공간을 비울 계획인가요?<br /><strong>필요한 철거부터 살펴보세요.</strong></span>
 <span aria-hidden="true">↓</span>
 </a>
 </section>
-<div className="ticker" aria-hidden="true">
-<span>REMOVE WITH CARE.</span>
-<span className="asterisk">✳</span>
-<span>MAKE ROOM FOR WHAT’S NEXT.</span>
-<span className="asterisk">✳</span>
-<span>다음 공간을 위한 첫 작업.</span>
+<div className="service-band"><strong>서울 · 경기 전 지역</strong><span>그 외 지역 출장비 20만원</span><a href="/estimate">사진 상담 준비 안내 <span aria-hidden="true">↗</span></a></div>
+<section id="services" className="services section-pad" aria-labelledby="services-title">
+<div className="services-heading"><div><div className="eyebrow">DADA / WHAT WE DO</div><h2 id="services-title">공간에 맞는 철거.<br />시작은 분명하게.</h2></div><p>전체를 비우는 일부터 필요한 부분만 정리하는 일까지.<br />공간의 용도와 다음 계획에 맞춰 상담합니다.</p></div>
+<div className="service-cards">
+{[
+ {number:"01",title:"상가 · 사무실 철거",en:"COMMERCIAL",description:"이전·폐업·리뉴얼을 앞둔 공간. 내부 철거 범위와 반출 조건을 함께 확인합니다.",detail:"내부 철거 · 집기 · 마감"},
+ {number:"02",title:"주택 · 부분 철거",en:"RESIDENTIAL",description:"공사할 곳은 비우고, 남길 곳은 구분합니다. 필요한 부분부터 상담하세요.",detail:"주방 · 욕실 · 바닥 · 천장"},
+ {number:"03",title:"원상복구",en:"RESTORATION",description:"임대차 조건과 인계 기준을 바탕으로, 철거와 복구가 필요한 범위를 정리합니다.",detail:"반환 조건 · 작업 범위 협의"},
+].map(service=><a key={service.number} className="service-card" href={SITE.kakaoUrl} target="_blank" rel="noopener noreferrer" aria-label={`${service.title} 카카오톡 상담`}><div className="service-card-top"><span>{service.number}</span><span>{service.en}</span><span aria-hidden="true">↗</span></div><h3>{service.title}</h3><p>{service.description}</p><div className="service-card-bottom"><span>{service.detail}</span><strong>상담하기</strong></div></a>)}
 </div>
-<aside className="support-callout"><span>상가 철거 · 폐업 준비</span><a href="/demolition-support">점포철거 지원금, 내 조건으로 계산하기 ↗</a><p>폐업일별 한도·전용면적·부가세를 구분한 참고 계산입니다. 실제 지급액은 공단 심사로 결정됩니다.</p></aside>
+<p className="service-scope-note">작업 가능 범위·비용·일정은 현장 조건을 확인한 뒤 협의합니다.</p>
+</section>
 <section className="space-story section-pad" aria-labelledby="space-story-title">
 <div className="space-story-heading"><div className="eyebrow">DADA / A DIFFERENT PERSPECTIVE</div><h2 id="space-story-title">비우는 일의 깊이.<br /><span>다음을 보는 시선.</span></h2><p>서울·경기 주거·상가·사무실.<br />철거할 곳과 지켜야 할 곳을<br />상담에서 함께 살펴봅니다.</p></div>
 <div className="space-frames">
-<figure className="space-frame"><div className="space-frame-image"><Image src="/dada/video/01-entry-poster.jpg" width={1280} height={720} sizes="(max-width:700px) 88vw, 37vw" alt="입구의 동선과 남길 마감을 생각하기 위한 AI 공간 연출 이미지" /><span aria-hidden="true">01</span></div><figcaption><span>ENTRY / 첫 경계</span><strong>들어가는 길부터 생각합니다.</strong><p>출입구와 이동 경로, 공용부의 조건.</p></figcaption></figure>
-<figure className="space-frame"><div className="space-frame-image"><Image src="/dada/video/02-corridor-poster.jpg" width={1280} height={720} sizes="(max-width:700px) 88vw, 37vw" alt="이동과 반출 경로를 생각하기 위한 AI 복도 연출 이미지" /><span aria-hidden="true">02</span></div><figcaption><span>PASSAGE / 연결되는 공간</span><strong>작업의 바깥까지 살핍니다.</strong><p>반출 동선과 보양할 부분의 연결.</p></figcaption></figure>
+<figure className="space-frame"><div className="space-frame-image"><Image src="/dada/film/dada-boundary.jpg" width={1344} height={768} sizes="(max-width:700px) 88vw, 37vw" alt="철거 범위와 남길 마감을 생각하기 위한 AI 출입구 연출 이미지" /><span aria-hidden="true">01</span></div><figcaption><span>ENTRY / 첫 경계</span><strong>들어가는 길부터 생각합니다.</strong><p>출입구와 이동 경로, 공용부의 조건.</p></figcaption></figure>
+<figure className="space-frame"><div className="space-frame-image"><Image src="/dada/film/dada-space.jpg" width={1344} height={768} sizes="(max-width:700px) 88vw, 37vw" alt="다음 공정을 준비하는 빈 공간을 표현한 AI 연출 이미지" /><span aria-hidden="true">02</span></div><figcaption><span>SPACE / 다음을 위한 공간</span><strong>다음 공정까지 생각합니다.</strong><p>비워야 할 범위와 인계할 공간의 상태.</p></figcaption></figure>
 </div><p className="image-disclosure">AI 연출 예시 · 실제 시공 현장이나 작업 전후 기록이 아닙니다.</p>
 </section>
+<aside className="support-callout"><span>상가 철거 · 폐업 준비</span><a href="/demolition-support">점포철거 지원금, 내 조건으로 계산하기 ↗</a><p>폐업일별 한도·전용면적·부가세를 구분한 참고 계산입니다. 실제 지급액은 공단 심사로 결정됩니다.</p></aside>
 <section id="approach" className="approach section-pad">
 <div className="section-intro">
 <div className="eyebrow">01 / THE APPROACH</div>
@@ -173,13 +176,14 @@ export default function DemolitionHome() {
 <section id="consultation" className="consultation section-pad">
 <div className="consultation-intro">
 <div className="eyebrow">03 / YOUR NEXT STEP</div>
-<h2>공간 이야기부터<br />시작해 볼까요?</h2>
-<p>아직 정확히 몰라도 괜찮습니다.<br />아는 내용만 골라 나만의 상담 메모를 만들어 보세요.</p>
+<h2>사진으로 시작하는<br />첫 상담.</h2>
+<p>전체 공간, 철거할 부분, 출입구 사진을 보내주세요.<br />정리가 필요하다면 옆의 상담 메모를 이용해도 좋습니다.</p>
+<ol className="contact-steps"><li><span>01</span><div><strong>현장 사진 보내기</strong><p>사진과 함께 지역 · 면적 · 희망 일정을 알려주세요.</p></div></li><li><span>02</span><div><strong>작업 범위 확인하기</strong><p>철거할 부분과 남길 부분, 현장 확인 필요 여부를 상담합니다.</p></div></li><li><span>03</span><div><strong>비용과 일정 협의하기</strong><p>보양 · 반출 · 정리의 포함 범위를 함께 확인합니다.</p></div></li></ol>
 <div className="contact-links">
 <Link href="/estimate">사진 상담 안내 ↗</Link>
 <a href={`tel:${SITE.phone}`}>전화 {SITE.phone}</a>
 <a href={SITE.kakaoUrl} target="_blank" rel="noopener noreferrer">카카오톡 상담 ↗</a>
-<p>{SITE.serviceArea}</p>
+<p>{SITE.serviceArea}<br />서울·경기 외 지역 출장비 20만원</p>
 </div>
 <div className="local-note">
 <span className="local-icon" aria-hidden="true">⌘</span>
@@ -324,6 +328,7 @@ export default function DemolitionHome() {
 <h2>먼저 궁금한 것들.</h2>
 </div>
 <div className="faq-list">
+<details><summary>어느 지역까지 작업하나요?<span aria-hidden="true">+</span></summary><p>서울·경기 전 지역에서 작업합니다. 그 외 지역은 출장비 20만원이 발생하며, 현장 위치와 작업 범위는 상담에서 확인합니다.</p></details>
 <details>
 <summary>사진만으로 견적을 받을 수 있나요?<span aria-hidden="true">+</span>
 </summary>
@@ -342,17 +347,17 @@ export default function DemolitionHome() {
 <details>
 <summary>여기서 상담을 신청할 수 있나요?<span aria-hidden="true">+</span>
 </summary>
-<p>철거 상담은 사진 상담 안내 페이지의 전화·다다 철거 카카오톡 채널로 진행할 수 있습니다. 아래 메모 도구는 준비용이며 자동으로 문의를 전송하지 않습니다.</p>
+<p>사진 상담 버튼을 누르면 다다 철거 카카오톡 채널로 연결됩니다. 현장 사진과 지역, 희망 일정을 보내주세요. 전화 상담도 가능합니다. 상담 메모는 준비용이며 자동으로 문의를 전송하지 않습니다.</p>
 </details>
 </div>
 </section>
 <section className="closing">
-<p>철거, 그다음을 생각합니다.</p>
-<a href="#consultation">다다철거<span aria-hidden="true">↗</span>
+<p>다음 공간의 시작, 사진 한 장부터 이야기하세요.</p>
+<a href={SITE.kakaoUrl} target="_blank" rel="noopener noreferrer" aria-label="다다철거 카카오톡 사진 상담">다다철거<span aria-hidden="true">↗</span>
 </a>
 <div>
 <span>다다 종합시공</span>
-<span>MAKE ROOM FOR WHAT’S NEXT.</span>
+<a href={`tel:${SITE.phone}`}>전화 상담 {SITE.phone}</a>
 </div>
 </section>
 </div>;

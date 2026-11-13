@@ -71,7 +71,7 @@ export default function DesktopFloatingCta() {
   return (
     <div
       ref={containerRef}
-      className="fixed right-6 top-1/2 z-40 hidden -translate-y-1/2 flex-col gap-3 md:flex"
+      className="dada-floating-contact fixed right-6 top-1/2 z-40 hidden -translate-y-1/2 flex-col gap-3 md:flex"
     >
       {/* 전화 상담 버튼 */}
       <div className="group relative">

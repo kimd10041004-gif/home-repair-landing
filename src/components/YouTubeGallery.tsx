@@ -22,7 +22,7 @@ export default function YouTubeGallery() {
   return <section id="videos" className="video-journal section-pad" aria-labelledby="videos-title">
     <div className="section-heading">
       <div><div className="eyebrow">DADA / FIELD RECORDS</div><h2 id="videos-title">직접 비운 공간,<br /><em>현장으로 보여드립니다.</em></h2></div>
-      <p>다다철거가 작업한 현장의 사진·영상 기록.<br />현장을 선택해 철거 전후와 작업 결과를 확인하세요.</p>
+      <p>현장마다 하나씩, 다다철거의 작업 기록.<br />현장을 선택해 철거 전후와 작업 결과를 확인하세요.</p>
     </div>
     <div className="video-journal-layout">
       <div className="video-feature">
@@ -37,7 +37,7 @@ export default function YouTubeGallery() {
       </div>
       <div className="video-editorial">
         <div className="video-selection" aria-live="polite"><span className="eyebrow">{String(selected + 1).padStart(2, "0")} / {video.category}</span><h3>{video.title}</h3><p>{video.description}</p></div>
-        <ol className="video-list" aria-label="다다철거 현장 영상 선택">{videos.map((item, index) => <li key={item.id}><button type="button" aria-pressed={selected === index} aria-controls="dada-youtube-player" onClick={() => selectVideo(index)}>
+        <ol className="video-list" aria-label="다다철거 현장 영상 선택">{videos.map((item, index) => <li key={item.siteKey}><button type="button" aria-pressed={selected === index} aria-controls="dada-youtube-player" onClick={() => selectVideo(index)}>
           <span className="video-list-number">0{index + 1}</span><span className="video-list-thumbnail"><Image src={`https://i.ytimg.com/vi/${item.id}/hq1.jpg`} width={96} height={72} sizes="72px" alt="" /></span><span className="video-list-copy"><small>{item.category}</small><strong>{item.title}</strong></span><span className="video-list-play" aria-hidden="true">▶</span>
         </button></li>)}</ol>
         <div className="video-next-step"><p>우리 공간의 철거도 궁금하다면.</p><a className="text-link" href={SITE.kakaoUrl} target="_blank" rel="noopener noreferrer">사진으로 상담하기 <span aria-hidden="true">↗</span></a></div>

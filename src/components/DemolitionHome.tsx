@@ -1,9 +1,9 @@
 import Image from "next/image";
 import Link from "next/link";
-import HeroVideos from "./HeroVideos";
 import ConsultationBrief from "./ConsultationBrief";
 import YouTubeGallery from "./YouTubeGallery";
 import { SITE } from "@/lib/constants";
+import { fieldVideos } from "@/lib/field-videos";
 
 const services = [
   { number: "01", title: "상가 · 사무실", en: "COMMERCIAL", image: "/dada/film/dada-brand-desktop.jpg", width: 1344, height: 768, description: "이전과 폐업, 새로운 시작을 앞둔 공간의 내부 철거.", detail: "내부 철거 · 집기 · 마감" },
@@ -35,7 +35,7 @@ export default function DemolitionHome() {
         <a className="hero-phone" href={`tel:${SITE.phone}`}><span>전화 상담</span><strong>{SITE.phone}</strong></a>
         <div className="hero-footnote"><span>상가 · 주택 · 부분 철거 · 원상복구</span><span>01 — A NEW BEGINNING</span></div>
       </div>
-      <div className="hero-media"><HeroVideos /><div className="hero-media-caption" aria-hidden="true"><span>SPACE<br />FOR WHAT’S NEXT.</span><span>DADA<br />FILM / 01</span></div></div>
+      <div className="hero-media hero-field-media"><a className="hero-field-link" href="#videos" aria-label="다다철거 실제 현장 영상 보기"><Image src={`https://i.ytimg.com/vi/${fieldVideos[0].id}/maxres1.jpg`} fill sizes="(max-width:700px) 1100px, 1200px" alt="다다철거 면목 늘푸른아파트 붙박이장 철거 현장 영상 표지" preload /><span className="scene-caption">다다철거 · 실제 현장 기록</span><span className="hero-field-action">실제 현장 영상 보기 <span aria-hidden="true">↗</span></span></a></div>
     </section>
     <div className="service-band"><div><span>WORK AREA</span><strong>서울 · 경기 전 지역</strong></div><p>서울·경기 외 지역 출장비 20만원</p><Link href="/estimate">상담 준비 안내 <span aria-hidden="true">↗</span></Link></div>
 

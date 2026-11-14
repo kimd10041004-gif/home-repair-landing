@@ -5,7 +5,7 @@ import { SITE } from "@/lib/constants";
 
 const links = [
   {href:"/#services",label:"철거 서비스"},
-  {href:"/#videos",label:"영상 보기"},
+  {href:"/#videos",label:"현장 영상"},
   {href:"/#approach",label:"작업의 기준"},
   {href:"/about",label:"사업자 정보"},
 ];

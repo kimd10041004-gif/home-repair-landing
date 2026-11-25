@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Geist, Geist_Mono, Noto_Serif_KR } from "next/font/google";
 import "./globals.css";
 import LegacyServiceNotice from "@/components/LegacyServiceNotice";
 import Nav from "@/components/Nav";
@@ -7,6 +7,14 @@ import MobileBottomBar from "@/components/MobileBottomBar";
 import DesktopFloatingCta from "@/components/DesktopFloatingCta";
 import Footer from "@/components/Footer";
 import { SITE, getVisibleBusinessFields } from "@/lib/constants";
+
+const editorialSerif = Noto_Serif_KR({
+  variable: "--font-editorial-serif",
+  weight: ["400", "500"],
+  subsets: ["latin"],
+  display: "swap",
+  preload: false,
+});
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -19,7 +27,7 @@ const geistMono = Geist_Mono({
 });
 
 const SITE_DESCRIPTION =
-  "다다철거 · 다다 종합시공. 철거 범위와 보존 대상, 보양과 반출 조건을 확인하고 다음 공간을 준비합니다. 서울·경기 전 지역 상담 가능합니다.";
+  "서울·경기 상가·주택 내부 철거, 부분 철거, 원상복구 상담. 현장 사진과 지역·희망 일정을 보내주세요. 다다철거 010-5094-0961. 서울·경기 외 지역 출장비 20만원.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE.url),
@@ -77,7 +85,7 @@ export default function RootLayout({
   return (
     <html
       lang="ko"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+      className={`${geistSans.variable} ${geistMono.variable} ${editorialSerif.variable} h-full antialiased`}
     >
       <body className="flex min-h-full flex-col bg-white text-slate-900">
         <script
